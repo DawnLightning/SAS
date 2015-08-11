@@ -31,7 +31,7 @@ namespace SAS.ClassSet.FunctionTools
         DataRow[] drSupervisor;
         DataRow[] drTeacher;
         DataRow[] drClasses;
-        List<string> supervisor;
+        List<string> supervisor=new List<string>();
         SqlHelper helper=new SqlHelper();
         
         OleDbDataAdapter daSpareTime;
@@ -110,6 +110,8 @@ namespace SAS.ClassSet.FunctionTools
         {
             for (Index = 0; Index < 15; Index++)
             {
+                supervisor.Clear();
+                Supervisors = "";
                  drSpareTimeClass = dtSpareTimeDay.Select("Spare_Number= '" + spareclass[Index] + "'");
                  drClasses = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number="+spareclass[Index]+"and Class_Type ='理论' ");
                  drSupervisor = dtSupervisor.Select("Class_WeekNumber<2 and Class_DayNumber = 0", "Class_Totality asc");
@@ -120,7 +122,7 @@ namespace SAS.ClassSet.FunctionTools
                 }
                 else if (count >= config.Cnumpeo_min && count <= config.Cnumpeo_max)
                 {
-                    foreach (string dr in Supervisor(drSpareTimeClass, drSupervisor))
+                    foreach (string dr in supervisor)
                     {
                         Supervisors = Supervisors + "," + dr;
                        
@@ -131,7 +133,7 @@ namespace SAS.ClassSet.FunctionTools
                 {
                     for (int i = 0; i < config.Cnumpeo_max;i++ )
                     {
-                        Supervisors = Supervisors +","+Supervisor(drSpareTimeClass, drSupervisor)[i];
+                        Supervisors = Supervisors +","+supervisor[i];
                     }
                      WritePlacement(Supervisors,Teacher(drClasses,drTeacher));
                 }

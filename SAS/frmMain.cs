@@ -43,6 +43,7 @@ namespace SAS
             }
 
             flashListview();
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
        
        
@@ -105,12 +106,6 @@ namespace SAS
             fp.Show();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            //frmAdd fa = new frmAdd();
-            //fa.Show();
-        }
-
         private void tssbSend_ButtonClick(object sender, EventArgs e)
         {
             tssbSend.ShowDropDown();
@@ -151,6 +146,7 @@ namespace SAS
         {
             if (listView1.CheckedItems.Count == 1)
             {
+                //listView1.Items[0].BackColor = Color.Green;
                 EmailPlacement sent = new EmailPlacement(listView1);
                 sent.SentPlacement();
                 //SentPlacement();
@@ -164,6 +160,11 @@ namespace SAS
                 frmResult fr = new frmResult(listView1);
                 fr.Show();
             }
+        }
+
+        public  void Changelist()
+        {
+            listView1.SelectedItems[0].BackColor = Color.Green;
         }
 
         private void tsbHelp_Click(object sender, EventArgs e)
@@ -370,13 +371,6 @@ namespace SAS
             ExcelTools output = new ExcelTools();
             output.ExportToExecl("select * from Placement_Data","Placement_Data",listView1);
            
-        }
-
-        private void ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-           
-
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

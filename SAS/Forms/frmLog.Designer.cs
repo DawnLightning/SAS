@@ -229,7 +229,6 @@
 
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
@@ -243,5 +242,6 @@
         private System.Windows.Forms.Label labPage;
         private System.Windows.Forms.Button btnPageDown;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        public System.Windows.Forms.ListView listView1;
     }
 }

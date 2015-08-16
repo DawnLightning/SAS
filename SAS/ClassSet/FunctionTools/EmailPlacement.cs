@@ -66,8 +66,8 @@ namespace SAS.ClassSet.FunctionTools
                 EInfo.Receiver = ListAddress[i];
                 EInfo.Title = DateTime.Now + "听课安排";
                 string successflag="";
-                ERecord = new EmailRecordInfo(ListSupervisor[i], "督导", EInfo.Title, ListSupervisor[i] + DateTime.Now.ToLongTimeString(), "听课安排", successflag, ListFileName[i]);
-                senter.Send(new Email {Type=0,EI= EInfo,ERI=ERecord});
+                ERecord = new EmailRecordInfo(ListSupervisor[i], "督导", EInfo.Title, ListSupervisor[i] + DateTime.Now.ToLongTimeString()+i, "听课安排", successflag, ListFileName[i]);
+                senter.Send(new Email {Type=0,EI= EInfo,ERI=ERecord,list=listView1,id=i,count=ListFileName.Count-1});
                 //MessageBox.Show(successflag);
                 //help.Insert(ERecord,"Logs_Data");
             }

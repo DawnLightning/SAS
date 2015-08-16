@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Drawing;
 using System.Net.Mail;
 using System.Threading;
 using SAS.Forms;
@@ -12,6 +13,7 @@ namespace SAS.ClassSet.FunctionTools
 {
     class Email
     {
+        public static int a = 0, b = 0;
         public int Type { get; set; }
         public EmailRecordInfo ERI { get; set; }
 
@@ -19,6 +21,9 @@ namespace SAS.ClassSet.FunctionTools
 
         public frmLog FL { get; set; }
         public string str { get; set; }
+        public ListView list { get; set; }
+        public int id { get; set;}
+        public int count { get; set; }
         public void Send(Email myemail)
         {
             Thread t1;
@@ -33,7 +38,7 @@ namespace SAS.ClassSet.FunctionTools
             EmailRecordInfo ERecord = null;
             frmLog log1 = null;
             EmailInfo myemail = E1.EI;
-            if (E1.Type==0)
+            if (E1.Type==0||E1.Type==2)
             {
                 ERecord = E1.ERI;
             }
@@ -88,18 +93,40 @@ namespace SAS.ClassSet.FunctionTools
                 if (ERecord != null)
                 {
                     ERecord.File_State = "发送成功";
+                    Email.a++;
+                    if (E1.Type==2)
+                    {
+                        MessageBox.Show("发送成功");
+                    }
                 }
-
-                MessageBox.Show("邮件发送成功");
+                if (log1 != null)
+                {
+                    updatecommand = updatecommand.Replace("{flag}", "发送成功");
+                    MessageBox.Show("发送成功");
+                    //log1.listView1.SelectedItems[0].BackColor = Color.Green;
+                }
+                
             }
             catch (Exception ex)
             {
                 if (ERecord != null)
                 {
                     ERecord.File_State = "发送失败";
+                    if (E1.Type == 2)
+                    {
+                        MessageBox.Show("发送失败");
+                    }
                 }
-                MessageBox.Show("邮件发送失败\r\n" + ex);
+                if (log1 != null)
+                {
+                    updatecommand = updatecommand.Replace("{flag}", "发送失败");
+                    MessageBox.Show("发送失败");
+                    //log1.listView1.SelectedItems[0].BackColor = Color.Red;
+
+                }
+                //MessageBox.Show("邮件发送失败\r\n" + ex);
                 //MessageBox.Show("发送失败");//记录错误日志
+
             }
             finally
             {
@@ -109,11 +136,28 @@ namespace SAS.ClassSet.FunctionTools
                 }
                 if (log1 != null)
                 {
-                    updatecommand = updatecommand.Replace("{flag}", "");
                     if (new SqlHelper().Oledbcommand(updatecommand) > 0)
                     {
                         log1.frmLog_Load_1(null, null);
                     }
+                }
+                Email.b++;
+                if(E1.count==E1.id&&E1.Type==0)
+                {
+                    if (Email.a==Email.b)
+                    {
+                        E1.list.SelectedItems[0].BackColor = Color.Green;
+                    }
+                    else if (Email.a==0)
+                    {
+                        E1.list.SelectedItems[0].BackColor = Color.Red;
+                    }
+                    else
+                    {
+                        E1.list.SelectedItems[0].BackColor = Color.Orange;
+                    }
+                    Email.a = 0;
+                    Email.b = 0;
                 }
             }
         }

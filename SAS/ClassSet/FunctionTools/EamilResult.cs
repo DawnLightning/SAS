@@ -33,7 +33,7 @@ namespace SAS.ClassSet.FunctionTools
             Email senter = new Email();
             string flag="";
             EmailRecordInfo record = new EmailRecordInfo(Listview.CheckedItems[0].SubItems[6].Text, "受听课教师", EInfo.Title, Listview.CheckedItems[0].SubItems[6].Text + DateTime.Now.ToShortTimeString(), "听课反馈结果", flag, FilePath);
-            senter.Send(new Email { Type=0,EI=EInfo,ERI=record});
+            senter.Send(new Email { Type=2,EI=EInfo,ERI=record,id=0,count=0});
             
             //help.Insert(record,"Logs_Data");
             //MessageBox.Show(flag);

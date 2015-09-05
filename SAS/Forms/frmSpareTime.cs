@@ -73,7 +73,19 @@ namespace SAS.Forms
                     if (item != e.Item)
                         item.Checked = false;
                 }
-            } 
+            }
+            foreach (ListViewItem s in listView1.Items)
+            {
+                if (listView1.CheckedItems.Contains(s))
+                {
+                    s.Selected = true;
+                }
+                else
+                {
+                    s.Selected = false;
+                }
+
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -95,8 +107,36 @@ namespace SAS.Forms
             if(listView1.CheckedItems.Count!=0){
                 string selectcommand = string.Format(@"Select * from Teachers_Data where Teacher='{0}'",listView1.CheckedItems[0].SubItems[0].Text.Trim());
                 DataTable dt = help.getDs(selectcommand, "Teacher_Data").Tables[0];
-                frmSupervisor sp = new frmSupervisor(dt.Rows[0][1].ToString(),dt.Rows[0][0].ToString());
-                sp.Show();
+                if (listView1.CheckedItems[0].SubItems[1].Text != "")
+                {
+
+                    string startweek = listView1.CheckedItems[0].SubItems[1].Text.Substring(0, listView1.CheckedItems[0].SubItems[1].Text.IndexOf(" "));
+                    frmSupervisor sp = new frmSupervisor(dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), startweek);
+                    sp.Show();
+                }
+                else {
+                    string startweek = "1";
+                    frmSupervisor sp = new frmSupervisor(dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), startweek);
+                    sp.Show();
+                }
+              
+                this.Close();
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem s in listView1.Items)
+            {
+                if (listView1.SelectedItems.Contains(s))
+                {
+                    s.Checked = true;
+                }
+                else
+                {
+                    s.Checked = false;
+                }
+
             }
         }
     }

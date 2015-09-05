@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -49,6 +49,17 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listView1_ItemChecked);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "督导";
+            this.columnHeader1.Width = 144;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "已填写的空闲时间";
+            this.columnHeader2.Width = 208;
             // 
             // button1
             // 
@@ -70,16 +81,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "督导";
-            this.columnHeader1.Width = 144;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "已填写的空闲时间";
-            this.columnHeader2.Width = 208;
-            // 
             // frmSpareTime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -89,6 +90,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
             this.Name = "frmSpareTime";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSpareTime";
             this.Load += new System.EventHandler(this.frmSpareTime_Load);
             this.ResumeLayout(false);

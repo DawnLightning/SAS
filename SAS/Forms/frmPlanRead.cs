@@ -25,6 +25,7 @@ namespace SAS.Forms
         List<string> oldfilepath = new List<string> { };
         int numexcel = -1;//导入的Excel表的索引
         int NumItems = 0;//listview1的item数目
+        int successflag = 0;//Excel表导入情况
         int numlistview = 0;
         private void btnDel_Click(object sender, EventArgs e)
         {
@@ -116,22 +117,25 @@ namespace SAS.Forms
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            //cReadexcel rd = new cReadexcel();
+         
             ExcelTools rd = new ExcelTools();
             for (int n = 0; n < al.Count; n++)
             {
-                rd.ReadExcel(al[n].ToString());
-                // string State = rd.Connect(al[n].ToString(), path2);
+              successflag=rd.ReadExcel(al[n].ToString());
+             
                 backgroundWorker1.ReportProgress(1,progressBarRead);
-                //backgroundWorker1.ReportProgress(n,listView1);
+              
             }
         }
      
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBarRead.PerformStep();
-
+            if(successflag==1){
             listView1.Items[numlistview].SubItems[1].Text = "已导入";
+            }else{
+                listView1.Items[numlistview].SubItems[1].Text = "未导入";
+            }
             numlistview++;
         }
 

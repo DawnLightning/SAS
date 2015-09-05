@@ -49,9 +49,9 @@ namespace SAS.Forms
             setTbEnable();
 
          
-            NoIdTeacher();
+            NoIdTeacher();//添加对应的教师
 
-           
+         
 
             pageshow = new SqlHelper();
             totalpage = pageshow.totalpage("select * from Teachers_Data", pagesize, "Teachers_Data");
@@ -137,59 +137,67 @@ namespace SAS.Forms
 
         private void btnsave_Click(object sender, EventArgs e)
         {
-            if (status == 1)
+            if (tBID.Text != "" && tBName.Text != "" && tBMail.Text != "" && tBTel.Text != "" && tbTitle.Text != "" && tbBelongs.Text != "")
             {
-                
-                TeacherInfo teacher = new TeacherInfo();
-                teacher.TeacherId = tBID.Text;
-                teacher.TeacherName = tBName.Text;
-                teacher.Email = tBMail.Text;
-                teacher.Phone = tBTel.Text;
-                teacher.Title = tbTitle.Text;
-                teacher.IsSupervisor = cbIsDUDao.Checked;
-                teacher.TeachingSection = tbBelongs.Text;
-
-
-                SqlHelper help = new SqlHelper();
-                if (help.update("Teachers_Data", teacher) > 0)
+                if (status == 1)
                 {
-                    MessageBox.Show("修改成功");
-                    listView1.Items.Clear();
+
+                    TeacherInfo teacher = new TeacherInfo();
+                    teacher.TeacherId = tBID.Text;
+                    teacher.TeacherName = tBName.Text;
+                    teacher.Email = tBMail.Text;
+                    teacher.Phone = tBTel.Text;
+                    teacher.Title = tbTitle.Text;
+                    teacher.IsSupervisor = cbIsDUDao.Checked;
+                    teacher.TeachingSection = tbBelongs.Text;
+
+
+                    SqlHelper help = new SqlHelper();
+                    if (help.update("Teachers_Data", teacher) > 0)
+                    {
+                        MessageBox.Show("修改成功");
+                        listView1.Items.Clear();
+                        DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
+                        UIShow show = new UIShow();
+                        show.teachers_listview_write(dt, listView1);
+                    }
+
+                }
+                if (status == 0)
+                {
+
+                    TeacherInfo teacher = new TeacherInfo();
+                    teacher.TeacherId = tBID.Text;
+                    teacher.TeacherName = tBName.Text;
+                    teacher.Email = tBMail.Text;
+                    teacher.Phone = tBTel.Text;
+                    teacher.Title = tbTitle.Text;
+                    teacher.IsSupervisor = cbIsDUDao.Checked;
+                    teacher.TeachingSection = tbBelongs.Text;
+                    SqlHelper help = new SqlHelper();
+                    if (help.Insert(teacher, "Teachers_Data") > 0)
+                    {
+                        MessageBox.Show("添加成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("操作失败");
+                    }
+                    clear_listview();
+                    totalpage = pageshow.totalpage("select * from Teachers_Data", pagesize, "Teachers_Data");
+                    labPageAll.Text = totalpage + "";
+                    textBoxNow.Text = currentpage.ToString();
                     DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
                     UIShow show = new UIShow();
                     show.teachers_listview_write(dt, listView1);
                 }
-               
-            }
-            if (status == 0)
-            {
 
-                TeacherInfo teacher = new TeacherInfo();
-                teacher.TeacherId = tBID.Text;
-                teacher.TeacherName = tBName.Text;
-                teacher.Email = tBMail.Text;
-                teacher.Phone = tBTel.Text;
-                teacher.Title = tbTitle.Text;
-                teacher.IsSupervisor = cbIsDUDao.Checked;
-                teacher.TeachingSection = tbBelongs.Text;
-                SqlHelper help = new SqlHelper();
-                if (help.Insert(teacher, "Teachers_Data") > 0)
-                {
-                    MessageBox.Show("添加成功");
-                }
-                else
-                {
-                    MessageBox.Show("操作失败");
-                }
-                clear_listview();
-                totalpage = pageshow.totalpage("select * from Teachers_Data", pagesize, "Teachers_Data");
-                labPageAll.Text = totalpage + "";
-                textBoxNow.Text = currentpage.ToString();
-                DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
-                UIShow show = new UIShow();
-                show.teachers_listview_write(dt, listView1);
+                this.btnsave.Enabled = false;
             }
-            this.btnsave.Enabled = false;
+            else
+            {
+                MessageBox.Show("请确保数据完整");
+            }
         }
 
 
@@ -205,6 +213,7 @@ namespace SAS.Forms
             string[] arr = new string[7] { "", "", "", "", "", "", "" };
             ListViewItem lvi = new ListViewItem(arr);
             setLviText(lvi);
+            tBName.Enabled = true;
             this.tBID.Focus();
         }
 
@@ -263,6 +272,7 @@ namespace SAS.Forms
             tbTitle.Text = lvwItem.SubItems[4].Text;
             cbIsDUDao.Checked = isTrueOrFalse(lvwItem.SubItems[5].Text);
             tbBelongs.Text = lvwItem.SubItems[6].Text;
+            tBName.Enabled = false;
         }
 
 

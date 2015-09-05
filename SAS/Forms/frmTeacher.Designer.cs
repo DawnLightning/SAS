@@ -157,7 +157,6 @@
             this.cbIsDUDao.TabIndex = 14;
             this.cbIsDUDao.Text = "是否督导";
             this.cbIsDUDao.UseVisualStyleBackColor = false;
-         
             // 
             // btnAddType
             // 

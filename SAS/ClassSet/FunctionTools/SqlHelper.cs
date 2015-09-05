@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.Data.SqlClient;
 using SAS.ClassSet.MemberInfo;
 namespace SAS.ClassSet.FunctionTools
 {
@@ -296,7 +297,79 @@ namespace SAS.ClassSet.FunctionTools
             OleDbCommandBuilder cb = new OleDbCommandBuilder(oledbda);
             return oledbda; 
         }
+        public void insertToStockDataByBatch(ArrayList sqlArray,ProgressBar pb)
+        {
+            try
+            {
+                OleDbConnection aConnection = new OleDbConnection(connString);
+               aConnection.Open();
+                OleDbTransaction transaction = aConnection.BeginTransaction();
+              
 
+                OleDbCommand aCommand = new OleDbCommand();
+                aCommand.Connection = aConnection;
+                aCommand.Transaction = transaction;
+                pb.Maximum = sqlArray.Count;
+                pb.Step = 1;
+                for (int i = 0; i < sqlArray.Count; i++)
+                {
+                    pb.PerformStep();
+                    aCommand.CommandText = sqlArray[i].ToString();
+                    aCommand.ExecuteNonQuery();
+                    
+                }
+             
+                transaction.Commit();
+                aConnection.Close();
+              
+            }
+            catch (Exception e)
+            {
+              
+            }
+        }
+        public static object ExcuteScalar(string SQl, params OleDbParameter[] parameters)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connString))
+            {
+                conn.Open();
+                using (OleDbCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = SQl;
+                    cmd.Parameters.AddRange(parameters);
+                    return cmd.ExecuteScalar();//返回一行object
+                }
+            }
+        }
+        public static DataTable ExecuteDataTable(string SQl, params OleDbParameter[] parameters)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connString))
+            {
+                conn.Open();
+                using (OleDbCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = SQl;
+                    cmd.Parameters.AddRange(parameters);
+                    OleDbDataAdapter adapter = new OleDbDataAdapter(cmd);
+                    DataSet dataset = new DataSet();
+                    adapter.Fill(dataset);
+                    return dataset.Tables[0];
+                }
+            }
+        }//用来执行查询结果较少的sql
+        public static int ExcuteNonQuery(string SQL, params OleDbParameter[] parameters)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connString))
+            {
+                conn.Open();
+                using (OleDbCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = SQL;
+                    cmd.Parameters.AddRange(parameters);
+                    return cmd.ExecuteNonQuery();//返回值为影响的数据行数
+                }
+            }
+        }
 
     }
     

@@ -126,7 +126,9 @@ namespace SAS.Forms
 
         private void frmPlacement_Load(object sender, EventArgs e)
         {
-
+            SqlHelper help = new SqlHelper();
+            help.getDs("select * from SpareTime_Data","SpareTime_Data");
+           
         }
 
         private void button3_Click(object sender, EventArgs e)

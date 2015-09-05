@@ -1,9 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,19 @@ namespace SAS.Forms
 {
     public partial class frmSupervisor : Form
     {
-        public frmSupervisor(string name,string id)
+        public frmSupervisor(string name, string id, string startweek)
         {
             this.DDName = name;
             this.DDID = id;
+            this.startweek = startweek;
             InitializeComponent();
         }
+
+        string startweek;
         SqlHelper help = new SqlHelper();
-        ArrayList A1 = new ArrayList(), InsertArray = new ArrayList();
+        private ArrayList A1 = new ArrayList();
+        List<string> InsertArray = new List<string>();
+        int[,] aInts = new int[7, 12];
         int[] intcheck = new int[7];
         string[] sAWeek = new string[7];
         ArrayList[] aAWeek = new ArrayList[7];
@@ -76,19 +82,26 @@ namespace SAS.Forms
             {
                 switch (si[j])
                 {
-                    case '1': s += "一";
+                    case '1':
+                        s += "一";
                         break;
-                    case '2': s += "二";
+                    case '2':
+                        s += "二";
                         break;
-                    case '3': s += "三";
+                    case '3':
+                        s += "三";
                         break;
-                    case '4': s += "四";
+                    case '4':
+                        s += "四";
                         break;
-                    case '5': s += "五";
+                    case '5':
+                        s += "五";
                         break;
-                    case '6': s += "六";
+                    case '6':
+                        s += "六";
                         break;
-                    case '7': s += "日";
+                    case '7':
+                        s += "日";
                         break;
                 }
             }
@@ -129,6 +142,7 @@ namespace SAS.Forms
         }
         private void btnsave_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(DateTime.Now);
             if (chkBatchAdd.Checked)
             {
                 if (tBStart.Text == "" || tBStart.Text == "00" || tBStart.Text == "0" || tBEnd.Text == "" || tBEnd.Text == "00" || tBEnd.Text == "0")
@@ -155,19 +169,26 @@ namespace SAS.Forms
                 string S1 = obj.ToString();
                 switch (S1[0])
                 {
-                    case '1': strWeek[0] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '1':
+                        strWeek[0] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '2': strWeek[1] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '2':
+                        strWeek[1] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '3': strWeek[2] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '3':
+                        strWeek[2] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '4': strWeek[3] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '4':
+                        strWeek[3] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '5': strWeek[4] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '5':
+                        strWeek[4] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '6': strWeek[5] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '6':
+                        strWeek[5] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
-                    case '7': strWeek[6] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                    case '7':
+                        strWeek[6] += S1.Substring(S1.IndexOf("第") + 1, 2);
                         break;
                 }
             }
@@ -181,41 +202,29 @@ namespace SAS.Forms
                 }
             }
             help.Oledbcommand("delete from SpareTime_Data where Supervisor_ID='" + DDID + "' and Spare_Week=" + tBWeek.Text + ";");
-        
+            System.Diagnostics.Debug.WriteLine(DateTime.Now);
             if (chkBatchAdd.Checked == false)
             {
+                System.Diagnostics.Debug.WriteLine(DateTime.Now);
                 for (int i = 0; i < 7; i++)
                 {
                     if (ALWeek[i].Count > 0)
                     {
                         for (int j = 0; j < ALWeek[i].Count; j++)
                         {
-                            try
-                            {
-                                if (tBWeek.Text.Count() == 1)
-                                { strID = DDID + "0" + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
-                                else
-                                { strID = DDID + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
-                                InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + tBWeek.Text + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
-                            }
-                            catch {  }
+                            if (tBWeek.Text.Count() == 1)
+                            { strID = DDID + "0" + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
+                            else
+                            { strID = DDID + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
+                            InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + tBWeek.Text + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
                         }
                     }
                 }
-              
-                for (int i = 0; i < InsertArray.Count; i++)
-                {
-                    try
-                    {
-
-                        help.Oledbcommand(InsertArray[i].ToString());
-                    }
-                    catch { }
-                }
-                InsertArray.Clear();
+                Insert();
                 iyanzheng = 1;
                 MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                //progressBar1.Value = 0;
+                //new frmSpareTime().Show();
             }
             else
             {
@@ -225,6 +234,7 @@ namespace SAS.Forms
                     tBEnd.Select();
                     return;
                 }
+                System.Diagnostics.Debug.WriteLine(DateTime.Now);
                 for (int i1 = int.Parse(tBStart.Text); i1 <= int.Parse(tBEnd.Text); i1++)
                 {
                     for (int i = 0; i < 7; i++)
@@ -233,68 +243,34 @@ namespace SAS.Forms
                         {
                             for (int j = 0; j < ALWeek[i].Count; j++)
                             {
-                                try
-                                {
-                                    if (i1.ToString().Count() == 1)
-                                    { strID = DDID + "0" + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
-                                    else
-                                    { strID = DDID + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
 
-                                    InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + i1.ToString() + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
-                                }
-                                catch
-                                {
-                                    
-                                }
+                                if (i1.ToString().Count() == 1)
+                                { strID = DDID + "0" + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
+                                else
+                                { strID = DDID + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
+
+                                InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + i1.ToString() + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
+
                             }
+
                         }
                     }
-
                 }
-                for (int i = 0; i < InsertArray.Count; i++)
-                {
-                    try
-                    {
-
-                        help.Oledbcommand(InsertArray[i].ToString());
-                    }
-                    catch { }
-                }
-                InsertArray.Clear();
+                Insert();
                 iyanzheng = 1;
                 MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //progressBar1.Value = 0;
+                //new frmSpareTime().Show();
             }
         }
         private void frmSupervisor_Load(object sender, EventArgs e)
         {
-            sAWeek = select(DDName, tBWeek.Text);
-            for (int i = 0; i < 7; i++)
-            {
-                aAWeek[i] = new ArrayList();
-                if (sAWeek[i] != null) aAWeek[i] = Ctoclass(sAWeek[i]);
-            }
-            foreach (Control Cl in panelFree.Controls)
-            {
-                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
-                {
-                    CheckBox CB = (CheckBox)Cl;
-                    if (CB.ThreeState == false)
-                    {
-                        int iday = int.Parse(Cl.Name.Substring(8, 1));
-                        int inum = int.Parse(Cl.Name.Substring(10));
-                        if (aAWeek[iday - 1].Contains(inum.ToString()))
-                        {
-
-                            CB.Checked = true;
-
-                        }
-                    }
-                }
-            }
+            tBWeek.Text = startweek;
+            RefreshThisWeek(tBWeek.Text);
         }
         private void checkBox1_1_CheckedChanged(object sender, EventArgs e)
         {
-            for (int j1 = 0; j1 < 7;j1++ )
+            for (int j1 = 0; j1 < 7; j1++)
             {
                 intcheck[j1] = 0;
             }
@@ -314,21 +290,21 @@ namespace SAS.Forms
             int intck = 0;
             for (int j1 = 0; j1 < 7; j1++)
             {
-                if(intcheck[j1]<1)
+                if (intcheck[j1] < 1)
                 {
                     foreach (Control Cl in panelFree.Controls)
                     {
                         if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
                         {
                             CheckBox CB1 = (CheckBox)Cl;
-                            if (CB1.ThreeState == true && CB1.Name == "checkBox"+(j1+1).ToString())
+                            if (CB1.ThreeState == true && CB1.Name == "checkBox" + (j1 + 1).ToString())
                             {
                                 CB1.CheckState = CheckState.Unchecked;
                             }
                         }
                     }
                 }
-                else if(intcheck[j1]<12)
+                else if (intcheck[j1] < 12)
                 {
                     foreach (Control Cl in panelFree.Controls)
                     {
@@ -358,11 +334,11 @@ namespace SAS.Forms
                 }
                 intck += intcheck[j1];
             }
-            if(intck<1)
+            if (intck < 1)
             {
                 checkBox0.CheckState = CheckState.Unchecked;
             }
-            else if(intck<84)
+            else if (intck < 84)
             {
                 checkBox0.CheckState = CheckState.Indeterminate;
             }
@@ -446,7 +422,7 @@ namespace SAS.Forms
                         }
                     }
                 }
-           
+
 
             }
             else if (A1.Count < 1)
@@ -458,8 +434,8 @@ namespace SAS.Forms
                 A1.Remove(A1[i2]);
                 listView3.Items[i2].Remove();
             }
+            //RefreshaInts();
         }
-
         private void listView3_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             foreach (ListViewItem s in listView3.Items)
@@ -475,7 +451,6 @@ namespace SAS.Forms
 
             }
         }
-
         private void listView3_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (ListViewItem s in listView3.Items)
@@ -491,7 +466,6 @@ namespace SAS.Forms
 
             }
         }
-
         private void chkBatchAdd_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBatchAdd.Checked == true)
@@ -523,8 +497,6 @@ namespace SAS.Forms
                 }
             }
         }
-
-
         private void btnDeleteAll_Click(object sender, EventArgs e)
         {
             listView3.Items.Clear();
@@ -539,7 +511,6 @@ namespace SAS.Forms
                 }
             }
         }
-
         private void btnDeleteSelect_Click(object sender, EventArgs e)
         {
             while (listView3.CheckedIndices.Count > 0)
@@ -557,7 +528,6 @@ namespace SAS.Forms
                 }
             }
         }
-
         private void tBWeek_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar < 48 || e.KeyChar > 57)
@@ -577,7 +547,6 @@ namespace SAS.Forms
                 e.Handled = false;
             }
         }
-
         private void tBWeek_KeyUp(object sender, KeyEventArgs e)
         {
             TextBox TB = sender as TextBox;
@@ -599,32 +568,10 @@ namespace SAS.Forms
 
             }
         }
-
         private void tBWeek_TextChanged(object sender, EventArgs e)
         {
-            if (tBWeek.Text == "1")
-            {
-                btnLastWeek.Enabled = false;
-                btnNextWeek.Enabled = true;
-            }
-            else if (tBWeek.Text == "20")
-            {
-                btnLastWeek.Enabled = false;
-                btnNextWeek.Enabled = true;
-            }
-            else
-            {
-                btnLastWeek.Enabled = true;
-                btnNextWeek.Enabled = true;
-            }
-            listView3.Items.Clear();
-            for (int i = 0; i < A1.Count; i++)
-            {
-                ListViewItem LVI = listView3.Items.Add(DDName);
-                LVI.SubItems.Add("第" + tBWeek.Text + "周" + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(" ") + 1, A1[i].ToString().IndexOf((',')) - A1[i].ToString().IndexOf(" ") - 1) + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(',') + 1));
-            }
-        }
 
+        }
         private void tBEnd_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox TB = sender as TextBox;
@@ -642,7 +589,6 @@ namespace SAS.Forms
                 e.Handled = false;
             }
         }
-
         private void tBEnd_KeyUp(object sender, KeyEventArgs e)
         {
             TextBox TB = sender as TextBox;
@@ -664,7 +610,6 @@ namespace SAS.Forms
 
             }
         }
-
         private void tBEnd_TextChanged(object sender, EventArgs e)
         {
             listView3.Items.Clear();
@@ -674,7 +619,6 @@ namespace SAS.Forms
                 LVI.SubItems.Add("第" + tBStart.Text + "周-" + "第" + tBEnd.Text + "周" + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(" ") + 1, A1[i].ToString().IndexOf((',')) - A1[i].ToString().IndexOf(" ") - 1) + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(',') + 1));
             }
         }
-
         private void btnLastWeek_Click(object sender, EventArgs e)
         {
             if (iyanzheng == 0)
@@ -692,48 +636,10 @@ namespace SAS.Forms
                 return;
             }
             tBWeek.Text = (int.Parse(tBWeek.Text) - 1).ToString();
-            sAWeek = select(DDName, tBWeek.Text);
-            for (int i = 0; i < 7; i++)
-            {
-                aAWeek[i] = new ArrayList();
-                if (sAWeek[i] != null) aAWeek[i] = Ctoclass(sAWeek[i]);
-            }
-            foreach (Control Cl in panelFree.Controls)
-            {
-                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
-                {
-                    CheckBox CB = (CheckBox)Cl;
-                    if (CB.ThreeState == false)
-                    {
-                        int iday = int.Parse(Cl.Name.Substring(8, 1));
-                        int inum = int.Parse(Cl.Name.Substring(10));
-                        if (aAWeek[iday - 1].Contains(inum.ToString()))
-                        {
+            RefreshThisWeek(tBWeek.Text);
 
-                            CB.Checked = true;
-
-                        }
-                    }
-                }
-            }
         }
-        private string[] select(string Name,string Week)
-        {
-            string[] sArrayWeek = new string[7];
 
-            DataTable dt = help.getDs("select * from " + "SpareTime_Data" + " where " + "Supervisor='" + Name + "'and Spare_Week=" + Week,"SpareTime_Data").Tables[0];
-            if (dt.Rows.Count > 0)
-            {
-                int idtcount = dt.Rows.Count;
-                for (int i = 0; i < idtcount; i++)
-                {
-                    int iweekday = int.Parse(dt.Rows[i]["Spare_Day"].ToString());
-                    sArrayWeek[iweekday - 1] += dt.Rows[i]["Spare_Number"].ToString();
-                }
-            }
-           
-            return sArrayWeek;
-        }
         private void btnNextWeek_Click(object sender, EventArgs e)
         {
             if (iyanzheng == 0)
@@ -751,37 +657,14 @@ namespace SAS.Forms
                 return;
             }
             tBWeek.Text = (int.Parse(tBWeek.Text) + 1).ToString();
-            sAWeek = select(DDName, tBWeek.Text);
-            for (int i = 0; i < 7; i++)
-            {
-                aAWeek[i] = new ArrayList();
-                if (sAWeek[i] != null) aAWeek[i] = Ctoclass(sAWeek[i]);
-            }
-            foreach (Control Cl in panelFree.Controls)
-            {
-                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
-                {
-                    CheckBox CB = (CheckBox)Cl;
-                    if (CB.ThreeState == false)
-                    {
-                        int iday = int.Parse(Cl.Name.Substring(8, 1));
-                        int inum = int.Parse(Cl.Name.Substring(10));
-                        if (aAWeek[iday - 1].Contains(inum.ToString()))
-                        {
+            RefreshThisWeek(tBWeek.Text);
 
-                            CB.Checked = true;
-
-                        }
-                    }
-                }
-            }
         }
-
         private void checkBox0_Click(object sender, EventArgs e)
         {
             CheckBox CB = sender as CheckBox;
             int iday0 = int.Parse(CB.Name.Substring(8, 1));
-            if(CB.CheckState== CheckState.Checked)
+            if (CB.CheckState == CheckState.Checked)
             {
                 CB.Checked = false;
                 foreach (Control Cl in panelFree.Controls)
@@ -816,10 +699,9 @@ namespace SAS.Forms
                 }
             }
         }
-
         private void checkBox0_Click_1(object sender, EventArgs e)
         {
-            if(checkBox0.CheckState== CheckState.Checked)
+            if (checkBox0.CheckState == CheckState.Checked)
             {
                 checkBox0.CheckState = CheckState.Unchecked;
                 foreach (Control Cl in panelFree.Controls)
@@ -855,5 +737,104 @@ namespace SAS.Forms
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (tBWeek.Text == "1")
+            {
+                btnLastWeek.Enabled = false;
+                btnNextWeek.Enabled = true;
+            }
+            else if (tBWeek.Text == "20")
+            {
+                btnLastWeek.Enabled = false;
+                btnNextWeek.Enabled = true;
+            }
+            else
+            {
+                btnLastWeek.Enabled = true;
+                btnNextWeek.Enabled = true;
+            }
+            listView3.Items.Clear();
+
+
+            tBWeek.Text = (int.Parse(tBWeek.Text)).ToString();
+            RefreshThisWeek(tBWeek.Text);
+            for (int i = 0; i < A1.Count; i++)
+            {
+                ListViewItem LVI = listView3.Items.Add(DDName);
+                LVI.SubItems.Add("第" + tBWeek.Text + "周" + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(" ") + 1, A1[i].ToString().IndexOf((',')) - A1[i].ToString().IndexOf(" ") - 1) + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(',') + 1));
+            }
+
+        }
+        private void RefreshThisWeek(string weekStr)
+        {
+            int week = Convert.ToInt32(weekStr);
+            ClearaInts();
+            for (int i = 0; i < 7; i++)
+            {
+                DataTable nw = SqlHelper.ExecuteDataTable("Select * from SpareTime_Data where Spare_Week = @week and Supervisor = @name and Spare_Day= @day",
+                new OleDbParameter("@week", week), new OleDbParameter("@name", DDName), new OleDbParameter("@day", i + 1));
+                foreach (DataRow value in nw.Rows)
+                {
+                    int num = Convert.ToInt32(value["Spare_Number"]);
+                    int c1 = Convert.ToInt32(num.ToString().Substring(0, num.ToString().Length / 2));
+                    int c2 = Convert.ToInt32(num.ToString().Substring(num.ToString().Length / 2, num.ToString().Length / 2));
+                    aInts[i, c1 - 1] = 1;
+                    aInts[i, c2 - 1] = 1;
+                }
+            }
+            foreach (Control Cl in panelFree.Controls)
+            {
+                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
+                {
+                    CheckBox CB = (CheckBox)Cl;
+                    if (CB.ThreeState == false)
+                    {
+                        int iday = int.Parse(Cl.Name.Substring(8, 1));
+                        int inum = int.Parse(Cl.Name.Substring(10));
+                        if (aInts[iday - 1, inum - 1] == 1)
+                        {
+                            CB.Checked = true;
+                        }
+                        else
+                        {
+                            CB.Checked = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ClearaInts()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    aInts[i, j] = 0;
+                }
+            }
+        }
+
+        private void Insert()
+        {
+            progressBar1.Maximum = InsertArray.Count;
+            for(int i=0;i<InsertArray.Count;i++)
+            {
+                //try
+                //{
+                    SqlHelper.ExcuteScalar(InsertArray[i]);
+                //}
+                //catch
+                //{
+                //}
+                //finally
+                //{
+                    progressBar1.Value = i+1;
+                    Application.DoEvents();
+                //}
+            }
+            InsertArray.Clear();
+        }
     }
 }

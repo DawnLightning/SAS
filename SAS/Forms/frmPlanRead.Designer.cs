@@ -124,6 +124,7 @@
             // 
             // ofdAdd
             // 
+            this.ofdAdd.Filter = "excel file|*.xls||*.xlsx";
             this.ofdAdd.Multiselect = true;
             this.ofdAdd.FileOk += new System.ComponentModel.CancelEventHandler(this.ofdAdd_FileOk);
             // 

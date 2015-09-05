@@ -38,91 +38,106 @@ namespace SAS.ClassSet.FunctionTools
         }
          #endregion
          #region 导入Excel
-         public void ReadExcel(string ExcelPath)
-        {
-            int[] name = new int[7];//确定Excel的所需字段值所在的列---
-           daClass= helper.adapter(strSelect_Class_Data);
-           dtClass = new System.Data.DataTable();
-           daClass.Fill(dtClass);
-           daClass.FillSchema(dtClass, SchemaType.Source);
-            ExcelConnection(ExcelPath);
-            //MessageBox.Show(Excel_dt.Columns[0].ToString());
-            string classname = Excel_dt.Rows[1][0].ToString();//课程名称
-            string spcialty = Excel_dt.Rows[1][4].ToString().Substring(3);//专业
-            string banji = Excel_dt.Rows[2][4].ToString();
-            for (int q = 0; q < Excel_dt.Columns.Count; q++)
-            {
-                switch (Excel_dt.Rows[4][q].ToString())
-                {
-                    case "周次": name[0] = q; break;
-                    case "星期": name[1] = q; break;
-                    case "节次": name[2] = q; break;
-                    case "上课地点": name[3] = q; break;
-                    case "授课教师": name[4] = q; break;
-                    case "授课内容": name[5] = q; break;
-                    case "授课方式": name[6] = q; break;
-                }
-            }
-
-            dt = dtClass.Copy();   //  获取Class_Data的架构
-            dt.Clear();
-            for (int i = 5; i < Excel_dt.Rows.Count; i++)
-            {
-                // dr = dt.Rows[i];//获取Excel的当前操作行的数据
-                if (!(Excel_dt.Rows[i][name[0]].ToString() == "周次" || Excel_dt.Rows[i][name[0]].ToString() == ""))
-                {
-                    string teachername = Excel_dt.Rows[i][name[4]].ToString();//获取授课老师列的数据
-                    int k = Teacher(teachername) + 1;//判断有多少位老师上同一节课
-                    for (int m = 1; m <= k; m++)//有几位老师，就循环几次
-                    {
-                        string teachernamepick;//定义截取的老师名字
-                        //以逗号为分界点，把多位老师的名字分成各自的名字
-                        if ((k == 1) || (m == k)) teachernamepick = teachername;
-                        else
-                        {
-                            int index2 = teachername.IndexOf(",");
-                            teachernamepick = teachername.Substring(0, index2);
-                            teachername = teachername.Remove(0, index2 + 1);
-                        }
-
-
-                        int j;
-                        //判断星期几，返回对应的数字
-                        switch (Excel_dt.Rows[i][name[1]].ToString().Substring(0, 1))
-                        {
-                            case "一": j = 1; break;
-                            case "二": j = 2; break;
-                            case "三": j = 3; break;
-                            case "四": j = 4; break;
-                            case "五": j = 5; break;
-                            default: j = 0; break;
-                        }
-
-                        DataRow drClass_information = dt.NewRow();
-                        drClass_information["Class_Day"] = j;
-                        //获取节次          
-                        string strclassname = Excel_dt.Rows[i][name[2]].ToString();
-                        int classnumindex = strclassname.IndexOf("-");
-                        drClass_information["Teacher"] = teachernamepick;
-                        drClass_information["Class_ID"] = teachernamepick+Excel_dt.Rows[i][name[0]].ToString() + j.ToString() + strclassname.Substring(0, classnumindex) + strclassname.Substring(classnumindex + 1) + classname.Substring(5) + Excel_dt.Rows[i][name[3]]+banji;
-                        drClass_information["Teacher_ID"] = "0000000000";
-                        drClass_information["Class_Week"] = Excel_dt.Rows[i][name[0]];
-                        drClass_information["Class_Number"] = Convert.ToInt32(strclassname.Substring(0, classnumindex) + strclassname.Substring(classnumindex + 1));
-                        drClass_information["Class_Address"] = Excel_dt.Rows[i][name[3]];
-                        drClass_information["Class_Name"] = classname.Substring(5);
-                        drClass_information["Class_Content"] = Excel_dt.Rows[i][name[5]];
-                        drClass_information["Class_Type"] = Excel_dt.Rows[i][name[6]];
-                        drClass_information["Spcialty"] = spcialty;
-                
-                        dt.Rows.Add(drClass_information);
-                    }
-                }
-
+         public int ReadExcel(string ExcelPath)
+         {
+             try
+             {
+                 int[] name = new int[7];//确定Excel的所需字段值所在的列---
+                 daClass = helper.adapter(strSelect_Class_Data);
+                 dtClass = new System.Data.DataTable();
+                 daClass.Fill(dtClass);
+                 daClass.FillSchema(dtClass, SchemaType.Source);
+                 ExcelConnection(ExcelPath);
+                 //MessageBox.Show(Excel_dt.Columns[0].ToString());
               
-            }
-            dtClass.Merge(dt,true);
+                 string classname = Excel_dt.Rows[1][0].ToString();//课程名称
+                 string spcialty = Excel_dt.Rows[1][4].ToString().Substring(3);//专业
+                 string banji = Excel_dt.Rows[2][4].ToString();
+                 for (int q = 0; q < Excel_dt.Columns.Count; q++)
+                 {
+                     switch (Excel_dt.Rows[4][q].ToString())
+                     {
+                         case "周次": name[0] = q; break;
+                         case "星期": name[1] = q; break;
+                         case "节次": name[2] = q; break;
+                         case "上课地点": name[3] = q; break;
+                         case "授课教师": name[4] = q; break;
+                         case "授课内容": name[5] = q; break;
+                         case "授课方式": name[6] = q; break;
+                     }
+                 }
 
-            daClass.Update(dtClass);
+                 dt = dtClass.Copy();   //  获取Class_Data的架构
+                 dt.Clear();
+                 for (int i = 5; i < Excel_dt.Rows.Count; i++)
+                 {
+                     // dr = dt.Rows[i];//获取Excel的当前操作行的数据
+                     if (!(Excel_dt.Rows[i][name[0]].ToString() == "周次" || Excel_dt.Rows[i][name[0]].ToString() == ""))
+                     {
+                         string teachername = Excel_dt.Rows[i][name[4]].ToString();//获取授课老师列的数据
+                         int k = Teacher(teachername) + 1;//判断有多少位老师上同一节课
+                         for (int m = 1; m <= k; m++)//有几位老师，就循环几次
+                         {
+                             string teachernamepick;//定义截取的老师名字
+                             //以逗号为分界点，把多位老师的名字分成各自的名字
+                             if ((k == 1) || (m == k)) teachernamepick = teachername;
+                             else
+                             {
+                                 int index2 = teachername.IndexOf(",");
+                                 teachernamepick = teachername.Substring(0, index2);
+                                 teachername = teachername.Remove(0, index2 + 1);
+                             }
+
+
+                             int j;
+                             //判断星期几，返回对应的数字
+                             switch (Excel_dt.Rows[i][name[1]].ToString().Substring(0, 1))
+                             {
+                                 case "一": j = 1; break;
+                                 case "二": j = 2; break;
+                                 case "三": j = 3; break;
+                                 case "四": j = 4; break;
+                                 case "五": j = 5; break;
+                                 default: j = 0; break;
+                             }
+                             if (teachernamepick != null && teachernamepick != "")
+                             {
+                                 DataRow drClass_information = dt.NewRow();
+                                 drClass_information["Class_Day"] = j;
+                                 //获取节次          
+                                 string strclassname = Excel_dt.Rows[i][name[2]].ToString();
+                                 int classnumindex = strclassname.IndexOf("-");
+                                 drClass_information["Teacher"] = teachernamepick;
+                                 drClass_information["Class_ID"] = teachernamepick + Excel_dt.Rows[i][name[0]].ToString() + j.ToString() + strclassname.Substring(0, classnumindex) + strclassname.Substring(classnumindex + 1) + classname.Substring(5) + Excel_dt.Rows[i][name[3]] + banji;
+                                 drClass_information["Teacher_ID"] = "0000000000";
+                                 drClass_information["Class_Week"] = Excel_dt.Rows[i][name[0]];
+                                 drClass_information["Class_Number"] = Convert.ToInt32(strclassname.Substring(0, classnumindex) + strclassname.Substring(classnumindex + 1));
+                                 drClass_information["Class_Address"] = Excel_dt.Rows[i][name[3]];
+                                 drClass_information["Class_Name"] = classname.Substring(5);
+                                 drClass_information["Class_Content"] = Excel_dt.Rows[i][name[5]];
+                                 drClass_information["Class_Type"] = Excel_dt.Rows[i][name[6]];
+                                 drClass_information["Spcialty"] = spcialty;
+
+                                 dt.Rows.Add(drClass_information);
+                             }
+                             else
+                             {
+                                 return 0;
+                             }
+                           
+                         }
+                     }
+                   
+
+
+                 }
+                 dtClass.Merge(dt, true);
+
+                 daClass.Update(dtClass);
+                 return 1;
+             }catch(Exception){
+                 return 0;
+             }
         }
          
          private string classnumber(string teachername)

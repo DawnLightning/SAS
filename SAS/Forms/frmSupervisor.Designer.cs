@@ -28,20 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("上午", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("下午", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("晚上", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("    ");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("     ");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("     ");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("上午", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("下午", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("晚上", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("    ");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("     ");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("     ");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("");
             this.panelFree = new System.Windows.Forms.Panel();
+            this.btnJump = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
@@ -167,6 +169,8 @@
             // 
             // panelFree
             // 
+            this.panelFree.Controls.Add(this.btnJump);
+            this.panelFree.Controls.Add(this.progressBar1);
             this.panelFree.Controls.Add(this.checkBox7);
             this.panelFree.Controls.Add(this.checkBox6);
             this.panelFree.Controls.Add(this.checkBox5);
@@ -274,6 +278,23 @@
             this.panelFree.Name = "panelFree";
             this.panelFree.Size = new System.Drawing.Size(732, 398);
             this.panelFree.TabIndex = 175;
+            // 
+            // btnJump
+            // 
+            this.btnJump.Location = new System.Drawing.Point(436, 335);
+            this.btnJump.Name = "btnJump";
+            this.btnJump.Size = new System.Drawing.Size(49, 23);
+            this.btnJump.TabIndex = 199;
+            this.btnJump.Text = "转到";
+            this.btnJump.UseVisualStyleBackColor = true;
+            this.btnJump.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(202, 366);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(438, 23);
+            this.progressBar1.TabIndex = 198;
             // 
             // checkBox7
             // 
@@ -1497,39 +1518,39 @@
             this.columnHeader9});
             this.listView2.Font = new System.Drawing.Font("宋体", 9F);
             this.listView2.GridLines = true;
-            listViewGroup1.Header = "上午";
-            listViewGroup1.Name = "listViewGroup1";
-            listViewGroup2.Header = "下午";
-            listViewGroup2.Name = "listViewGroup2";
-            listViewGroup3.Header = "晚上";
-            listViewGroup3.Name = "listViewGroup3";
+            listViewGroup4.Header = "上午";
+            listViewGroup4.Name = "listViewGroup1";
+            listViewGroup5.Header = "下午";
+            listViewGroup5.Name = "listViewGroup2";
+            listViewGroup6.Header = "晚上";
+            listViewGroup6.Name = "listViewGroup3";
             this.listView2.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6});
             this.listView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            listViewItem1.Group = listViewGroup1;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.Group = listViewGroup3;
-            listViewItem3.Group = listViewGroup2;
-            listViewItem4.Group = listViewGroup1;
-            listViewItem5.Group = listViewGroup1;
-            listViewItem6.Group = listViewGroup1;
-            listViewItem7.Group = listViewGroup2;
-            listViewItem8.Group = listViewGroup2;
-            listViewItem9.Group = listViewGroup1;
-            listViewItem10.Group = listViewGroup2;
+            listViewItem11.Group = listViewGroup4;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.Group = listViewGroup6;
+            listViewItem13.Group = listViewGroup5;
+            listViewItem14.Group = listViewGroup4;
+            listViewItem15.Group = listViewGroup4;
+            listViewItem16.Group = listViewGroup4;
+            listViewItem17.Group = listViewGroup5;
+            listViewItem18.Group = listViewGroup5;
+            listViewItem19.Group = listViewGroup4;
+            listViewItem20.Group = listViewGroup5;
             this.listView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20});
             this.listView2.Location = new System.Drawing.Point(3, 1);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(493, 316);
@@ -1713,5 +1734,7 @@
         private System.Windows.Forms.CheckBox checkBox0;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button btnJump;
     }
 }

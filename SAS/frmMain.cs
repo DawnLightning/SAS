@@ -56,7 +56,7 @@ namespace SAS
             totalpage = pageshow.totalpage("select * from Placement_Data", pagesize, "Placement_Data");
             labPageAll.Text = totalpage + "";
             textBoxNow.Text = currentpage.ToString();
-            DataTable dt = pageshow.ListviewShow("select * from Placement_Data", currentpage, pagesize, "Placement_Data");
+            DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
             UIShow show = new UIShow();
             show.placement_listview_write(dt, listView1, currentpage, pagesize);
            
@@ -283,7 +283,7 @@ namespace SAS
 
             }
            textBoxNow.Text = currentpage.ToString();
-           DataTable dt = pageshow.ListviewShow("select * from Placement_Data", currentpage, pagesize, "Placement_Data");
+           DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
            UIShow show = new UIShow();
            show.placement_listview_write(dt,listView1,currentpage,pagesize);
         }
@@ -300,7 +300,7 @@ namespace SAS
                 currentpage = totalpage;
             }
             textBoxNow.Text = currentpage.ToString();
-            DataTable dt = pageshow.ListviewShow("select * from Placement_Data", currentpage, pagesize, "Placement_Data");
+            DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
             UIShow show = new UIShow();
             show.placement_listview_write(dt, listView1, currentpage, pagesize);
         }
@@ -367,9 +367,12 @@ namespace SAS
         }
 
         private void ExcelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {   if(listView1.Items.Count>0){
             ExcelTools output = new ExcelTools();
             output.ExportToExecl("select * from Placement_Data","Placement_Data",listView1);
+            }else{
+                MessageBox.Show("当前没有数据");
+            }
            
         }
 

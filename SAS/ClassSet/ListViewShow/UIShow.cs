@@ -9,6 +9,7 @@ namespace SAS.ClassSet.ListViewShow
 {
     class UIShow
     {
+        private List<string> ListSupervisor=new List<string>();
         public void logs_listview_write(DataTable dtLogs, ListView listview, int currpage, int pagesize)
         {
 
@@ -79,6 +80,7 @@ namespace SAS.ClassSet.ListViewShow
             {
                 int nowday = Convert.ToInt32(dtPlacement.Rows[i][4]);
                 int nowWeeks = Convert.ToInt32(dtPlacement.Rows[i][3]);
+                DistinctSupervisor(dtPlacement.Rows[i][6].ToString(), ListSupervisor);
                 string time = CalendarTools.getdata(Common.Common.Year, nowWeeks, nowday-CalendarTools.weekdays(CalendarTools.CaculateWeekDay(Common.Common.Year,Common.Common.Month,Common.Common.Day)), Common.Common.Month, Common.Common.Day).ToLongDateString();
                 string[] placement_arrages = new string[]
                 {
@@ -88,10 +90,10 @@ namespace SAS.ClassSet.ListViewShow
                     dtPlacement.Rows[i][10].ToString(),
                     dtPlacement.Rows[i][11].ToString(),
                     dtPlacement.Rows[i][7].ToString(),
-                    dtPlacement.Rows[i][2].ToString(),
+                     FormatTeacher( dtPlacement.Rows[i][2].ToString()),
                     dtPlacement.Rows[i][3].ToString(),//周次
                     time + " "+addseparator(Convert.ToInt32(dtPlacement.Rows[i][5])) + "节",//得知具体日期
-                    dtPlacement.Rows[i][6].ToString(),
+                  FormatSupervisor(ListSupervisor),
                     dtPlacement.Rows[i][12].ToString()
                 };
                 ListViewItem lvi = new ListViewItem(placement_arrages);
@@ -159,5 +161,56 @@ namespace SAS.ClassSet.ListViewShow
             }
 
         }
+        //去掉职称
+        private string DistinctSupervisor(string supervisor, List<string> ListSupervisor)
+        {
+            if (supervisor.IndexOf(",") != -1)
+            {
+                ListSupervisor.Add(supervisor.Substring(0, supervisor.IndexOf(",")));
+                return DistinctSupervisor(supervisor.Substring(supervisor.IndexOf(",") + 1), ListSupervisor);
+            }
+            else
+            {
+                ListSupervisor.Add(supervisor);
+                return supervisor;
+            }
+            
+        }
+        private string FormatSupervisor( List<string> List)
+        {
+            string supervisor = "";
+          
+            foreach(string s in List){
+                if (s.IndexOf("(") != -1)
+                {
+                    supervisor = supervisor +","+ s.Substring(0, s.IndexOf("("));
+                }
+                else
+                {
+                    supervisor = supervisor+"," + s;
+                }
+            }
+            List.Clear();
+            return supervisor.Substring(1);
+
+        }
+        private string FormatTeacher(string s)
+        {
+            string supervisor = "";
+
+            
+                if (s.IndexOf("(") != -1)
+                {
+                    supervisor = supervisor + "," + s.Substring(0, s.IndexOf("("));
+                }
+                else
+                {
+                    supervisor = supervisor + "," + s;
+                }
+           
+            return supervisor.Substring(1);
+
+        }
+
     }
 }

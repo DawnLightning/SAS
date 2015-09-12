@@ -20,18 +20,18 @@ namespace SAS.ClassSet.FunctionTools
         private int Week;//周数
         private int Day;//上课天
         private int Index = 0;//数组spareclass的索引
-        DataTable dtSpareTime;
-        DataTable dtSpareTimeWeek;
-        DataTable dtSpareTimeDay;
-        DataTable dtPlacement;
-        DataTable dtTeachers;
-        DataTable dtSupervisor;
-        DataTable dtClasses;
-        DataRow[] drSpareTimeClass;
-        DataRow[] drSupervisor;
-        DataRow[] drTeacher;
-        DataRow[] drClasses;
-        List<string> supervisor=new List<string>();
+        DataTable dtSpareTime;//空闲时间表
+        DataTable dtSpareTimeWeek;//周空闲时间表
+        DataTable dtSpareTimeDay;//天空闲时间表
+        DataTable dtPlacement;//听课安排表
+        DataTable dtTeachers;//教师表
+        DataTable dtSupervisor;//督导表
+        DataTable dtClasses;//课程表
+        DataRow[] drSpareTimeClass;//督导能听的课
+        DataRow[] drSupervisor;//督导小组
+        DataRow[] drTeacher;//能听的课的老师
+        DataRow[] drClasses;//总的课
+        List<string> supervisor=new List<string>();//最终确定的督导
         SqlHelper helper=new SqlHelper();
         
         OleDbDataAdapter daSpareTime;
@@ -106,6 +106,29 @@ namespace SAS.ClassSet.FunctionTools
                 }
             }
         }
+        private DataRow[] ContorlProportion(int Proportion)//控制理论课和实验课的比例
+        {
+            DataRow[] dr = null; 
+                if((dtPlacement.Select("Class_Type='理论'").Length==0)){
+                      dr= dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number="+spareclass[Index]+"and Class_Type ='理论' ");
+                      return dr;
+                }else if((dtPlacement.Select("Class_Type='实验'").Length==0)){
+                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
+                    return dr;
+                }
+                else if ((dtPlacement.Select("Class_Type='理论'").Length / dtPlacement.Select("Class_Type='实验'").Length) < Proportion)
+                {
+                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='理论' ");
+                    return dr;
+
+                }
+                else
+                {
+                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
+                    return dr;
+                }
+           
+        }
         private void SelectSameClass(PlacementConfig config)
         {
             for (Index = 0; Index < 15; Index++)
@@ -113,7 +136,8 @@ namespace SAS.ClassSet.FunctionTools
                 supervisor.Clear();
                 Supervisors = "";
                  drSpareTimeClass = dtSpareTimeDay.Select("Spare_Number= '" + spareclass[Index] + "'");
-                 drClasses = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number="+spareclass[Index]+"and Class_Type ='理论' ");
+                 DataTable dt = drSpareTimeClass.CopyToDataTable();
+                 drClasses = ContorlProportion(config.Proportion);
                  drSupervisor = dtSupervisor.Select("Class_WeekNumber<2 and Class_DayNumber = 0", "Class_Totality asc");
                  drTeacher = dtTeachers.Select("Accept_ClassNumber=0");
                 int count = Supervisor(drSpareTimeClass,drSupervisor).Count;
@@ -129,13 +153,17 @@ namespace SAS.ClassSet.FunctionTools
                     }
                      WritePlacement(Supervisors,Teacher(drClasses,drTeacher));
                 }
+                else if (count > config.Cnumpeo_max)
+                {
+                    for (int i = 0; i < config.Cnumpeo_max; i++)
+                    {
+                        Supervisors = Supervisors + "," + supervisor[i];
+                    }
+                    WritePlacement(Supervisors, Teacher(drClasses, drTeacher));
+                }
                 else
                 {
-                    for (int i = 0; i < config.Cnumpeo_max;i++ )
-                    {
-                        Supervisors = Supervisors +","+supervisor[i];
-                    }
-                     WritePlacement(Supervisors,Teacher(drClasses,drTeacher));
+                    break;
                 }
 
             }
@@ -177,9 +205,9 @@ namespace SAS.ClassSet.FunctionTools
                     
                     dtPlacement.Rows.Add(dr);
 
-         
-            UpdataSupervisor(supervisor);
-            UpdataTeacher(teacher);
+
+                    UpdataSupervisor(supervisors.Substring(1));
+                    UpdataTeacher(teacher);
                     }
         }
         private void UpdataWeek(DataTable dt){
@@ -204,15 +232,32 @@ namespace SAS.ClassSet.FunctionTools
             frmMain.fm.flashListview();
 
         }
-        private void UpdataSupervisor(List<string> LastSupervisor){
-            for (int i = 0; i < LastSupervisor.Count;i++ )
+        private string DistinctSupervisor(string supervisor, List<string> ListSupervisor)
+        {
+            if (supervisor.IndexOf(",") != -1)
             {
-                DataRow[] dr = dtSupervisor.Select("Teacher='"+LastSupervisor[i].ToString()+"'");
+                ListSupervisor.Add(supervisor.Substring(0, supervisor.IndexOf(",")));
+                return DistinctSupervisor(supervisor.Substring(supervisor.IndexOf(",") + 1), ListSupervisor);
+            }
+            else
+            {
+                ListSupervisor.Add(supervisor);
+                return supervisor;
+            }
+
+        }
+        private void UpdataSupervisor(string s){
+            List<string> lastsupervisor = new List<string>();
+            DistinctSupervisor(s,lastsupervisor);
+            for (int i = 0; i < lastsupervisor.Count; i++)
+            {
+                DataRow[] dr = dtSupervisor.Select("Teacher='" + lastsupervisor[i].ToString() + "'");
                 dr[0]["Class_Totality"] = Convert.ToInt32(dr[0]["Class_Totality"]) + 1;
                 dr[0]["Class_WeekNumber"] = Convert.ToInt32(dr[0]["Class_WeekNumber"]) + 1;
                 dr[0]["Class_DayNumber"] = Convert.ToInt32(dr[0]["Class_DayNumber"]) + 1;
-                drSpareTimeClass.CopyToDataTable().Select("Supervisor='" + LastSupervisor[i].ToString()+"'")[0]["IsAssigned"] = true;
 
+                dtSpareTime.Select("Supervisor='" + lastsupervisor[i].ToString() + "'" + "and Spare_Number= '" + spareclass[Index] + "'" + "and Spare_Day=" + Day + "" + "and Spare_Week=" + Week + "")[0]["IsAssigned"] = true;
+                System.Diagnostics.Debug.WriteLine(drSpareTimeClass.Length);
             }
            
         }
@@ -260,9 +305,20 @@ namespace SAS.ClassSet.FunctionTools
                 dtTeachers.Rows[i][10] = 0;
                 
             }
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString());
+            dtSpareTime = helper.getDs(strSelect_SpareTime_Data, "SpareTime").Tables[0];
+            DataRow[] DrIsAssigned = dtSpareTime.Select("IsAssigned='"+"true"+"'");
+            for (int i = 0; i < DrIsAssigned.Length; i++)
+            {
+                DrIsAssigned[i]["IsAssigned"] = false;
+            }
+            daSpareTime = helper.adapter(strSelect_SpareTime_Data);
+            daSpareTime.Update(dtSpareTime);
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString());
             daTeacher = helper.adapter(strSelect_Teachers_Data);
             daTeacher.Update(dtTeachers);
             MakePlacement(config);
+          
         }
         #endregion
     }

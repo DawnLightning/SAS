@@ -10,13 +10,14 @@ namespace SAS.ClassSet.FunctionTools
         public PlacementConfig()
         {
         }
-        public PlacementConfig(int week,int day,int classweek,int max,int min)
+        public PlacementConfig(int week, int day, int classweek, int max, int min, int proportion)
         {
             this.cbegin_week = week;
             this.cbegin_day = day;
             this.cnumclass_week = classweek;
             this.cnumpeo_max = max;
             this.cnumpeo_min = min;
+            this.Proportion = proportion;
         }
         private int cbegin_week;//开始周   
 
@@ -52,6 +53,12 @@ namespace SAS.ClassSet.FunctionTools
         {
             get { return cnumpeo_min; }
             set { cnumpeo_min = value; }
+        }
+        private int proportion;//课程比例
+        public int Proportion
+        {
+            get { return proportion; }
+            set { proportion = value; }
         }
     }
 }

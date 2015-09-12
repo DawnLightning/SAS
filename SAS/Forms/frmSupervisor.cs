@@ -15,13 +15,14 @@ namespace SAS.Forms
     public partial class frmSupervisor : Form
     {
         public frmSupervisor(string name, string id, string startweek)
-        {
+        {   
             this.DDName = name;
             this.DDID = id;
             this.startweek = startweek;
             InitializeComponent();
+           
         }
-
+        private Form form;
         string startweek;
         SqlHelper help = new SqlHelper();
         private ArrayList A1 = new ArrayList();
@@ -220,10 +221,13 @@ namespace SAS.Forms
                         }
                     }
                 }
-                Insert();
+                help.insertToStockDataByBatch(InsertArray, progressBar1);
+                InsertArray.Clear();
+               // Insert();
                 iyanzheng = 1;
                 MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //progressBar1.Value = 0;
+                
+                progressBar1.Value = 0;
                 //new frmSpareTime().Show();
             }
             else
@@ -256,9 +260,14 @@ namespace SAS.Forms
                         }
                     }
                 }
-                Insert();
+                help.insertToStockDataByBatch(InsertArray, progressBar1);
+                InsertArray.Clear();
+               // Insert();
                 iyanzheng = 1;
                 MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                frmSpareTime frs = new frmSpareTime();
+                frs.Show();
+                form.Close();
                 //progressBar1.Value = 0;
                 //new frmSpareTime().Show();
             }
@@ -267,6 +276,7 @@ namespace SAS.Forms
         {
             tBWeek.Text = startweek;
             RefreshThisWeek(tBWeek.Text);
+            form = this;
         }
         private void checkBox1_1_CheckedChanged(object sender, EventArgs e)
         {

@@ -11,6 +11,7 @@ using SAS.ClassSet.ListViewShow;
 using SAS.ClassSet.FunctionTools;
 using SAS.ClassSet.MemberInfo;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 namespace SAS.Forms
 {
     public partial class frmTeacher : Form
@@ -139,61 +140,74 @@ namespace SAS.Forms
         {
             if (tBID.Text != "" && tBName.Text != "" && tBMail.Text != "" && tBTel.Text != "" && tbTitle.Text != "" && tbBelongs.Text != "")
             {
-                if (status == 1)
-                {
+                
 
-                    TeacherInfo teacher = new TeacherInfo();
-                    teacher.TeacherId = tBID.Text;
-                    teacher.TeacherName = tBName.Text;
-                    teacher.Email = tBMail.Text;
-                    teacher.Phone = tBTel.Text;
-                    teacher.Title = tbTitle.Text;
-                    teacher.IsSupervisor = cbIsDUDao.Checked;
-                    teacher.TeachingSection = tbBelongs.Text;
-
-
-                    SqlHelper help = new SqlHelper();
-                    if (help.update("Teachers_Data", teacher) > 0)
+                    string EmailPattern = @"^([A-Za-z0-9]{1}[A-Za-z0-9_]*)@([A-Za-z0-9_]+)[.]([A-Za-z0-9_]*)$";//E-Mail地址格式的正则表达式
+                    if (Regex.IsMatch(tBMail.Text.Trim(), EmailPattern))
                     {
-                        MessageBox.Show("修改成功");
-                        listView1.Items.Clear();
-                        DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
-                        UIShow show = new UIShow();
-                        show.teachers_listview_write(dt, listView1);
-                    }
+                        if (status == 1)
+                        {
 
-                }
-                if (status == 0)
-                {
+                            TeacherInfo teacher = new TeacherInfo();
+                            teacher.TeacherId = tBID.Text;
+                            teacher.TeacherName = tBName.Text;
+                            teacher.Email = tBMail.Text;
+                            teacher.Phone = tBTel.Text;
+                            teacher.Title = tbTitle.Text;
+                            teacher.IsSupervisor = cbIsDUDao.Checked;
+                            teacher.TeachingSection = tbBelongs.Text;
 
-                    TeacherInfo teacher = new TeacherInfo();
-                    teacher.TeacherId = tBID.Text;
-                    teacher.TeacherName = tBName.Text;
-                    teacher.Email = tBMail.Text;
-                    teacher.Phone = tBTel.Text;
-                    teacher.Title = tbTitle.Text;
-                    teacher.IsSupervisor = cbIsDUDao.Checked;
-                    teacher.TeachingSection = tbBelongs.Text;
-                    SqlHelper help = new SqlHelper();
-                    if (help.Insert(teacher, "Teachers_Data") > 0)
-                    {
-                        MessageBox.Show("添加成功");
+
+                            SqlHelper help = new SqlHelper();
+                            if (help.update("Teachers_Data", teacher) > 0)
+                            {
+                                MessageBox.Show("修改成功");
+                                listView1.Items.Clear();
+                                DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
+                                UIShow show = new UIShow();
+                                show.teachers_listview_write(dt, listView1);
+                            }
+
+                        }
+                        if (status == 0)
+                        {
+
+                            TeacherInfo teacher = new TeacherInfo();
+                            teacher.TeacherId = tBID.Text;
+                            teacher.TeacherName = tBName.Text;
+                            teacher.Email = tBMail.Text;
+                            teacher.Phone = tBTel.Text;
+                            teacher.Title = tbTitle.Text;
+                            teacher.IsSupervisor = cbIsDUDao.Checked;
+                            teacher.TeachingSection = tbBelongs.Text;
+                            SqlHelper help = new SqlHelper();
+                            if (help.Insert(teacher, "Teachers_Data") > 0)
+                            {
+                                MessageBox.Show("添加成功");
+                            }
+                            else
+                            {
+                                MessageBox.Show("操作失败");
+                            }
+                            clear_listview();
+                            totalpage = pageshow.totalpage("select * from Teachers_Data", pagesize, "Teachers_Data");
+                            labPageAll.Text = totalpage + "";
+                            textBoxNow.Text = currentpage.ToString();
+                            DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
+                            UIShow show = new UIShow();
+                            show.teachers_listview_write(dt, listView1);
+                        }
+
+                        this.btnsave.Enabled = false;
                     }
                     else
                     {
-                        MessageBox.Show("操作失败");
+                        MessageBox.Show("请输入正确的邮箱地址");
                     }
-                    clear_listview();
-                    totalpage = pageshow.totalpage("select * from Teachers_Data", pagesize, "Teachers_Data");
-                    labPageAll.Text = totalpage + "";
-                    textBoxNow.Text = currentpage.ToString();
-                    DataTable dt = pageshow.ListviewShow("select * from Teachers_Data", currentpage, pagesize, "Teachers_Data");
-                    UIShow show = new UIShow();
-                    show.teachers_listview_write(dt, listView1);
-                }
-
-                this.btnsave.Enabled = false;
+               
+               
             }
+
             else
             {
                 MessageBox.Show("请确保数据完整");
@@ -379,6 +393,12 @@ namespace SAS.Forms
 
                 groupBox1.SendToBack();
             }
+        }
+
+      
+        private void tBMail_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

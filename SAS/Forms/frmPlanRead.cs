@@ -152,6 +152,7 @@ namespace SAS.Forms
             {
                 frmTeacher frmt = new frmTeacher();
                 frmt.Show();
+                this.Close();
             }
             progressBarRead.Value = 0;
         }

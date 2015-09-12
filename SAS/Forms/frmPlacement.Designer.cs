@@ -43,6 +43,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnPageUp = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -153,11 +155,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.textBox6);
+            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.textBox4);
             this.groupBox2.Location = new System.Drawing.Point(14, 121);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(195, 52);
+            this.groupBox2.Size = new System.Drawing.Size(195, 80);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "听课频率";
@@ -168,7 +172,7 @@
             this.groupBox3.Controls.Add(this.textBox3);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.textBox5);
-            this.groupBox3.Location = new System.Drawing.Point(14, 179);
+            this.groupBox3.Location = new System.Drawing.Point(14, 210);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(162, 80);
             this.groupBox3.TabIndex = 13;
@@ -182,7 +186,7 @@
             this.btnPageUp.Enabled = false;
             this.btnPageUp.FlatAppearance.BorderSize = 0;
             this.btnPageUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageUp.Location = new System.Drawing.Point(218, 222);
+            this.btnPageUp.Location = new System.Drawing.Point(218, 260);
             this.btnPageUp.Name = "btnPageUp";
             this.btnPageUp.Size = new System.Drawing.Size(68, 30);
             this.btnPageUp.TabIndex = 15;
@@ -197,7 +201,7 @@
             this.button3.Enabled = false;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button3.Location = new System.Drawing.Point(302, 222);
+            this.button3.Location = new System.Drawing.Point(302, 260);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(68, 30);
             this.button3.TabIndex = 16;
@@ -205,11 +209,27 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 56);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "理论：实验";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(89, 53);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(100, 21);
+            this.textBox6.TabIndex = 17;
+            // 
             // frmPlacement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 262);
+            this.ClientSize = new System.Drawing.Size(382, 300);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btnPageUp);
             this.Controls.Add(this.groupBox3);
@@ -245,5 +265,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnPageUp;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label6;
     }
 }

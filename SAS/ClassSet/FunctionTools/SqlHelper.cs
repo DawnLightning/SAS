@@ -242,23 +242,29 @@ namespace SAS.ClassSet.FunctionTools
         #region 执行SQL语句返回受影响行数
         public int Oledbcommand(string command)
         {
-            int SuccessFlag;
-            conn = new OleDbConnection(connString); 
-            if (conn.State != ConnectionState.Open)
-            {
-                conn.Open();
-                OleDbCommand cmd = new OleDbCommand(command, conn);
-               SuccessFlag =cmd.ExecuteNonQuery();
-                conn.Dispose();
-                return SuccessFlag;
-            }
-            else
-            {
-                OleDbCommand cmd = new OleDbCommand(command, conn);
-               SuccessFlag =cmd.ExecuteNonQuery();
-                conn.Dispose();
-                return SuccessFlag;
-            }
+            //try
+            //{
+                int SuccessFlag;
+                conn = new OleDbConnection(connString);
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                    OleDbCommand cmd = new OleDbCommand(command, conn);
+                    SuccessFlag = cmd.ExecuteNonQuery();
+                    conn.Dispose();
+                    return SuccessFlag;
+                }
+                else
+                {
+                    OleDbCommand cmd = new OleDbCommand(command, conn);
+                    SuccessFlag = cmd.ExecuteNonQuery();
+                    conn.Dispose();
+                    return SuccessFlag;
+                }
+            //}catch(OleDbException e){
+            //    MessageBox.Show("ID重复输入");
+            //    return 0;
+            //}
         }
         #endregion
         #region 返回dataset
@@ -297,7 +303,7 @@ namespace SAS.ClassSet.FunctionTools
             OleDbCommandBuilder cb = new OleDbCommandBuilder(oledbda);
             return oledbda; 
         }
-        public void insertToStockDataByBatch(ArrayList sqlArray,ProgressBar pb)
+        public void insertToStockDataByBatch(List<string> sqlArray,ProgressBar pb)
         {
             try
             {

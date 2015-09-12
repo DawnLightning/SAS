@@ -42,9 +42,9 @@
             this.columnHeader1,
             this.columnHeader2});
             this.listView1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.listView1.Location = new System.Drawing.Point(12, 4);
+            this.listView1.Location = new System.Drawing.Point(-1, -2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(356, 97);
+            this.listView1.Size = new System.Drawing.Size(450, 242);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -59,11 +59,11 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "已填写的空闲时间";
-            this.columnHeader2.Width = 208;
+            this.columnHeader2.Width = 300;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 138);
+            this.button1.Location = new System.Drawing.Point(12, 261);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -73,7 +73,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(102, 138);
+            this.button2.Location = new System.Drawing.Point(115, 261);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(98, 23);
             this.button2.TabIndex = 2;
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(390, 173);
+            this.ClientSize = new System.Drawing.Size(452, 296);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);

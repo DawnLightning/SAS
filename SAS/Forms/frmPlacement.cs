@@ -23,7 +23,7 @@ namespace SAS.Forms
         int cnumclass_week;
         int cnumpeo_max;
         int cnumpeo_min;
-
+        int proportion;
         private void checkIsNull()
         {
             DataTable dt = new SqlHelper().getDs("select * from Placement_Data", "Placement_Data").Tables[0];
@@ -57,6 +57,7 @@ namespace SAS.Forms
                 cnumclass_week = Convert.ToInt32(textBox4.Text);
                 cnumpeo_max = Convert.ToInt32(textBox2.Text);
                cnumpeo_min= Convert.ToInt32(textBox1.Text);
+               proportion = Convert.ToInt32(textBox6.Text);
                if (cbegin_week > 0 && cbegin_day > 0 && cnumclass_week > 0 && cnumpeo_max > 0 && cnumpeo_min > 0)
                {
                    if (cbegin_day < 6)
@@ -89,13 +90,20 @@ namespace SAS.Forms
         private void btnPageUp_Click(object sender, EventArgs e)
         {
            if(checkType())
-           {    
-               frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
-               //MessageBox.Show("OK");
-              
-               PlacementConfig pc = new PlacementConfig(cbegin_week,cbegin_day,cnumclass_week,cnumpeo_max,cnumpeo_min);
-               Placement doplacement = new Placement();
-               doplacement.MakePlacement(pc);
+           {
+               if (cnumpeo_max > cnumpeo_min)
+               {
+                   frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
+                   //MessageBox.Show("OK");
+
+                   PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min,proportion);
+                   Placement doplacement = new Placement();
+                   doplacement.MakePlacement(pc);
+               }
+               else
+               {
+                   MessageBox.Show("最大人数不能小于最小人数");
+               }
               
                
              
@@ -134,13 +142,19 @@ namespace SAS.Forms
         private void button3_Click(object sender, EventArgs e)
         {   if(checkType())
         {
-            frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
-            //MessageBox.Show("OK");
+            if (cnumpeo_max > cnumpeo_min)
+            {
+                frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
+                //MessageBox.Show("OK");
 
 
-            PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min);
-            Placement doplacement = new Placement();
-            doplacement.RePlacement(pc);
+                PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min,proportion);
+                Placement doplacement = new Placement();
+                doplacement.RePlacement(pc);
+            }
+            else {
+                MessageBox.Show("最大人数不能小于最小人数");
+            }
           
         }
         }

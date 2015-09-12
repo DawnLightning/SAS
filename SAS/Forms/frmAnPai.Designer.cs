@@ -43,7 +43,6 @@
             this.cmbName = new System.Windows.Forms.ComboBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,25 +51,32 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listView3 = new System.Windows.Forms.ListView();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button3 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label17.Location = new System.Drawing.Point(12, 569);
+            this.label17.Location = new System.Drawing.Point(21, 410);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(149, 12);
             this.label17.TabIndex = 76;
             this.label17.Text = "注：默认第一个成员为组长";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // label16
             // 
@@ -163,17 +169,18 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(17, 541);
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(16, 369);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 17);
+            this.label3.Size = new System.Drawing.Size(90, 21);
             this.label3.TabIndex = 59;
             this.label3.Text = "督导成员：";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(459, 560);
+            this.button1.Location = new System.Drawing.Point(768, 360);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(68, 30);
             this.button1.TabIndex = 15;
@@ -196,11 +203,10 @@
             this.listView1.CheckBoxes = true;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader6,
             this.columnHeader7});
-            this.listView1.Location = new System.Drawing.Point(20, 266);
+            this.listView1.Location = new System.Drawing.Point(454, 139);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(425, 121);
+            this.listView1.Size = new System.Drawing.Size(172, 180);
             this.listView1.TabIndex = 78;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -211,14 +217,9 @@
             this.columnHeader1.Text = "首选督导";
             this.columnHeader1.Width = 94;
             // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "总听课数";
-            // 
             // columnHeader7
             // 
             this.columnHeader7.Text = "安排情况";
-            this.columnHeader7.Width = 193;
             // 
             // comboBox7
             // 
@@ -253,6 +254,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 12);
             this.label1.TabIndex = 85;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // listView2
             // 
@@ -264,9 +266,9 @@
             this.columnHeader5,
             this.columnHeader10,
             this.columnHeader11});
-            this.listView2.Location = new System.Drawing.Point(20, 139);
+            this.listView2.Location = new System.Drawing.Point(23, 139);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(425, 121);
+            this.listView2.Size = new System.Drawing.Size(425, 180);
             this.listView2.TabIndex = 86;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -287,15 +289,25 @@
             // 
             this.columnHeader5.Text = "专业";
             // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "课程名";
+            this.columnHeader10.Width = 103;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "课程编号";
+            this.columnHeader11.Width = 74;
+            // 
             // listView3
             // 
             this.listView3.CheckBoxes = true;
             this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader8,
             this.columnHeader9});
-            this.listView3.Location = new System.Drawing.Point(20, 393);
+            this.listView3.Location = new System.Drawing.Point(632, 139);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(425, 97);
+            this.listView3.Size = new System.Drawing.Size(216, 180);
             this.listView3.TabIndex = 87;
             this.listView3.UseCompatibleStateImageBehavior = false;
             this.listView3.View = System.Windows.Forms.View.Details;
@@ -303,12 +315,12 @@
             // columnHeader8
             // 
             this.columnHeader8.Text = "备选督导";
-            this.columnHeader8.Width = 171;
+            this.columnHeader8.Width = 100;
             // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "总听课数";
-            this.columnHeader9.Width = 241;
+            this.columnHeader9.Width = 100;
             // 
             // label4
             // 
@@ -321,7 +333,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(14, 506);
+            this.button2.Location = new System.Drawing.Point(14, 336);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(101, 23);
             this.button2.TabIndex = 89;
@@ -329,19 +341,9 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "课程名";
-            this.columnHeader10.Width = 103;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "课程编号";
-            this.columnHeader11.Width = 74;
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(121, 506);
+            this.button3.Location = new System.Drawing.Point(121, 336);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 90;
@@ -349,11 +351,77 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label10.Location = new System.Drawing.Point(20, 435);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(197, 12);
+            this.label10.TabIndex = 91;
+            this.label10.Text = "注：首选督导为这个时间有空的成员";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label11.Location = new System.Drawing.Point(18, 461);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(137, 12);
+            this.label11.TabIndex = 92;
+            this.label11.Text = "注：备选督导为全部督导";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label12.Location = new System.Drawing.Point(18, 482);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(233, 12);
+            this.label12.TabIndex = 93;
+            this.label12.Text = "注：若备选和首选都勾上，也不会显示重复";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(108, 376);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(0, 12);
+            this.label13.TabIndex = 94;
+            this.label13.TextChanged += new System.EventHandler(this.label13_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(251, 96);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(65, 12);
+            this.label14.TabIndex = 95;
+            this.label14.Text = "授课方式：";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "理论",
+            "实验"});
+            this.comboBox1.Location = new System.Drawing.Point(310, 91);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(71, 20);
+            this.comboBox1.TabIndex = 96;
+            // 
             // frmAnPai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 590);
+            this.ClientSize = new System.Drawing.Size(893, 503);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label4);
@@ -407,7 +475,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ListView listView3;
         private System.Windows.Forms.ColumnHeader columnHeader8;
@@ -417,5 +484,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

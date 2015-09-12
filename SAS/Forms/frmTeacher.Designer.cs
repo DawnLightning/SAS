@@ -68,8 +68,9 @@
             // 
             // tBID
             // 
-            this.tBID.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tBID.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf;
             this.tBID.Location = new System.Drawing.Point(61, 20);
+            this.tBID.MaxLength = 20;
             this.tBID.Name = "tBID";
             this.tBID.Size = new System.Drawing.Size(130, 21);
             this.tBID.TabIndex = 8;
@@ -77,8 +78,9 @@
             // 
             // tBTel
             // 
-            this.tBTel.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tBTel.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf;
             this.tBTel.Location = new System.Drawing.Point(326, 47);
+            this.tBTel.MaxLength = 11;
             this.tBTel.Name = "tBTel";
             this.tBTel.Size = new System.Drawing.Size(130, 21);
             this.tBTel.TabIndex = 12;
@@ -86,11 +88,13 @@
             // 
             // tBMail
             // 
-            this.tBMail.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tBMail.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf;
             this.tBMail.Location = new System.Drawing.Point(326, 74);
             this.tBMail.Name = "tBMail";
             this.tBMail.Size = new System.Drawing.Size(130, 21);
             this.tBMail.TabIndex = 13;
+            this.tBMail.TextChanged += new System.EventHandler(this.tBMail_TextChanged);
+      
             this.tBMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tBName_KeyUp);
             // 
             // tBName
@@ -211,7 +215,7 @@
             // 
             // tbTitle
             // 
-            this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf;
             this.tbTitle.Location = new System.Drawing.Point(61, 74);
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(130, 21);
@@ -387,7 +391,7 @@
             // 
             // tbBelongs
             // 
-            this.tbBelongs.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tbBelongs.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf;
             this.tbBelongs.Location = new System.Drawing.Point(326, 20);
             this.tbBelongs.Name = "tbBelongs";
             this.tbBelongs.Size = new System.Drawing.Size(130, 21);

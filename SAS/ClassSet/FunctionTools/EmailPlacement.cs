@@ -50,7 +50,7 @@ namespace SAS.ClassSet.FunctionTools
         private  void FindEmailAddress(List<string> ListSupervisor,SqlHelper help,List<string> ListAddress){
               for (int i = 0; i < ListSupervisor.Count; i++)
             {
-                string selectcommand = "select * from Teachers_Data where Teacher='" + ListSupervisor[i] + "'";
+                string selectcommand = "select * from Teachers_Data where Teacher like '"+"%" + ListSupervisor[i] +"%"+ "'";
                 DataRow[] dr = help.getDs(selectcommand, "Teachers_Data").Tables[0].Select();
                 ListAddress.Add(dr[0][2].ToString());
             }

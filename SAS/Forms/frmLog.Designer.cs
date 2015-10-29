@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param Name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,33 +36,15 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnAll = new System.Windows.Forms.Button();
-            this.btnPageUp = new System.Windows.Forms.Button();
             this.textBoxNow = new System.Windows.Forms.TextBox();
             this.labPageAll = new System.Windows.Forms.Label();
             this.labPage = new System.Windows.Forms.Label();
-            this.btnPageDown = new System.Windows.Forms.Button();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX5 = new DevComponents.DotNetBar.ButtonX();
             this.SuspendLayout();
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(123, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(68, 30);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "重新发送";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(197, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(68, 30);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "删除";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // listView1
             // 
@@ -121,34 +101,6 @@
             // 
             this.columnHeader1.Text = "状态";
             // 
-            // btnAll
-            // 
-            this.btnAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAll.BackColor = System.Drawing.SystemColors.Window;
-            this.btnAll.FlatAppearance.BorderSize = 0;
-            this.btnAll.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnAll.Location = new System.Drawing.Point(12, 6);
-            this.btnAll.Name = "btnAll";
-            this.btnAll.Size = new System.Drawing.Size(68, 30);
-            this.btnAll.TabIndex = 3;
-            this.btnAll.Text = "全选";
-            this.btnAll.UseVisualStyleBackColor = false;
-            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
-            // 
-            // btnPageUp
-            // 
-            this.btnPageUp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageUp.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageUp.FlatAppearance.BorderSize = 0;
-            this.btnPageUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageUp.Location = new System.Drawing.Point(123, 368);
-            this.btnPageUp.Name = "btnPageUp";
-            this.btnPageUp.Size = new System.Drawing.Size(68, 30);
-            this.btnPageUp.TabIndex = 4;
-            this.btnPageUp.Text = "上一页";
-            this.btnPageUp.UseVisualStyleBackColor = false;
-            this.btnPageUp.Click += new System.EventHandler(this.btnPageUp_Click);
-            // 
             // textBoxNow
             // 
             this.textBoxNow.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -186,37 +138,81 @@
             this.labPage.Text = "当前是第        页   共        页";
             this.labPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnPageDown
+            // buttonX1
             // 
-            this.btnPageDown.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageDown.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageDown.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPageDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageDown.Location = new System.Drawing.Point(459, 368);
-            this.btnPageDown.MaximumSize = new System.Drawing.Size(68, 30);
-            this.btnPageDown.Name = "btnPageDown";
-            this.btnPageDown.Size = new System.Drawing.Size(68, 30);
-            this.btnPageDown.TabIndex = 5;
-            this.btnPageDown.Text = "下一页";
-            this.btnPageDown.UseVisualStyleBackColor = false;
-            this.btnPageDown.Click += new System.EventHandler(this.btnPageDown_Click);
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(12, 13);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.TabIndex = 72;
+            this.buttonX1.Text = "全选";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.Location = new System.Drawing.Point(109, 13);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(64, 25);
+            this.buttonX2.TabIndex = 73;
+            this.buttonX2.Text = "重新发送";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
+            // 
+            // buttonX3
+            // 
+            this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX3.Location = new System.Drawing.Point(201, 15);
+            this.buttonX3.Name = "buttonX3";
+            this.buttonX3.Size = new System.Drawing.Size(75, 23);
+            this.buttonX3.TabIndex = 74;
+            this.buttonX3.Text = "删除";
+            this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
+            // 
+            // buttonX4
+            // 
+            this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Location = new System.Drawing.Point(130, 374);
+            this.buttonX4.Name = "buttonX4";
+            this.buttonX4.Size = new System.Drawing.Size(75, 23);
+            this.buttonX4.TabIndex = 75;
+            this.buttonX4.Text = "上一页";
+            this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
+            // 
+            // buttonX5
+            // 
+            this.buttonX5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX5.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX5.Location = new System.Drawing.Point(446, 373);
+            this.buttonX5.Name = "buttonX5";
+            this.buttonX5.Size = new System.Drawing.Size(75, 23);
+            this.buttonX5.TabIndex = 76;
+            this.buttonX5.Text = "下一页";
+            this.buttonX5.Click += new System.EventHandler(this.buttonX5_Click);
             // 
             // frmLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(651, 408);
-            this.Controls.Add(this.btnPageUp);
+            this.Controls.Add(this.buttonX5);
+            this.Controls.Add(this.buttonX4);
+            this.Controls.Add(this.buttonX3);
+            this.Controls.Add(this.buttonX2);
+            this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.textBoxNow);
             this.Controls.Add(this.labPageAll);
             this.Controls.Add(this.labPage);
-            this.Controls.Add(this.btnPageDown);
-            this.Controls.Add(this.btnAll);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(667, 447);
             this.Name = "frmLog";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "日志";
             this.Load += new System.EventHandler(this.frmLog_Load_1);
@@ -227,21 +223,21 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.Button btnAll;
-        private System.Windows.Forms.Button btnPageUp;
         private System.Windows.Forms.TextBox textBoxNow;
         private System.Windows.Forms.Label labPageAll;
         private System.Windows.Forms.Label labPage;
-        private System.Windows.Forms.Button btnPageDown;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         public System.Windows.Forms.ListView listView1;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX3;
+        private DevComponents.DotNetBar.ButtonX buttonX4;
+        private DevComponents.DotNetBar.ButtonX buttonX5;
     }
 }

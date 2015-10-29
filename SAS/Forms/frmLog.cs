@@ -13,11 +13,12 @@ using SAS.ClassSet.MemberInfo;
 using SAS.ClassSet.Common;
 namespace SAS.Forms
 {
-    public partial class frmLog : Form
+    public partial class frmLog : DevComponents.DotNetBar.Office2007Form
     {
         public frmLog()
         {
             InitializeComponent();
+            this.EnableGlass = false;
         }
         int pagesize = 18;
         int currentpage = 1;
@@ -32,65 +33,24 @@ namespace SAS.Forms
             CheckForIllegalCrossThreadCalls = false;
             totalpage = help.totalpage("select * from Logs_Data", pagesize, "Logs_Data");
             labPageAll.Text = totalpage.ToString();
-            DataTable dt = help.getDs("select * from Logs_Data","Logs_Data").Tables[0];
+            DataTable dt = help.ListviewShow("select * from Logs_Data", currentpage, pagesize, "Logs_Data");
+           
             UIShow show = new UIShow();
             show.logs_listview_write(dt, listView1, currentpage, pagesize);
             
         }
         private void btnPageDown_Click(object sender, EventArgs e)
         {
-            listView1.Items.Clear();
-            if (currentpage < totalpage)
-            {
-                currentpage++;
-            
-            }
-            if (currentpage == totalpage)
-            {
-                currentpage = totalpage;
-              
-            }
-            textBoxNow.Text = currentpage.ToString();
-            DataTable dt = help.getDs("select * from Logs_Data", "Logs_Data").Tables[0];
-            UIShow show = new UIShow();
-            show.logs_listview_write(dt, listView1, currentpage, pagesize);
+          
         }
         private void btnPageUp_Click(object sender, EventArgs e)
         {
 
-            listView1.Items.Clear();
-            if (currentpage > 1)
-            {
-                currentpage--;
-
-            }
-            if (currentpage == 1)
-            {
-                currentpage = 1;
-
-
-            }
-            textBoxNow.Text = currentpage.ToString();
-            DataTable dt = help.getDs("select * from Logs_Data", "Logs_Data").Tables[0];
-            UIShow show = new UIShow();
-            show.logs_listview_write(dt, listView1, currentpage, pagesize);
+           
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否确认删除?注意!删除后将无法恢复!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-            {
-                return;
-            }
-            if (listView1.SelectedItems.Count > 0)
-            {
-                foreach (ListViewItem LVI in listView1.SelectedItems)
-                {
-                    string strCMD = "delete from Logs_Data where Time_Now = '" + LVI.SubItems[4].Text + "'";
-                    help.Oledbcommand(strCMD);
-                }
-            }
-            listView1.Items.Clear();
-            frmLog_Load_1(sender,e);
+           
           
         }
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -125,10 +85,7 @@ namespace SAS.Forms
         }
         private void btnAll_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem s in listView1.Items)
-            {
-                s.Checked = true;
-            }
+           
         }
         private EmailInfo InitializeEmailInfo()
         {
@@ -138,24 +95,12 @@ namespace SAS.Forms
             EInfo.Title = listView1.CheckedItems[0].SubItems[3].Text;
             EInfo.Content = "";
             EInfo.AddFiles = help.getDs("select * from Logs_Data where Time_Now='" + listView1.CheckedItems[0].SubItems[4].Text + "'", "Logs_Data").Tables[0].Rows[0][6].ToString();
-            EInfo.Receiver = help.getDs("select * from Teachers_Data where Teacher='" + listView1.CheckedItems[0].SubItems[1].Text + "'", "Teachers_Data").Tables[0].Rows[0][2].ToString();
+            EInfo.Receiver = help.getDs("select * from Teachers_Data where Teacher like '%" + listView1.CheckedItems[0].SubItems[1].Text + "%'", "Teachers_Data").Tables[0].Rows[0][2].ToString();
             return EInfo;
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            if(listView1.CheckedItems.Count==1)
-            {
-                EmailInfo EInfo = InitializeEmailInfo();
-                Email senter = new Email();
-                string updatecommand = "update Logs_Data set File_State='{flag}'" + "where Time_Now='" + listView1.CheckedItems[0].SubItems[4].Text + "'";
-                frmLog log1 = this;
-                senter.Send(new Email {Type=1, EI= EInfo,FL=log1,str=updatecommand });
-                
-                if(help.Oledbcommand(updatecommand)>0){
-                    frmLog_Load_1(sender, e);
-                }
-            
-            }
+           
         }
 
         private void textBoxNow_TextChanged(object sender, EventArgs e)
@@ -168,6 +113,89 @@ namespace SAS.Forms
             {
                 textBoxNow.Text = "1";
             }
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem s in listView1.Items)
+            {
+                s.Checked = true;
+            }
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            if (listView1.CheckedItems.Count == 1)
+            {
+                EmailInfo EInfo = InitializeEmailInfo();
+                Email senter = new Email();
+                string updatecommand = "update Logs_Data set File_State='{flag}'" + "where Time_Now='" + listView1.CheckedItems[0].SubItems[4].Text + "'";
+                frmLog log1 = this;
+                senter.Send(new Email { Type = 1, EI = EInfo, FL = log1, str = updatecommand });
+
+                if (help.Oledbcommand(updatecommand) > 0)
+                {
+                    frmLog_Load_1(sender, e);
+                }
+
+            }
+        }
+
+        private void buttonX3_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否确认删除?注意!删除后将无法恢复!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+            if (listView1.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem LVI in listView1.SelectedItems)
+                {
+                    string strCMD = "delete from Logs_Data where Time_Now = '" + LVI.SubItems[4].Text + "'";
+                    help.Oledbcommand(strCMD);
+                }
+            }
+            listView1.Items.Clear();
+            frmLog_Load_1(sender, e);
+        }
+
+        private void buttonX4_Click(object sender, EventArgs e)
+        {
+            listView1.Items.Clear();
+            if (currentpage > 1)
+            {
+                currentpage--;
+
+            }
+            if (currentpage == 1)
+            {
+                currentpage = 1;
+
+
+            }
+            textBoxNow.Text = currentpage.ToString();
+            DataTable dt = help.ListviewShow("select * from Logs_Data", currentpage, pagesize, "Logs_Data");
+            UIShow show = new UIShow();
+            show.logs_listview_write(dt, listView1, currentpage, pagesize);
+        }
+
+        private void buttonX5_Click(object sender, EventArgs e)
+        {
+            listView1.Items.Clear();
+            if (currentpage < totalpage)
+            {
+                currentpage++;
+
+            }
+            if (currentpage == totalpage)
+            {
+                currentpage = totalpage;
+
+            }
+            textBoxNow.Text = currentpage.ToString();
+            DataTable dt = help.ListviewShow("select * from Logs_Data", currentpage, pagesize, "Logs_Data");
+            UIShow show = new UIShow();
+            show.logs_listview_write(dt, listView1, currentpage, pagesize);
         }
     }
 }

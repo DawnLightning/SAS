@@ -11,7 +11,7 @@ using System.IO;
 using SAS.ClassSet.FunctionTools;
 namespace SAS.Forms
 {
-    public partial class frmSetting : Form
+    public partial class frmSetting : DevComponents.DotNetBar.Office2007Form
     {
 
         public frmSetting()
@@ -20,6 +20,86 @@ namespace SAS.Forms
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void frmSetting_Load(object sender, EventArgs e)
+        {
+            if (Common.Year >= 0 && Common.Month > 0 && Common.Day > 0)
+            {
+                txtYear.Text = Common.Year.ToString();
+                txtMonth.Text = Common.Month.ToString();
+                txtDay.Text = Common.Day.ToString();
+                if (!(string.IsNullOrWhiteSpace(Common.MailAddress) || string.IsNullOrWhiteSpace(Common.MailPassword)) && Common.MailAddress.IndexOf('@') != -1)
+                {
+                    string[] arr = Common.MailAddress.Split('@');
+                    txbMailAddress.Text = arr[0];
+                    comboBox1.Text = arr[1];
+                    txbMailPassword.Text = Common.MailPassword;
+                }
+            }
+        }
+
+        private void btCancel_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void txtMonth_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtMonth.Text.Length == 2)
+            {
+                this.txtDay.Focus();
+            }
+        }
+
+        private void txtYear_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtYear.Text.Length == 4)
+            {
+                this.txtMonth.Focus();
+            }
+
+
+        }
+
+        private void txtDay_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("你确定要执行重置操作？这将会删除除“教师信息”外的所有数据！", "警告！！！", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
+                try
+                {
+                    SqlHelper help = new SqlHelper();
+                    help.delete("Logs_Data", "");
+                    help.delete("Placement_Data", "");
+                    help.delete("SpareTime_Data", "");
+                    help.delete("Classes_Data", "");
+                    help.delete("Conf", "");
+
+                    Main.fm.flashListview();
+                    MessageBox.Show("操作成功");
+                }
+                catch { MessageBox.Show("操作失败"); }
+            }
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
         {
             try
             {
@@ -108,74 +188,9 @@ namespace SAS.Forms
             }
         }
 
-        private void frmSetting_Load(object sender, EventArgs e)
-        {
-            if (Common.Year >= 0 && Common.Month > 0 && Common.Day > 0)
-            {
-                txtYear.Text = Common.Year.ToString();
-                txtMonth.Text = Common.Month.ToString();
-                txtDay.Text = Common.Day.ToString();
-                if (!(string.IsNullOrWhiteSpace(Common.MailAddress) || string.IsNullOrWhiteSpace(Common.MailPassword)) && Common.MailAddress.IndexOf('@') != -1)
-                {
-                    string[] arr = Common.MailAddress.Split('@');
-                    txbMailAddress.Text = arr[0];
-                    comboBox1.Text = arr[1];
-                    txbMailPassword.Text = Common.MailPassword;
-                }
-            }
-        }
-
-        private void btCancel_Click(object sender, EventArgs e)
+        private void buttonX3_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("你确定要执行重置操作？这将会删除除“教师信息”外的所有数据！", "警告！！！", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-            {
-                try
-                {
-                    SqlHelper help= new SqlHelper();
-                    help.delete("Logs_Data","");
-                    help.delete("Placement_Data", "");
-                    help.delete("SpareTime_Data", "");
-                    help.delete("Classes_Data", "");
-                    help.delete("Conf", "");
-                    
-                    frmMain.fm.flashListview();
-                    MessageBox.Show("操作成功");
-                }
-                catch { MessageBox.Show("操作失败"); }
-            }
-        }
-
-        private void txtMonth_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (txtMonth.Text.Length == 2)
-            {
-                this.txtDay.Focus();
-            }
-        }
-
-        private void txtYear_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (txtYear.Text.Length == 4)
-            {
-                this.txtMonth.Focus();
-            }
-
-
-        }
-
-        private void txtDay_KeyUp(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
 

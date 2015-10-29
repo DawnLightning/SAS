@@ -25,6 +25,7 @@ namespace SAS.ClassSet.FunctionTools
          System.Data.DataTable dt = new System.Data.DataTable();
          int rowIndex = 2;
          int columnIndex = 0;
+         List<string>  ListSupervisor=new List<string>();
          List<string> dcs = new List<string> { "序号", "课程", "授课内容", "授课方式", "专业", "教室", "教师", "周次", "听课时间", "听课人员安排", "分数", "申报" };
          #region Excel链接
          private  void ExcelConnection(string ExcelFiles)
@@ -176,8 +177,8 @@ namespace SAS.ClassSet.FunctionTools
         {
             // try
             //{
-
-            int rowNum = helper.getDs(sqlcommand, tablename).Tables[0].Rows.Count;
+            System.Data.DataTable dt = helper.getDs(sqlcommand, tablename).Tables[0];
+            int rowNum = dt.Rows.Count;
             int columnNum = dcs.Count;
 
             if (rowNum == 0 || string.IsNullOrEmpty(strFileName))
@@ -223,7 +224,7 @@ namespace SAS.ClassSet.FunctionTools
                 {
                     rowIndex++;
                     columnIndex = 0;
-
+                    DistinctSupervisor(dt.Rows[i][6].ToString(), ListSupervisor);//去职称
                     for (int j = 0; j < dcs.Count; j++)
                     {
                         columnIndex++;
@@ -231,7 +232,44 @@ namespace SAS.ClassSet.FunctionTools
                         {
 
                             //注意这个在导出的时候加了“\t” 的目的就是避免导出的数据显示为科学计数法。可以放在每行的首尾。
-                            xlApp.Cells[rowIndex, columnIndex] = listview.Items[i].SubItems[j].Text + "\t";
+                            switch(j){
+                                case 0:
+                                    xlApp.Cells[rowIndex, columnIndex] = (i + 1).ToString() + "\t"; 
+                                    break;
+                                case 1:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][8].ToString() + "\t";
+                                    break;
+                                case 2:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][9].ToString() + "\t";
+                                    break;
+                                case 3:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][10].ToString() + "\t";
+                                    break;
+                                case 4:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][11].ToString() + "\t";
+                                    break;
+                                case 5:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][7].ToString() + "\t";
+                                    break;
+                                case 6:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][2].ToString() + "\t";
+                                    break;
+                                case 7:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][3].ToString() + "\t";
+                                    break;
+                                case 8:
+                                    xlApp.Cells[rowIndex, columnIndex] = //听课时间
+                                    CalendarTools.getdata(Common.Common.Year, Convert.ToInt32(dt.Rows[i][3]), Convert.ToInt32(dt.Rows[i][4]) - CalendarTools.weekdays(CalendarTools.CaculateWeekDay(Common.Common.Year, Common.Common.Month, Common.Common.Day)), Common.Common.Month, Common.Common.Day).ToLongDateString()
+                                    + " " + addseparator(Convert.ToInt32(dt.Rows[i][5])) + "节" + "\t";                               
+                                    break;
+                                case 9:
+                                    xlApp.Cells[rowIndex, columnIndex] =  FormatSupervisor(ListSupervisor)+ "\t";
+                                    break;
+                                case 10:
+                                    xlApp.Cells[rowIndex, columnIndex] = dt.Rows[i][12].ToString() + "\t";
+                                    break;
+                            }
+                          
                             Range rg2 = xlApp.Cells[rowIndex, columnIndex];
                             rg2.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
                         }
@@ -277,7 +315,84 @@ namespace SAS.ClassSet.FunctionTools
             {
             }
         }
+        //生成间隔符“-”
+        private string addseparator(int classnumber)
+        {
+            string newclassnumber = "";
+            switch (classnumber)
+            {
+                case 12: newclassnumber = "1-2"; break;
+                case 13: newclassnumber = "1-3"; break;
+                case 23: newclassnumber = "2-3"; break;
+                case 24: newclassnumber = "2-4"; break;
+                case 34: newclassnumber = "3-4"; break;
+                case 35: newclassnumber = "3-5"; break;
+                case 45: newclassnumber = "4-5"; break;
+                case 46: newclassnumber = "4-6"; break;
+                case 67: newclassnumber = "6-7"; break;
+                case 68: newclassnumber = "6-8"; break;
+                case 78: newclassnumber = "7-8"; break;
+                case 79: newclassnumber = "7-9"; break;
+                case 89: newclassnumber = "8-9"; break;
+                case 1011: newclassnumber = "10-11"; break;
+                case 1112: newclassnumber = "11-12"; break;
+                case 1012: newclassnumber = "10-12"; break;
+            }
+            return newclassnumber;
+        }
+         //去掉职称
+        private string DistinctSupervisor(string supervisor, List<string> ListSupervisor)
+        {
+            if (supervisor.IndexOf(",") != -1)
+            {
+                ListSupervisor.Add(supervisor.Substring(0, supervisor.IndexOf(",")));
+                return DistinctSupervisor(supervisor.Substring(supervisor.IndexOf(",") + 1), ListSupervisor);
+            }
+            else
+            {
+                ListSupervisor.Add(supervisor);
+                return supervisor;
+            }
+            
+        }
+        private string FormatSupervisor( List<string> List)
+        {
+            string supervisor = "";
+          
+            foreach(string s in List){
+                if (s.IndexOf("(") != -1)
+                {
+                    supervisor = supervisor +","+ s.Substring(0, s.IndexOf("("));
+                }
+                else
+                {
+                    supervisor = supervisor+"," + s;
+                }
+            }
+            List.Clear();
+            return supervisor.Substring(1);
+
+        }
+        private string FormatTeacher(string s)
+        {
+            string supervisor = "";
+
+            
+                if (s.IndexOf("(") != -1)
+                {
+                    supervisor = supervisor + "," + s.Substring(0, s.IndexOf("("));
+                }
+                else
+                {
+                    supervisor = supervisor + "," + s;
+                }
+           
+            return supervisor.Substring(1);
+
+        }
+
+    }
         #endregion
     }
 
-}
+

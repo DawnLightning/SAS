@@ -12,7 +12,7 @@ using SAS.ClassSet.ListViewShow;
 
 namespace SAS.Forms
 {
-    public partial class frmPlan : Form
+    public partial class frmPlan : DevComponents.DotNetBar.Office2007Form
     {
 
 
@@ -20,6 +20,7 @@ namespace SAS.Forms
 
         public frmPlan()
         {
+            this.EnableGlass = false;
             InitializeComponent();
             frmpr = this;
         }
@@ -94,13 +95,61 @@ namespace SAS.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmPlanRead frmp = new frmPlanRead();
-            frmp.Show();
+           
         }
        
 
 
         private void btnPageUp_Click_1(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void btnPageDown_Click_1(object sender, EventArgs e)
+        {
+          
+        }
+
+      
+
+      
+
+        private void btnDelType_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            frmPlanRead frmp = new frmPlanRead();
+            frmp.Show();
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("你确定要执行删除操作？这将会删除当前的所有数据！", "警告！！！", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
+                try
+                {
+
+                    SqlHelper help = new SqlHelper();
+                    help.delete("Classes_Data", " ");
+                    frmPlan_Load(sender, e);
+
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
+
+        private void buttonX3_Click(object sender, EventArgs e)
         {
             clear_listview();
             if (currentpage > 1)
@@ -115,13 +164,13 @@ namespace SAS.Forms
 
             }
             textBoxNow.Text = currentpage.ToString();
-         
+
             DataTable dt = pageshow.ListviewShow("select * from Classes_Data", currentpage, pagesize, "Classes_Data");
             UIShow show = new UIShow();
             show.listview_write_classes_data(dt, listView1);
         }
 
-        private void btnPageDown_Click_1(object sender, EventArgs e)
+        private void buttonX4_Click(object sender, EventArgs e)
         {
             clear_listview();
             if (currentpage < totalpage)
@@ -138,34 +187,6 @@ namespace SAS.Forms
             DataTable dt = pageshow.ListviewShow("select * from Classes_Data", currentpage, pagesize, "Classes_Data");
             UIShow show = new UIShow();
             show.listview_write_classes_data(dt, listView1);
-        }
-
-      
-
-      
-
-        private void btnDelType_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("你确定要执行删除操作？这将会删除当前的所有数据！", "警告！！！", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-            {
-                try
-                {
-
-                    SqlHelper help = new SqlHelper();
-                    help.delete("Classes_Data"," ");
-                    frmPlan_Load(sender, e);
-
-                }
-                catch (Exception)
-                {
-                   
-                }
-            }
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
 

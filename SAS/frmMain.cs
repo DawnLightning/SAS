@@ -7,29 +7,30 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Data.OleDb;
 using SAS.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 using SAS.ClassSet.FunctionTools;
 using SAS.ClassSet.Common;
 using SAS.ClassSet.ListViewShow;
 using SAS.ClassSet.MemberInfo;
+using DevComponents.WinForms;
 namespace SAS
 {
-    public partial class frmMain : Form
+    public partial class frmMain :Form
     {
-        public static frmMain fm;
-
+       
         public frmMain()
         {
             InitializeComponent();
             fm = this;
         }
+        public static frmMain fm;
         public int pagesize = 19;
         public int currentpage = 1;
         public int totalpage;
         SqlHelper pageshow;
-       
+        public int expertflag=0;//导出标志
         private void frmMain_Load(object sender, EventArgs e)
         {
             SetStatusText("欢迎使用~", 0);
@@ -44,6 +45,9 @@ namespace SAS
 
             flashListview();
             Control.CheckForIllegalCrossThreadCalls = false;
+            label1.Text = "临时数据";
+            delete.Enabled = false;
+
         }
        
        
@@ -62,7 +66,21 @@ namespace SAS
            
 
         }
+        public void flashListview_check()
+        {
+            //---------------------------------------------
+            listView1.Items.Clear();
 
+            pageshow = new SqlHelper();
+            totalpage = pageshow.totalpage("select * from CheckPlacement_Data", pagesize, "CheckPlacement_Data");
+            labPageAll.Text = totalpage + "";
+            textBoxNow.Text = currentpage.ToString();
+            DataTable dt = pageshow.ListviewShow("select * from CheckPlacement_Data order by Class_week", currentpage, pagesize, "CheckPlacement_Data");
+            UIShow show = new UIShow();
+            show.placement_listview_write(dt, listView1, currentpage, pagesize);
+
+
+        }
         #region 委托
 
         delegate void SetTextCallback(string text, int color);
@@ -253,8 +271,7 @@ namespace SAS
                     }
 
                     s.Close();
-                    //S.Close();
-                    //S.Dispose();
+           
                     System.Diagnostics.Process.Start(helpPath);
                 }
                 catch (Exception ex)
@@ -283,9 +300,19 @@ namespace SAS
 
             }
            textBoxNow.Text = currentpage.ToString();
-           DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
-           UIShow show = new UIShow();
-           show.placement_listview_write(dt,listView1,currentpage,pagesize);
+            if (expertflag==0)
+            {
+                DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
+                UIShow show = new UIShow();
+                show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            } 
+            else
+            {
+                DataTable dt = pageshow.ListviewShow("select * from CheckPlacement_Data order by Class_week", currentpage, pagesize, "CheckPlacement_Data");
+                UIShow show = new UIShow();
+                show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            }
+          
         }
 
         private void btnPageDown_Click(object sender, EventArgs e)
@@ -300,11 +327,22 @@ namespace SAS
                 currentpage = totalpage;
             }
             textBoxNow.Text = currentpage.ToString();
-            DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
-            UIShow show = new UIShow();
-            show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            if (expertflag == 0)
+            {
+                DataTable dt = pageshow.ListviewShow("select * from Placement_Data order by Class_week", currentpage, pagesize, "Placement_Data");
+                UIShow show = new UIShow();
+                show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            }
+            else
+            {
+                DataTable dt = pageshow.ListviewShow("select * from CheckPlacement_Data order by Class_week", currentpage, pagesize, "CheckPlacement_Data");
+                UIShow show = new UIShow();
+                show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            }
+           
         }
         private void btnSearch_Click(object sender, EventArgs e)
+        {   if (expertflag==0)
         {
             if (string.IsNullOrWhiteSpace(txtSearch.Text))
             {
@@ -322,6 +360,27 @@ namespace SAS
                 UIShow show = new UIShow();
                 show.placement_listview_write(dt, listView1, currentpage, pagesize);
             }
+        } 
+        else
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+            }// flashListview();
+            else
+            {
+                listView1.Items.Clear();
+                string fe = "Teacher like '%" + txtSearch.Text.Trim() + "%' or Supervisor_Name like '%" + txtSearch.Text.Trim() + "%'";
+                string cmdText = "SELECT * FROM CheckPlacement_Data WHERE " + fe;
+                pageshow = new SqlHelper();
+                totalpage = pageshow.totalpage(cmdText, pagesize, "CheckPlacement_Data");
+                labPageAll.Text = totalpage + "";
+                textBoxNow.Text = currentpage.ToString();
+                DataTable dt = pageshow.ListviewShow(cmdText, currentpage, pagesize, "CheckPlacement_Data");
+                UIShow show = new UIShow();
+                show.placement_listview_write(dt, listView1, currentpage, pagesize);
+            }
+        }
+           
         }
 
 
@@ -368,8 +427,21 @@ namespace SAS
 
         private void ExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {   if(listView1.Items.Count>0){
-            ExcelTools output = new ExcelTools();
-            output.ExportToExecl("select * from Placement_Data","Placement_Data",listView1);
+            if (expertflag==0)
+            {
+                //ExcelTools output = new ExcelTools();
+                //output.ExportToExecl("select * from Placement_Data", "Placement_Data", listView1);
+                new NPOIHelper() .ExportToExecl("select * from Placement_Data", "Placement_Data");
+               
+            } 
+            else
+            {
+                //ExcelTools output = new ExcelTools();
+                //output.ExportToExecl("select * from CheckPlacement_Data", "Placement_Data", listView1);
+                new NPOIHelper().ExportToExecl("select * from CheckPlacement_Data", "CheckPlacement_Data");
+               
+            }
+           
             }else{
                 MessageBox.Show("当前没有数据");
             }
@@ -405,6 +477,88 @@ namespace SAS
             frm.Show();
         }
 
+        private void 保存记录ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.CheckedItems.Count == 1)
+            {   SqlHelper help=new SqlHelper();
+                DataTable dt =  help.getDs("select * from Placement_Data", "Placement_Data").Tables[0];
+                DataRow[] dr = dt.Select("Teacher like '%" + listView1.CheckedItems[0].SubItems[6].Text + "%'" + " and " + "Class_week= '" + listView1.CheckedItems[0].SubItems[7].Text + "'");//+ " and " + "Class_week= '" + listView1.CheckedItems[0].SubItems[7].Text + "'" + 
+                DataTable dtcheck =  help.getDs("select * from CheckPlacement_Data", "CheckPlacement_Data").Tables[0];
+                DataRow drc = dtcheck.NewRow();
+                for (int i = 0; i < dt.Columns.Count;i++ )
+                {
+                    drc[i] = dr[0][i];
+                }
+                dtcheck.Rows.Add(drc);
+                OleDbDataAdapter da = help.adapter("select * from CheckPlacement_Data");
+                try
+                {
+                    da.Update(dtcheck);
+                    MessageBox.Show("保存成功");
+                }
+                catch (OleDbException)
+                {
+                    MessageBox.Show("记录已存在，请删除后再保存");
+                }
+                finally
+                {
+
+                   
+                }
+                }
+             
+                
+                
+        }
+
+        private void 查看保存记录ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            flashListview_check();
+            saverecord.Enabled = false;
+            tsmiAutoCreate.Enabled = false;
+            tsmiCreate.Enabled = false;
+            label1.Text = "保存数据";
+            delete.Enabled = true;
+            search.Enabled = false;
+            expertflag = 1;
+        }
+
+        private void 查看临时数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            flashListview();
+            saverecord.Enabled = true;
+            tsmiAutoCreate.Enabled = true;
+            tsmiCreate.Enabled = true;
+            label1.Text = "临时数据";
+            delete.Enabled = false;
+            search.Enabled = true;
+            expertflag = 0;
+        }
+
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(listView1.CheckedItems.Count==1){
+                string deletecommand = string.Format("delete * from CheckPlacement_Data where Teacher like  '%{0}%' and Class_week={1}", listView1.CheckedItems[0].SubItems[6].Text, listView1.CheckedItems[0].SubItems[7].Text);
+                SqlHelper help = new SqlHelper();
+               if (help.Oledbcommand(deletecommand)!=0)
+               {
+                   flashListview_check();
+                   MessageBox.Show("删除成功");
+               } 
+               else
+               {
+                   MessageBox.Show("删除失败");
+               }
+              
+
+            }
+        }
+
+      
+       
+
+       
+     
 
     }
 }

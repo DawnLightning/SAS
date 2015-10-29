@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SAS.Forms
 {
-    partial class frmAbout : Form
+    partial class frmAbout :DevComponents.DotNetBar.Office2007Form
     {
         public frmAbout()
         {
@@ -19,6 +19,7 @@ namespace SAS.Forms
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
+            this.EnableGlass = false;
         }
 
         #region 程序集特性访问器
@@ -100,5 +101,15 @@ namespace SAS.Forms
             }
         }
         #endregion
+
+        private void frmAbout_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

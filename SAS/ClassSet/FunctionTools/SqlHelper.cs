@@ -242,8 +242,8 @@ namespace SAS.ClassSet.FunctionTools
         #region 执行SQL语句返回受影响行数
         public int Oledbcommand(string command)
         {
-            //try
-            //{
+            try
+            {
                 int SuccessFlag;
                 conn = new OleDbConnection(connString);
                 if (conn.State != ConnectionState.Open)
@@ -261,10 +261,12 @@ namespace SAS.ClassSet.FunctionTools
                     conn.Dispose();
                     return SuccessFlag;
                 }
-            //}catch(OleDbException e){
-            //    MessageBox.Show("ID重复输入");
-            //    return 0;
-            //}
+            }
+            catch (OleDbException e)
+            {
+                MessageBox.Show("ID重复输入");
+                return 0;
+            }
         }
         #endregion
         #region 返回dataset
@@ -331,7 +333,8 @@ namespace SAS.ClassSet.FunctionTools
             }
             catch (Exception e)
             {
-              
+                MessageBox.Show(e.ToString());
+               
             }
         }
         public static object ExcuteScalar(string SQl, params OleDbParameter[] parameters)

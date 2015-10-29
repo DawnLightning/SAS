@@ -12,11 +12,12 @@ using SAS.ClassSet.FunctionTools;
 
 namespace SAS.Forms
 {
-    public partial class frmPlanRead : Form
+    public partial class frmPlanRead : DevComponents.DotNetBar.Office2007Form
     {
         public frmPlanRead()
         {
             InitializeComponent();
+            this.EnableGlass = false; 
         }
         string path2 = Environment.CurrentDirectory + "/" + "DataBase.mdb";//数据库路径
         List<string> al = new List<string> { };//有几张表，数组就有多大
@@ -29,22 +30,85 @@ namespace SAS.Forms
         int numlistview = 0;
         private void btnDel_Click(object sender, EventArgs e)
         {
-            int index2 = 0;
-            if (this.listView1.SelectedItems.Count > 0)
-            {
-                index2 = this.listView1.SelectedItems[0].Index;
-                al.RemoveAt(index2);
-                numexcel--;
-                NumItems--;
-                listView1.Items[index2].Remove();
-            }
-            else MessageBox.Show("没有选择有效的文件,无法移除");
+           
         }
 
         //-------------添加文件
         private void btnAdd_Click(object sender, EventArgs e)
         {
 
+            
+
+        }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+
+
+        private void frmPlanRead_Load(object sender, EventArgs e)
+        {
+            //TxtToFrom();
+
+        }
+
+        private void frmPlanRead_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+         
+            //ExcelTools rd = new ExcelTools();
+            NPOIHelper rd = new NPOIHelper();
+            for (int n = 0; n < al.Count; n++)
+            {
+              successflag=rd.Import(al[n].ToString());
+             
+                backgroundWorker1.ReportProgress(1,progressBarRead);
+              
+            }
+        }
+     
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBarRead.PerformStep();
+            if(successflag==1){
+            listView1.Items[numlistview].SubItems[1].Text = "已导入";
+            }else{
+                listView1.Items[numlistview].SubItems[1].Text = "未导入";
+            }
+            numlistview++;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBarRead.Value = progressBarRead.Maximum;
+
+
+            buttonX2.Enabled = true;
+            buttonX3.Enabled = true;
+            frmPlan.frmpr.NewMethod();
+           
+            if (MessageBox.Show("成功导入，是否马上补充填写对应教师信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                frmTeacher frmt = new frmTeacher();
+                frmt.Show();
+                this.Close();
+            }
+            progressBarRead.Value = 0;
+        }
+
+        private void ofdAdd_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
             listView1.Items.Clear();
             numexcel = -1;
             NumItems = 0;
@@ -69,97 +133,51 @@ namespace SAS.Forms
                 }
 
 
-                btnRead.Enabled = true;
+                buttonX3.Enabled = true;
             }
-
         }
 
-        private void btnRead_Click(object sender, EventArgs e)
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            int index2 = 0;
+            if (this.listView1.SelectedItems.Count > 0)
+            {
+                index2 = this.listView1.SelectedItems[0].Index;
+                al.RemoveAt(index2);
+                numexcel--;
+                NumItems--;
+                listView1.Items[index2].Remove();
+            }
+            else MessageBox.Show("没有选择有效的文件,无法移除");
+        }
+
+        private void buttonX3_Click(object sender, EventArgs e)
         {
             if (NumItems > 0)
-            {   if(numlistview>=al.Count)
             {
-                numlistview = 0;
-            }
+                if (numlistview >= al.Count)
+                {
+                    numlistview = 0;
+                }
                 progressBarRead.Maximum = listView1.Items.Count;
                 progressBarRead.Step = 1;
-                if(!backgroundWorker1.IsBusy)
+                if (!backgroundWorker1.IsBusy)
                 {
-                backgroundWorker1.RunWorkerAsync();
-                   
+                    backgroundWorker1.RunWorkerAsync();
+
                 }
-                
+
                 //cReadData rd = new cReadData();
-               
-                btnAdd.Enabled = false;
-                btnDel.Enabled = false;
-                btnRead.Enabled = false;
-               
+
+                buttonX1.Enabled = false;
+                buttonX2.Enabled = false;
+                buttonX3.Enabled = false;
+
                 //初始化数据及提示导入成功
 
-              
+
             }
             else MessageBox.Show("无文件可导入");
-        }
-
-
-
-        private void frmPlanRead_Load(object sender, EventArgs e)
-        {
-            //TxtToFrom();
-
-        }
-
-        private void frmPlanRead_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-         
-            ExcelTools rd = new ExcelTools();
-            for (int n = 0; n < al.Count; n++)
-            {
-              successflag=rd.ReadExcel(al[n].ToString());
-             
-                backgroundWorker1.ReportProgress(1,progressBarRead);
-              
-            }
-        }
-     
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBarRead.PerformStep();
-            if(successflag==1){
-            listView1.Items[numlistview].SubItems[1].Text = "已导入";
-            }else{
-                listView1.Items[numlistview].SubItems[1].Text = "未导入";
-            }
-            numlistview++;
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            progressBarRead.Value = progressBarRead.Maximum;
-
-           
-            btnAdd.Enabled = true;
-            btnDel.Enabled = true;
-            frmPlan.frmpr.NewMethod();
-           
-            if (MessageBox.Show("成功导入，是否马上补充填写对应教师信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                frmTeacher frmt = new frmTeacher();
-                frmt.Show();
-                this.Close();
-            }
-            progressBarRead.Value = 0;
-        }
-
-        private void ofdAdd_FileOk(object sender, CancelEventArgs e)
-        {
-
         }
     }
 }

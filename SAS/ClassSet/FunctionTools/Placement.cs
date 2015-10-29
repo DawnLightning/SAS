@@ -10,7 +10,7 @@ using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.ComponentModel;
-
+using SAS.ClassSet.MemberInfo;
 namespace SAS.ClassSet.FunctionTools
 {
     class Placement
@@ -46,23 +46,35 @@ namespace SAS.ClassSet.FunctionTools
         #region 主方法
         public void MakePlacement(PlacementConfig config)
         {
-            dtClasses = helper.getDs(strSelect_Class_Data, "Classes_Data").Tables[0];
-            dtTeachers = helper.getDs(strSelect_Teachers_Data, "Teachers_Data").Tables[0];
-            dtTeachers = dtTeachers.Select("IsSupervisor=False").CopyToDataTable();
-            dtSupervisor = helper.getDs(strSelect_Teachers_Data, "Teachers_Data").Tables[0];
-            dtSupervisor = dtSupervisor.Select("IsSupervisor=True").CopyToDataTable();
-            dtSpareTime = helper.getDs(strSelect_SpareTime_Data, "SpaerTime_Data").Tables[0];
-            dtPlacement = helper.getDs(strSelect_Placement_Data,"Placement_Data").Tables[0];
-            for (Week = config.Cbegin_week; Week < 19;Week++ )
-            {   UpdataWeek(dtSupervisor);
-                if(CheckWeekPeo(Week)>=config.Cnumpeo_min){
-                    SelectSameDay(config,Week);
+            try
+            {
+                dtClasses = helper.getDs(strSelect_Class_Data, "Classes_Data").Tables[0];
+                dtTeachers = helper.getDs(strSelect_Teachers_Data, "Teachers_Data").Tables[0];
+                dtTeachers = dtTeachers.Select("IsSupervisor=False").CopyToDataTable();
+                dtSupervisor = helper.getDs(strSelect_Teachers_Data, "Teachers_Data").Tables[0];
+                dtSupervisor = dtSupervisor.Select("IsSupervisor=True").CopyToDataTable();
+                dtSpareTime = helper.getDs(strSelect_SpareTime_Data, "SpaerTime_Data").Tables[0];
+                dtPlacement = helper.getDs(strSelect_Placement_Data, "Placement_Data").Tables[0];
+                for (Week = config.Cbegin_week; Week < 19; Week++)
+                {
+                    UpdataWeek(dtSupervisor);
+                    if (CheckWeekPeo(Week) >= config.Cnumpeo_min)
+                    {
+                        SelectSameDay(config, Week);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
-                else{
-                    continue;
-                }
+                UpdateALL();
             }
-            UpdateALL();
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("排课失败" + ex.ToString());
+            }
+               
+           
         }
         #endregion
         #region 辅助方法
@@ -108,25 +120,23 @@ namespace SAS.ClassSet.FunctionTools
         }
         private DataRow[] ContorlProportion(int Proportion)//控制理论课和实验课的比例
         {
-            DataRow[] dr = null; 
-                if((dtPlacement.Select("Class_Type='理论'").Length==0)){
-                      dr= dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number="+spareclass[Index]+"and Class_Type ='理论' ");
-                      return dr;
-                }else if((dtPlacement.Select("Class_Type='实验'").Length==0)){
-                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
-                    return dr;
-                }
-                else if ((dtPlacement.Select("Class_Type='理论'").Length / dtPlacement.Select("Class_Type='实验'").Length) < Proportion)
-                {
-                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='理论' ");
-                    return dr;
+                 DataRow[] dr = null;
+                 //dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='理论' ");
+                 //   dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
+                 Random rd = new Random();
+                 int i = rd.Next(1, 100);
+                 System.Diagnostics.Debug.WriteLine(i.ToString());
+                 if (i > 0 && i <= Proportion)
+                 {
+                     dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='理论' ");
+                     return dr;
+                 }
+                 else
+                 {
+                     dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
+                     return dr;
+                 }
 
-                }
-                else
-                {
-                    dr = dtClasses.Select(" Class_Week=" + Week + "and Class_Day=" + Day + " and Class_Number=" + spareclass[Index] + "and Class_Type ='实验' ");
-                    return dr;
-                }
            
         }
         private void SelectSameClass(PlacementConfig config)
@@ -135,8 +145,8 @@ namespace SAS.ClassSet.FunctionTools
             {
                 supervisor.Clear();
                 Supervisors = "";
-                 drSpareTimeClass = dtSpareTimeDay.Select("Spare_Number= '" + spareclass[Index] + "'");
-                 DataTable dt = drSpareTimeClass.CopyToDataTable();
+                drSpareTimeClass = dtSpareTimeDay.Select("Spare_Number= '" + spareclass[Index] + "'");
+              
                  drClasses = ContorlProportion(config.Proportion);
                  drSupervisor = dtSupervisor.Select("Class_WeekNumber<2 and Class_DayNumber = 0", "Class_Totality asc");
                  drTeacher = dtTeachers.Select("Accept_ClassNumber=0");
@@ -321,5 +331,182 @@ namespace SAS.ClassSet.FunctionTools
           
         }
         #endregion
+        #region 自动筛选督导空闲时间
+        public void AutoSelectSpareTime(ProgressBar ProgressBar1)
+        {  
+            List<SupervisorInfo> supervisorname = new List<SupervisorInfo>();//存储督导信息
+            List<SupervisorInfo> listsparetime = new List<SupervisorInfo>();//用于存储经过对比课程表后的督导的上课时间
+            List<string> ListInsertCommand = new List<string>();
+            dtClasses = helper.getDs(strSelect_Class_Data, "Classes_Data").Tables[0];
+            dtSupervisor = helper.getDs(strSelect_Teachers_Data, "Teachers_Data").Tables[0];
+            dtSupervisor = dtSupervisor.Select("IsSupervisor=True").CopyToDataTable();
+            List<DataRow[]> DrClassesArray = new List<DataRow[]>();//一个Datarow数组代表每一周每一天每一节次所有的上课记录
+            for (int i = 0; i < dtSupervisor.Rows.Count;i++ )
+            {
+
+                SupervisorInfo sp = new SupervisorInfo();
+                sp.SupervisorName = dtSupervisor.Rows[i][1].ToString();
+                sp.SupervisorId = dtSupervisor.Rows[i][0].ToString();
+                supervisorname.Add(sp);
+               
+            }
+            //分别把每一周每一天每一节的记录分开，存储在DrClassArray数组中
+            for (int i = 0; i < supervisorname.Count; i++)
+            {
+                for (int week = 1; week < 20; week++)
+                {
+                    for (int day = 1; day < 6; day++)
+                    {
+                        for (int index = 0; index < spareclass.Count; index++)
+                        {
+                            DataRow[] dr = dtClasses.Select(" Class_Week=" + week + "and Class_Day=" + day + " and Class_Number=" + spareclass[index] + "and Teacher='" + supervisorname[i].SupervisorName + "'");
+                            if (dr.Length==0)
+                            {
+                                SupervisorInfo info = new SupervisorInfo();
+                                info.SupervisorName = supervisorname[i].SupervisorName.ToString();
+                                info.Isassigned = false;
+                                foreach(SupervisorInfo s in supervisorname)
+                                {
+                               if (supervisorname[i].SupervisorName.Equals(s.SupervisorName))
+                                 {
+                                     info.SupervisorId = s.SupervisorId;
+                                     info.SpareID = info.SupervisorId + week.ToString() + day.ToString() + spareclass[index].ToString();
+                                        break;
+
+                                 }
+                             
+                                }
+                                if (info.SupervisorId==""||info.SpareID=="")
+                                {
+
+                                    info.SupervisorId = supervisorname[i].SupervisorName;
+                                     info.SpareID = info.SupervisorId + week.ToString() + day.ToString() + spareclass[index].ToString();
+                                   
+                              
+                                }
+                                info.SpareWeek = week;
+                                info.SpareDay = day;
+                                info.SpareNumber = spareclass[index];
+                                listsparetime.Add(info);
+                            }
+                            else
+                            {
+                                int[] array;
+                                switch (spareclass[index])
+                                {
+                                    case 12:
+                                        index += 3;
+                                        break;
+                                    case 13:
+                                         array=new int []{12};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 4;
+                                        break;
+                                    case 23:
+                                        array=new int []{12,13};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 3;
+                                        break;
+                                    case 24:
+                                          array=new int []{12,13,23};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 3;
+                                        break;
+                                    case 34:
+                                          array=new int []{13,23,24};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 2;
+                                        break;
+                                    case 35:
+                                          array=new int []{13,24,23,34};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index +=1;
+                                        break;
+                                    case 45:
+                                          array=new int []{24,34,35};
+                                        DeleteError(array, week, day, listsparetime);
+                                        break;
+                                    case 67:
+                                        index += 3;
+                                        break;
+                                    case 68:
+                                         array=new int []{67};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 3;
+                                        break;
+                                    case 78:
+                                        array=new int []{67,68};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index += 2;
+                                        break;
+                                    case 79:
+                                        array=new int []{67,78,68};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index +=1;
+                                        break;
+                                    case 89:
+                                         array=new int []{68,79,78};
+                                        DeleteError(array, week, day, listsparetime);
+                                        break;
+                                    case 1011:
+                                        index +=2;
+                                        break;
+                                    case 1112:
+                                         array=new int []{1011,1012};
+                                        DeleteError(array, week, day, listsparetime);
+                                        index +=1;
+                                        break;
+                                    case 1012:
+                                         array=new int []{1011,1112};
+                                        DeleteError(array, week, day, listsparetime);
+                                        break;
+                                        
+                                }
+                            }
+                         
+                        }
+                    }
+                }
+            }
+
+           List<SupervisorInfo> newsupervisorlist= listsparetime.Distinct<SupervisorInfo>().ToList();
+           
+            //编写数据库插入语句
+           foreach (SupervisorInfo supervisor in newsupervisorlist)
+            {
+             string insertcommand = string.Format(@"insert into SpareTime_Data values('{0}','{1}','{2}',{3},{4},{5},{6})", supervisor.SpareID,
+                       supervisor.SupervisorId, supervisor.SupervisorName, supervisor.SpareWeek, supervisor.SpareDay, supervisor.SpareNumber, supervisor.Isassigned);
+             ListInsertCommand.Add(insertcommand);
+            }
+               
+            
+          
+            //使用数据库事务条件插入请求
+            helper.insertToStockDataByBatch(ListInsertCommand, ProgressBar1);
+        }
+        #endregion
+        #region 去除枚举情况造成的空闲时间错误，如2-3节上课，12节有空，13节有课这些情况
+        private void DeleteError(int[] num,int thisweek,int thisday,List<SupervisorInfo> list)
+        {
+            List<SupervisorInfo> newlist = new List<SupervisorInfo>();
+            foreach (SupervisorInfo i in list)
+            {
+                newlist.Add(i);
+            }
+            for (int j = 0; j < num.Length;j++ )
+            {
+                for (int i = 0; i < newlist.Count; i++)
+                {
+                    if (newlist[i].SpareNumber.Equals(num[j]) && newlist[i].SpareWeek.Equals(thisweek) && newlist[i].SpareDay.Equals(thisday))
+                    {
+                        list.Remove(newlist[i]);
+                    }
+                }
+            }
+            newlist.Clear();
+        }
+#endregion
+      
+       
     }
 }

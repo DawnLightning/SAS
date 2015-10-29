@@ -34,7 +34,7 @@ namespace SAS.ClassSet.FunctionTools
         public void Send1(object obj)
         {
             Email E1=obj as Email;
-            string successflag = "", updatecommand = "";
+           string updatecommand = "";
             EmailRecordInfo ERecord = null;
             frmLog log1 = null;
             EmailInfo myemail = E1.EI;
@@ -114,13 +114,13 @@ namespace SAS.ClassSet.FunctionTools
                     ERecord.File_State = "发送失败";
                     if (E1.Type == 2)
                     {
-                        MessageBox.Show("发送失败");
+                        MessageBox.Show("发送失败"+ex.ToString());
                     }
                 }
                 if (log1 != null)
                 {
                     updatecommand = updatecommand.Replace("{flag}", "发送失败");
-                    MessageBox.Show("发送失败");
+                    MessageBox.Show("发送失败" + ex.ToString());
                     //log1.listView1.SelectedItems[0].BackColor = Color.Red;
 
                 }

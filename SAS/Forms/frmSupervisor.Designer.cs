@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param Name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,21 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("上午", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("下午", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("晚上", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("    ");
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("     ");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("     ");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("上午", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("下午", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("晚上", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("    ");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("     ");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("     ");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("");
             this.panelFree = new System.Windows.Forms.Panel();
-            this.btnJump = new System.Windows.Forms.Button();
+            this.buttonX6 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX5 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -53,9 +58,6 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.chkBatchAdd = new System.Windows.Forms.CheckBox();
-            this.btnNextWeek = new System.Windows.Forms.Button();
-            this.btnLastWeek = new System.Windows.Forms.Button();
-            this.btnsave = new System.Windows.Forms.Button();
             this.listView3 = new System.Windows.Forms.ListView();
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -73,8 +75,6 @@
             this.checkBox1_5 = new System.Windows.Forms.CheckBox();
             this.checkBox7_12 = new System.Windows.Forms.CheckBox();
             this.checkBox1_6 = new System.Windows.Forms.CheckBox();
-            this.btnDeleteAll = new System.Windows.Forms.Button();
-            this.btnDeleteSelect = new System.Windows.Forms.Button();
             this.checkBox7_11 = new System.Windows.Forms.CheckBox();
             this.checkBox1_7 = new System.Windows.Forms.CheckBox();
             this.checkBox7_10 = new System.Windows.Forms.CheckBox();
@@ -169,7 +169,12 @@
             // 
             // panelFree
             // 
-            this.panelFree.Controls.Add(this.btnJump);
+            this.panelFree.Controls.Add(this.buttonX6);
+            this.panelFree.Controls.Add(this.buttonX5);
+            this.panelFree.Controls.Add(this.buttonX4);
+            this.panelFree.Controls.Add(this.buttonX3);
+            this.panelFree.Controls.Add(this.buttonX2);
+            this.panelFree.Controls.Add(this.buttonX1);
             this.panelFree.Controls.Add(this.progressBar1);
             this.panelFree.Controls.Add(this.checkBox7);
             this.panelFree.Controls.Add(this.checkBox6);
@@ -180,9 +185,6 @@
             this.panelFree.Controls.Add(this.checkBox2);
             this.panelFree.Controls.Add(this.checkBox1);
             this.panelFree.Controls.Add(this.chkBatchAdd);
-            this.panelFree.Controls.Add(this.btnNextWeek);
-            this.panelFree.Controls.Add(this.btnLastWeek);
-            this.panelFree.Controls.Add(this.btnsave);
             this.panelFree.Controls.Add(this.listView3);
             this.panelFree.Controls.Add(this.groupBox2);
             this.panelFree.Controls.Add(this.checkBox1_1);
@@ -192,8 +194,6 @@
             this.panelFree.Controls.Add(this.checkBox1_5);
             this.panelFree.Controls.Add(this.checkBox7_12);
             this.panelFree.Controls.Add(this.checkBox1_6);
-            this.panelFree.Controls.Add(this.btnDeleteAll);
-            this.panelFree.Controls.Add(this.btnDeleteSelect);
             this.panelFree.Controls.Add(this.checkBox7_11);
             this.panelFree.Controls.Add(this.checkBox1_7);
             this.panelFree.Controls.Add(this.checkBox7_10);
@@ -279,15 +279,71 @@
             this.panelFree.Size = new System.Drawing.Size(732, 398);
             this.panelFree.TabIndex = 175;
             // 
-            // btnJump
+            // buttonX6
             // 
-            this.btnJump.Location = new System.Drawing.Point(436, 335);
-            this.btnJump.Name = "btnJump";
-            this.btnJump.Size = new System.Drawing.Size(49, 23);
-            this.btnJump.TabIndex = 199;
-            this.btnJump.Text = "转到";
-            this.btnJump.UseVisualStyleBackColor = true;
-            this.btnJump.Click += new System.EventHandler(this.button1_Click);
+            this.buttonX6.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX6.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX6.Location = new System.Drawing.Point(646, 368);
+            this.buttonX6.Name = "buttonX6";
+            this.buttonX6.Size = new System.Drawing.Size(75, 23);
+            this.buttonX6.TabIndex = 205;
+            this.buttonX6.Text = "保存";
+            this.buttonX6.Click += new System.EventHandler(this.buttonX6_Click);
+            // 
+            // buttonX5
+            // 
+            this.buttonX5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX5.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX5.Location = new System.Drawing.Point(583, 325);
+            this.buttonX5.Name = "buttonX5";
+            this.buttonX5.Size = new System.Drawing.Size(75, 23);
+            this.buttonX5.TabIndex = 204;
+            this.buttonX5.Text = "移除勾选";
+            this.buttonX5.Click += new System.EventHandler(this.buttonX5_Click);
+            // 
+            // buttonX4
+            // 
+            this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Location = new System.Drawing.Point(502, 325);
+            this.buttonX4.Name = "buttonX4";
+            this.buttonX4.Size = new System.Drawing.Size(75, 23);
+            this.buttonX4.TabIndex = 203;
+            this.buttonX4.Text = "清空全部";
+            this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
+            // 
+            // buttonX3
+            // 
+            this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX3.Location = new System.Drawing.Point(428, 337);
+            this.buttonX3.Name = "buttonX3";
+            this.buttonX3.Size = new System.Drawing.Size(47, 23);
+            this.buttonX3.TabIndex = 202;
+            this.buttonX3.Text = "转到";
+            this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.Location = new System.Drawing.Point(375, 337);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(47, 23);
+            this.buttonX2.TabIndex = 201;
+            this.buttonX2.Text = "下一周";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
+            // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(322, 337);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(47, 23);
+            this.buttonX1.TabIndex = 200;
+            this.buttonX1.Text = "上一周";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
             // 
             // progressBar1
             // 
@@ -403,40 +459,6 @@
             this.chkBatchAdd.Text = "批量增加";
             this.chkBatchAdd.UseVisualStyleBackColor = true;
             this.chkBatchAdd.CheckedChanged += new System.EventHandler(this.chkBatchAdd_CheckedChanged);
-            // 
-            // btnNextWeek
-            // 
-            this.btnNextWeek.Location = new System.Drawing.Point(379, 335);
-            this.btnNextWeek.Name = "btnNextWeek";
-            this.btnNextWeek.Size = new System.Drawing.Size(49, 23);
-            this.btnNextWeek.TabIndex = 196;
-            this.btnNextWeek.Text = "下一周";
-            this.btnNextWeek.UseVisualStyleBackColor = true;
-            this.btnNextWeek.Click += new System.EventHandler(this.btnNextWeek_Click);
-            // 
-            // btnLastWeek
-            // 
-            this.btnLastWeek.Location = new System.Drawing.Point(322, 335);
-            this.btnLastWeek.Name = "btnLastWeek";
-            this.btnLastWeek.Size = new System.Drawing.Size(49, 23);
-            this.btnLastWeek.TabIndex = 196;
-            this.btnLastWeek.Text = "上一周";
-            this.btnLastWeek.UseVisualStyleBackColor = true;
-            this.btnLastWeek.Click += new System.EventHandler(this.btnLastWeek_Click);
-            // 
-            // btnsave
-            // 
-            this.btnsave.BackColor = System.Drawing.SystemColors.Window;
-            this.btnsave.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnsave.FlatAppearance.BorderSize = 0;
-            this.btnsave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnsave.Location = new System.Drawing.Point(646, 366);
-            this.btnsave.Name = "btnsave";
-            this.btnsave.Size = new System.Drawing.Size(75, 23);
-            this.btnsave.TabIndex = 193;
-            this.btnsave.Text = "保存";
-            this.btnsave.UseVisualStyleBackColor = false;
-            this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
             // listView3
             // 
@@ -616,26 +638,6 @@
             this.checkBox1_6.Text = "6";
             this.checkBox1_6.UseVisualStyleBackColor = true;
             this.checkBox1_6.CheckedChanged += new System.EventHandler(this.checkBox1_1_CheckedChanged);
-            // 
-            // btnDeleteAll
-            // 
-            this.btnDeleteAll.Location = new System.Drawing.Point(502, 325);
-            this.btnDeleteAll.Name = "btnDeleteAll";
-            this.btnDeleteAll.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteAll.TabIndex = 179;
-            this.btnDeleteAll.Text = "清空全部";
-            this.btnDeleteAll.UseVisualStyleBackColor = true;
-            this.btnDeleteAll.Click += new System.EventHandler(this.btnDeleteAll_Click);
-            // 
-            // btnDeleteSelect
-            // 
-            this.btnDeleteSelect.Location = new System.Drawing.Point(583, 325);
-            this.btnDeleteSelect.Name = "btnDeleteSelect";
-            this.btnDeleteSelect.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteSelect.TabIndex = 177;
-            this.btnDeleteSelect.Text = "移出勾选";
-            this.btnDeleteSelect.UseVisualStyleBackColor = true;
-            this.btnDeleteSelect.Click += new System.EventHandler(this.btnDeleteSelect_Click);
             // 
             // checkBox7_11
             // 
@@ -1518,39 +1520,39 @@
             this.columnHeader9});
             this.listView2.Font = new System.Drawing.Font("宋体", 9F);
             this.listView2.GridLines = true;
-            listViewGroup4.Header = "上午";
-            listViewGroup4.Name = "listViewGroup1";
-            listViewGroup5.Header = "下午";
-            listViewGroup5.Name = "listViewGroup2";
-            listViewGroup6.Header = "晚上";
-            listViewGroup6.Name = "listViewGroup3";
+            listViewGroup1.Header = "上午";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "下午";
+            listViewGroup2.Name = "listViewGroup2";
+            listViewGroup3.Header = "晚上";
+            listViewGroup3.Name = "listViewGroup3";
             this.listView2.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.listView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            listViewItem11.Group = listViewGroup4;
-            listViewItem11.StateImageIndex = 0;
-            listViewItem12.Group = listViewGroup6;
-            listViewItem13.Group = listViewGroup5;
-            listViewItem14.Group = listViewGroup4;
-            listViewItem15.Group = listViewGroup4;
-            listViewItem16.Group = listViewGroup4;
-            listViewItem17.Group = listViewGroup5;
-            listViewItem18.Group = listViewGroup5;
-            listViewItem19.Group = listViewGroup4;
-            listViewItem20.Group = listViewGroup5;
+            listViewItem1.Group = listViewGroup1;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.Group = listViewGroup3;
+            listViewItem3.Group = listViewGroup2;
+            listViewItem4.Group = listViewGroup1;
+            listViewItem5.Group = listViewGroup1;
+            listViewItem6.Group = listViewGroup1;
+            listViewItem7.Group = listViewGroup2;
+            listViewItem8.Group = listViewGroup2;
+            listViewItem9.Group = listViewGroup1;
+            listViewItem10.Group = listViewGroup2;
             this.listView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16,
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10});
             this.listView2.Location = new System.Drawing.Point(3, 1);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(493, 316);
@@ -1599,8 +1601,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 420);
             this.Controls.Add(this.panelFree);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(768, 459);
             this.Name = "frmSupervisor";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "督导教师空闲时间";
             this.Load += new System.EventHandler(this.frmSupervisor_Load);
@@ -1630,8 +1636,6 @@
         private System.Windows.Forms.CheckBox checkBox1_5;
         private System.Windows.Forms.CheckBox checkBox7_12;
         private System.Windows.Forms.CheckBox checkBox1_6;
-        private System.Windows.Forms.Button btnDeleteAll;
-        private System.Windows.Forms.Button btnDeleteSelect;
         private System.Windows.Forms.CheckBox checkBox7_11;
         private System.Windows.Forms.CheckBox checkBox1_7;
         private System.Windows.Forms.CheckBox checkBox7_10;
@@ -1723,9 +1727,6 @@
         private System.Windows.Forms.ListView listView3;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.Button btnsave;
-        private System.Windows.Forms.Button btnNextWeek;
-        private System.Windows.Forms.Button btnLastWeek;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox5;
@@ -1735,6 +1736,11 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button btnJump;
+        private DevComponents.DotNetBar.ButtonX buttonX6;
+        private DevComponents.DotNetBar.ButtonX buttonX5;
+        private DevComponents.DotNetBar.ButtonX buttonX4;
+        private DevComponents.DotNetBar.ButtonX buttonX3;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

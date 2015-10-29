@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param Name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -39,7 +39,6 @@
             this.cbIsDUDao = new System.Windows.Forms.CheckBox();
             this.btnAddType = new System.Windows.Forms.Button();
             this.btnDelType = new System.Windows.Forms.Button();
-            this.btnsave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -50,19 +49,22 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnPageUp = new System.Windows.Forms.Button();
             this.textBoxNow = new System.Windows.Forms.TextBox();
             this.labPageAll = new System.Windows.Forms.Label();
             this.labPage = new System.Windows.Forms.Label();
-            this.btnPageDown = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tbBelongs = new System.Windows.Forms.TextBox();
-            this.btnNew = new System.Windows.Forms.Button();
-            this.btnDel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnsave = new DevComponents.DotNetBar.ButtonX();
+            this.galleryContainer2 = new DevComponents.DotNetBar.GalleryContainer();
+            this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX5 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX6 = new DevComponents.DotNetBar.ButtonX();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,7 +96,6 @@
             this.tBMail.Size = new System.Drawing.Size(130, 21);
             this.tBMail.TabIndex = 13;
             this.tBMail.TextChanged += new System.EventHandler(this.tBMail_TextChanged);
-      
             this.tBMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tBName_KeyUp);
             // 
             // tBName
@@ -188,20 +189,6 @@
             this.btnDelType.TabIndex = 191;
             this.btnDelType.UseVisualStyleBackColor = true;
             // 
-            // btnsave
-            // 
-            this.btnsave.BackColor = System.Drawing.SystemColors.Window;
-            this.btnsave.Enabled = false;
-            this.btnsave.FlatAppearance.BorderSize = 0;
-            this.btnsave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnsave.Location = new System.Drawing.Point(642, 70);
-            this.btnsave.Name = "btnsave";
-            this.btnsave.Size = new System.Drawing.Size(68, 30);
-            this.btnsave.TabIndex = 16;
-            this.btnsave.Text = "保存";
-            this.btnsave.UseVisualStyleBackColor = false;
-            this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -285,20 +272,6 @@
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader7.Width = 120;
             // 
-            // btnPageUp
-            // 
-            this.btnPageUp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageUp.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageUp.FlatAppearance.BorderSize = 0;
-            this.btnPageUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageUp.Location = new System.Drawing.Point(151, 479);
-            this.btnPageUp.Name = "btnPageUp";
-            this.btnPageUp.Size = new System.Drawing.Size(68, 30);
-            this.btnPageUp.TabIndex = 6;
-            this.btnPageUp.Text = "上一页";
-            this.btnPageUp.UseVisualStyleBackColor = false;
-            this.btnPageUp.Click += new System.EventHandler(this.btnPageUp_Click);
-            // 
             // textBoxNow
             // 
             this.textBoxNow.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -335,20 +308,6 @@
             this.labPage.Text = "当前是第        页   共        页";
             this.labPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnPageDown
-            // 
-            this.btnPageDown.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageDown.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageDown.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPageDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageDown.Location = new System.Drawing.Point(494, 477);
-            this.btnPageDown.Name = "btnPageDown";
-            this.btnPageDown.Size = new System.Drawing.Size(68, 30);
-            this.btnPageDown.TabIndex = 7;
-            this.btnPageDown.Text = "下一页";
-            this.btnPageDown.UseVisualStyleBackColor = false;
-            this.btnPageDown.Click += new System.EventHandler(this.btnPageDown_Click);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -366,17 +325,6 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(113, 21);
             this.txtSearch.TabIndex = 4;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSearch.Location = new System.Drawing.Point(654, 12);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(68, 24);
-            this.btnSearch.TabIndex = 5;
-            this.btnSearch.Text = "搜索";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // label3
             // 
@@ -398,34 +346,15 @@
             this.tbBelongs.TabIndex = 11;
             this.tbBelongs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tBName_KeyUp);
             // 
-            // btnNew
-            // 
-            this.btnNew.Location = new System.Drawing.Point(12, 12);
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(68, 25);
-            this.btnNew.TabIndex = 1;
-            this.btnNew.Text = "新增";
-            this.btnNew.UseVisualStyleBackColor = true;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.Location = new System.Drawing.Point(104, 12);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(68, 25);
-            this.btnDel.TabIndex = 3;
-            this.btnDel.Text = "删除";
-            this.btnDel.UseVisualStyleBackColor = true;
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.btnsave);
             this.groupBox1.Controls.Add(this.tBName);
             this.groupBox1.Controls.Add(this.tBMail);
             this.groupBox1.Controls.Add(this.tBID);
             this.groupBox1.Controls.Add(this.tBTel);
             this.groupBox1.Controls.Add(this.lblMail);
-            this.groupBox1.Controls.Add(this.btnsave);
             this.groupBox1.Controls.Add(this.lblTel);
             this.groupBox1.Controls.Add(this.lblID);
             this.groupBox1.Controls.Add(this.tbBelongs);
@@ -440,27 +369,117 @@
             this.groupBox1.TabIndex = 210;
             this.groupBox1.TabStop = false;
             // 
+            // btnsave
+            // 
+            this.btnsave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnsave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnsave.Location = new System.Drawing.Point(636, 77);
+            this.btnsave.Name = "btnsave";
+            this.btnsave.Size = new System.Drawing.Size(75, 23);
+            this.btnsave.TabIndex = 214;
+            this.btnsave.Text = "保存";
+            this.btnsave.Click += new System.EventHandler(this.buttonX4_Click);
+            // 
+            // galleryContainer2
+            // 
+            // 
+            // 
+            // 
+            this.galleryContainer2.BackgroundStyle.Class = "RibbonFileMenuColumnTwoContainer";
+            this.galleryContainer2.EnableGalleryPopup = false;
+            this.galleryContainer2.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.galleryContainer2.MinimumSize = new System.Drawing.Size(180, 240);
+            this.galleryContainer2.MultiLine = false;
+            this.galleryContainer2.Name = "galleryContainer2";
+            this.galleryContainer2.PopupUsesStandardScrollbars = false;
+            // 
+            // labelItem1
+            // 
+            this.labelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.labelItem1.BorderType = DevComponents.DotNetBar.eBorderType.Etched;
+            this.labelItem1.CanCustomize = false;
+            this.labelItem1.Name = "labelItem1";
+            // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(12, 16);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.TabIndex = 211;
+            this.buttonX1.Text = "新增";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.Location = new System.Drawing.Point(106, 16);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(75, 23);
+            this.buttonX2.TabIndex = 212;
+            this.buttonX2.Text = "删除";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
+            // 
+            // buttonX3
+            // 
+            this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX3.Location = new System.Drawing.Point(654, 16);
+            this.buttonX3.Name = "buttonX3";
+            this.buttonX3.Size = new System.Drawing.Size(75, 23);
+            this.buttonX3.TabIndex = 213;
+            this.buttonX3.Text = "搜索";
+            this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
+            // 
+            // buttonX5
+            // 
+            this.buttonX5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX5.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX5.Location = new System.Drawing.Point(166, 483);
+            this.buttonX5.Name = "buttonX5";
+            this.buttonX5.Size = new System.Drawing.Size(75, 23);
+            this.buttonX5.TabIndex = 214;
+            this.buttonX5.Text = "上一页";
+            this.buttonX5.Click += new System.EventHandler(this.buttonX5_Click);
+            // 
+            // buttonX6
+            // 
+            this.buttonX6.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX6.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX6.Location = new System.Drawing.Point(480, 484);
+            this.buttonX6.Name = "buttonX6";
+            this.buttonX6.Size = new System.Drawing.Size(75, 23);
+            this.buttonX6.TabIndex = 215;
+            this.buttonX6.Text = "下一页";
+            this.buttonX6.Click += new System.EventHandler(this.buttonX6_Click);
+            // 
             // frmTeacher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 511);
+            this.Controls.Add(this.buttonX6);
+            this.Controls.Add(this.buttonX5);
+            this.Controls.Add(this.buttonX3);
+            this.Controls.Add(this.buttonX2);
+            this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnDel);
-            this.Controls.Add(this.btnNew);
-            this.Controls.Add(this.btnPageUp);
             this.Controls.Add(this.textBoxNow);
             this.Controls.Add(this.labPageAll);
             this.Controls.Add(this.labPage);
-            this.Controls.Add(this.btnPageDown);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtSearch);
-            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnAddType);
             this.Controls.Add(this.btnDelType);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(751, 550);
             this.Name = "frmTeacher";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "教师信息";
             this.Load += new System.EventHandler(this.frmTeacher_Load);
@@ -482,16 +501,12 @@
         private System.Windows.Forms.CheckBox cbIsDUDao;
         private System.Windows.Forms.Button btnAddType;
         private System.Windows.Forms.Button btnDelType;
-        private System.Windows.Forms.Button btnsave;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Button btnPageUp;
         private System.Windows.Forms.TextBox textBoxNow;
         private System.Windows.Forms.Label labPageAll;
         private System.Windows.Forms.Label labPage;
-        private System.Windows.Forms.Button btnPageDown;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbTitle;
         private System.Windows.Forms.ColumnHeader columnHeader1;
@@ -503,10 +518,16 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbBelongs;
         private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.Button btnNew;
-        private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.TextBox tBID;
         public System.Windows.Forms.TextBox tBName;
+        private DevComponents.DotNetBar.GalleryContainer galleryContainer2;
+        private DevComponents.DotNetBar.LabelItem labelItem1;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX3;
+        private DevComponents.DotNetBar.ButtonX btnsave;
+        private DevComponents.DotNetBar.ButtonX buttonX5;
+        private DevComponents.DotNetBar.ButtonX buttonX6;
     }
 }

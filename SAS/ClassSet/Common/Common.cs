@@ -200,11 +200,13 @@ namespace SAS.ClassSet.Common
                      fs.Write(b, 0, b.Length);
                      if (fs != null)
                          fs.Close();
+                     fs.Dispose();
                  }
                  catch
                  {
                      if (fs != null)
                          fs.Close();
+                     fs.Dispose();
 
                  }
              }

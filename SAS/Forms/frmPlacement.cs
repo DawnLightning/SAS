@@ -11,12 +11,13 @@ using SAS.ClassSet.MemberInfo;
 using SAS.ClassSet.FunctionTools;
 namespace SAS.Forms
 {
-    public partial class frmPlacement : Form
+    public partial class frmPlacement : DevComponents.DotNetBar.Office2007Form
     {
         public static frmPlacement fmp;
         public frmPlacement()
         {   
             InitializeComponent();
+            this.EnableGlass = false;
         }
         int cbegin_week;
         int cbegin_day;
@@ -31,14 +32,14 @@ namespace SAS.Forms
                 && textBox5.Text != "" )
             {   if(dt.Rows.Count==0)
             {
-                btnPageUp.Enabled = true;
+                buttonX1.Enabled = true;
             }
-                button3.Enabled = true;
+                 buttonX2.Enabled = true;
             }
             else
             {
-                btnPageUp.Enabled = false;
-                button3.Enabled = false;
+                buttonX1.Enabled = false;
+                buttonX2.Enabled = false;
             }
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -89,27 +90,6 @@ namespace SAS.Forms
         }
         private void btnPageUp_Click(object sender, EventArgs e)
         {
-           if(checkType())
-           {
-               if (cnumpeo_max > cnumpeo_min)
-               {
-                   frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
-                   //MessageBox.Show("OK");
-
-                   PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min,proportion);
-                   Placement doplacement = new Placement();
-                   doplacement.MakePlacement(pc);
-               }
-               else
-               {
-                   MessageBox.Show("最大人数不能小于最小人数");
-               }
-              
-               
-             
-               
-               
-           }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -134,29 +114,86 @@ namespace SAS.Forms
 
         private void frmPlacement_Load(object sender, EventArgs e)
         {
-            SqlHelper help = new SqlHelper();
-            help.getDs("select * from SpareTime_Data","SpareTime_Data");
+           
            
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {   if(checkType())
         {
-            if (cnumpeo_max > cnumpeo_min)
-            {
-                frmMain.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
-                //MessageBox.Show("OK");
-
-
-                PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min,proportion);
-                Placement doplacement = new Placement();
-                doplacement.RePlacement(pc);
-            }
-            else {
-                MessageBox.Show("最大人数不能小于最小人数");
-            }
           
         }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+
+            SqlHelper help = new SqlHelper();
+            DataTable dtsparetime = help.getDs("select * from SpareTime_Data", "SpareTime_Data").Tables[0];
+            DataTable dtclass = help.getDs("select * from Classes_Data", "Classes_Data").Tables[0];
+            DataTable dtteacher = help.getDs("select * from Teachers_Data", "Teachers_Data").Tables[0];
+
+
+            if (checkType())
+            {
+            if (cnumpeo_max >= cnumpeo_min)
+            {
+            if (dtsparetime.Rows.Count != 0 && dtclass.Rows.Count != 0 && dtteacher.Rows.Count != 0)
+            {
+                Main.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
+                //MessageBox.Show("OK");
+
+                PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min, proportion);
+                Placement doplacement = new Placement();
+                doplacement.MakePlacement(pc);
+            }
+            else
+            {
+                MessageBox.Show("请导入数据后重试");
+            }
+
+            }
+            else
+            {
+            MessageBox.Show("最大人数不能小于最小人数");
+            }
+
+
+
+
+
+            }
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            SqlHelper help = new SqlHelper();
+            DataTable dtsparetime = help.getDs("select * from SpareTime_Data", "SpareTime_Data").Tables[0];
+            DataTable dtclass = help.getDs("select * from Classes_Data", "Classes_Data").Tables[0];
+            DataTable dtteacher = help.getDs("select * from Teachers_Data", "Teachers_Data").Tables[0];
+            if (checkType())
+            {
+                if (cnumpeo_max >= cnumpeo_min)
+                {
+                    if (dtsparetime.Rows.Count != 0 && dtclass.Rows.Count != 0 && dtteacher.Rows.Count != 0)
+                    {
+                        Main.fm.SetStatusText("正在工作中，请耐心等待~~", 1);
+                        //MessageBox.Show("OK");
+
+
+                        PlacementConfig pc = new PlacementConfig(cbegin_week, cbegin_day, cnumclass_week, cnumpeo_max, cnumpeo_min, proportion);
+                        Placement doplacement = new Placement();
+                        doplacement.RePlacement(pc);
+                    }
+                    else
+                    {
+                        MessageBox.Show("请导入数据后重试");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("最大人数不能小于最小人数");
+                }
+
+            }
         }
     }
 }

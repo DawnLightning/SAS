@@ -9,11 +9,12 @@ using System.Windows.Forms;
 
 namespace SAS.Forms
 {
-    public partial class frmPlanSearch : Form
+    public partial class frmPlanSearch : DevComponents.DotNetBar.Office2007Form
     {
         private DateTime CurrentTime; 
         public frmPlanSearch(DateTime dt)
         {
+            this.EnableGlass = false; 
             this.CurrentTime = dt;
             InitializeComponent();
         }

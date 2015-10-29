@@ -10,7 +10,7 @@
         /// <summary>
         /// 清理所有正在使用的资源。
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param Name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -56,7 +56,11 @@
             this.tsmiCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.ExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.search = new System.Windows.Forms.ToolStripMenuItem();
+            this.saverecord = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看保存记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看临时数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delete = new System.Windows.Forms.ToolStripMenuItem();
             this.tssbSend = new System.Windows.Forms.ToolStripSplitButton();
             this.tsmiAllot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiResult = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +75,8 @@
             this.labPageAll = new System.Windows.Forms.Label();
             this.labPage = new System.Windows.Forms.Label();
             this.btnPageDown = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -213,7 +219,7 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStrip1.Size = new System.Drawing.Size(913, 57);
+            this.toolStrip1.Size = new System.Drawing.Size(882, 57);
             this.toolStrip1.TabIndex = 36;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -247,14 +253,14 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem2.Text = "教师信息";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem3.Text = "空闲时间";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
@@ -265,7 +271,11 @@
             this.tsmiCreate,
             this.ExcelToolStripMenuItem,
             this.ToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.search,
+            this.saverecord,
+            this.查看保存记录ToolStripMenuItem,
+            this.查看临时数据ToolStripMenuItem,
+            this.delete});
             this.tsbCreate.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsbCreate.Image = ((System.Drawing.Image)(resources.GetObject("tsbCreate.Image")));
             this.tsbCreate.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -303,12 +313,40 @@
             this.ToolStripMenuItem.Text = "修改安排";
             this.ToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click_1);
             // 
-            // toolStripMenuItem1
+            // search
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 22);
-            this.toolStripMenuItem1.Text = "数据查找";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(178, 22);
+            this.search.Text = "数据查找";
+            this.search.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // saverecord
+            // 
+            this.saverecord.Name = "saverecord";
+            this.saverecord.Size = new System.Drawing.Size(178, 22);
+            this.saverecord.Text = "保存记录";
+            this.saverecord.Click += new System.EventHandler(this.保存记录ToolStripMenuItem_Click);
+            // 
+            // 查看保存记录ToolStripMenuItem
+            // 
+            this.查看保存记录ToolStripMenuItem.Name = "查看保存记录ToolStripMenuItem";
+            this.查看保存记录ToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.查看保存记录ToolStripMenuItem.Text = "查看保存记录";
+            this.查看保存记录ToolStripMenuItem.Click += new System.EventHandler(this.查看保存记录ToolStripMenuItem_Click);
+            // 
+            // 查看临时数据ToolStripMenuItem
+            // 
+            this.查看临时数据ToolStripMenuItem.Name = "查看临时数据ToolStripMenuItem";
+            this.查看临时数据ToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.查看临时数据ToolStripMenuItem.Text = "查看临时数据";
+            this.查看临时数据ToolStripMenuItem.Click += new System.EventHandler(this.查看临时数据ToolStripMenuItem_Click);
+            // 
+            // delete
+            // 
+            this.delete.Name = "delete";
+            this.delete.Size = new System.Drawing.Size(178, 22);
+            this.delete.Text = "删除";
+            this.delete.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
             // tssbSend
             // 
@@ -327,7 +365,7 @@
             // 
             this.tsmiAllot.Enabled = false;
             this.tsmiAllot.Name = "tsmiAllot";
-            this.tsmiAllot.Size = new System.Drawing.Size(144, 22);
+            this.tsmiAllot.Size = new System.Drawing.Size(152, 22);
             this.tsmiAllot.Text = "听课安排";
             this.tsmiAllot.Click += new System.EventHandler(this.tsmiAllot_Click);
             // 
@@ -335,7 +373,7 @@
             // 
             this.tsmiResult.Enabled = false;
             this.tsmiResult.Name = "tsmiResult";
-            this.tsmiResult.Size = new System.Drawing.Size(144, 22);
+            this.tsmiResult.Size = new System.Drawing.Size(152, 22);
             this.tsmiResult.Text = "听课结果";
             this.tsmiResult.Click += new System.EventHandler(this.tsmiResult_Click);
             // 
@@ -462,11 +500,21 @@
             this.btnPageDown.UseVisualStyleBackColor = false;
             this.btnPageDown.Click += new System.EventHandler(this.btnPageDown_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(12, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 14);
+            this.label1.TabIndex = 75;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 521);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnPageUp);
             this.Controls.Add(this.textBoxNow);
             this.Controls.Add(this.labPageAll);
@@ -478,6 +526,9 @@
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "督导听课安排系统";
@@ -531,10 +582,16 @@
         private System.Windows.Forms.ToolStripButton tsbAbout;
         private System.Windows.Forms.ToolStripMenuItem ExcelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem search;
         private System.Windows.Forms.ToolStripSplitButton tsbTeacher;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem saverecord;
+        private System.Windows.Forms.ToolStripMenuItem 查看保存记录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 查看临时数据ToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem delete;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param Name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -35,13 +35,13 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnPageUp = new System.Windows.Forms.Button();
             this.textBoxNow = new System.Windows.Forms.TextBox();
             this.labPageAll = new System.Windows.Forms.Label();
             this.labPage = new System.Windows.Forms.Label();
-            this.btnPageDown = new System.Windows.Forms.Button();
-            this.btnDelType = new System.Windows.Forms.Button();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
             this.SuspendLayout();
             // 
             // listView1
@@ -93,30 +93,6 @@
             this.columnHeader6.Text = "课程类型";
             this.columnHeader6.Width = 88;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 30);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "导入进度表";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnPageUp
-            // 
-            this.btnPageUp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageUp.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageUp.FlatAppearance.BorderSize = 0;
-            this.btnPageUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageUp.Location = new System.Drawing.Point(149, 429);
-            this.btnPageUp.Name = "btnPageUp";
-            this.btnPageUp.Size = new System.Drawing.Size(68, 25);
-            this.btnPageUp.TabIndex = 5;
-            this.btnPageUp.Text = "上一页";
-            this.btnPageUp.UseVisualStyleBackColor = false;
-            this.btnPageUp.Click += new System.EventHandler(this.btnPageUp_Click_1);
-            // 
             // textBoxNow
             // 
             this.textBoxNow.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -153,50 +129,69 @@
             this.labPage.Text = "当前是第        页   共        页";
             this.labPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnPageDown
+            // buttonX1
             // 
-            this.btnPageDown.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPageDown.BackColor = System.Drawing.SystemColors.Window;
-            this.btnPageDown.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPageDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPageDown.Location = new System.Drawing.Point(473, 429);
-            this.btnPageDown.MaximumSize = new System.Drawing.Size(68, 25);
-            this.btnPageDown.Name = "btnPageDown";
-            this.btnPageDown.Size = new System.Drawing.Size(68, 25);
-            this.btnPageDown.TabIndex = 6;
-            this.btnPageDown.Text = "下一页";
-            this.btnPageDown.UseVisualStyleBackColor = false;
-            this.btnPageDown.Click += new System.EventHandler(this.btnPageDown_Click_1);
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(12, 19);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.TabIndex = 83;
+            this.buttonX1.Text = "导入课表";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
             // 
-            // btnDelType
+            // buttonX2
             // 
-            this.btnDelType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnDelType.FlatAppearance.BorderSize = 0;
-            this.btnDelType.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnDelType.Location = new System.Drawing.Point(173, 12);
-            this.btnDelType.Name = "btnDelType";
-            this.btnDelType.Size = new System.Drawing.Size(57, 30);
-            this.btnDelType.TabIndex = 2;
-            this.btnDelType.Text = "删除";
-            this.btnDelType.UseVisualStyleBackColor = true;
-            this.btnDelType.Click += new System.EventHandler(this.btnDelType_Click);
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.Location = new System.Drawing.Point(110, 19);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(75, 23);
+            this.buttonX2.TabIndex = 84;
+            this.buttonX2.Text = "删除全部";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
+            // 
+            // buttonX3
+            // 
+            this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX3.Location = new System.Drawing.Point(142, 425);
+            this.buttonX3.Name = "buttonX3";
+            this.buttonX3.Size = new System.Drawing.Size(75, 21);
+            this.buttonX3.TabIndex = 85;
+            this.buttonX3.Text = "上一页";
+            this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
+            // 
+            // buttonX4
+            // 
+            this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Location = new System.Drawing.Point(464, 424);
+            this.buttonX4.Name = "buttonX4";
+            this.buttonX4.Size = new System.Drawing.Size(75, 21);
+            this.buttonX4.TabIndex = 86;
+            this.buttonX4.Text = "下一页";
+            this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
             // 
             // frmPlan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 457);
-            this.Controls.Add(this.btnDelType);
-            this.Controls.Add(this.btnPageUp);
+            this.Controls.Add(this.buttonX4);
+            this.Controls.Add(this.buttonX3);
+            this.Controls.Add(this.buttonX2);
+            this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.textBoxNow);
             this.Controls.Add(this.labPageAll);
             this.Controls.Add(this.labPage);
-            this.Controls.Add(this.btnPageDown);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(750, 496);
             this.Name = "frmPlan";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "教学进度表";
             this.Load += new System.EventHandler(this.frmPlan_Load);
@@ -213,13 +208,13 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnPageUp;
         private System.Windows.Forms.Label labPage;
-        private System.Windows.Forms.Button btnPageDown;
-        private System.Windows.Forms.Button btnDelType;
         public System.Windows.Forms.ListView listView1;
         public System.Windows.Forms.TextBox textBoxNow;
         public System.Windows.Forms.Label labPageAll;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX3;
+        private DevComponents.DotNetBar.ButtonX buttonX4;
     }
 }

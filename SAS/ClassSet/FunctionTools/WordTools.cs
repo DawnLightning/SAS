@@ -10,6 +10,9 @@ using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using SAS.ClassSet.MemberInfo;
 using SAS.ClassSet.Common;
+using System.Web;
+using System.Xml;
+using Novacode;
 namespace SAS.ClassSet.FunctionTools
 {
     class WordTools
@@ -69,6 +72,50 @@ namespace SAS.ClassSet.FunctionTools
             return newfile; 
         }
         //一般
+        public string fullcheifsupervisor(WordTableInfo Info)
+        {   
+            Common.Common.load_cheif_supervisor();
+            string fileName = Environment.CurrentDirectory + "\\" + "chief_supervisor.doc";//WORD文档所在路径
+            string newfile =  Common.Common.strAddfilesPath + Info.Teacher + Info.Time.Trim() + Info.Supervisor + ".doc";//存储路径名称
+            DocX doc = DocX.Load(fileName);
+            Table table = doc.Tables[0];
+              
+             table.Rows[0].Cells[1].Paragraphs[0].ReplaceText("teacher", Info.Teacher);
+             table.Rows[0].Cells[5].Paragraphs[0].ReplaceText("time", Info.Time.Substring(0, Info.Time.IndexOf(" ")));
+             table.Rows[1].Cells[5].Paragraphs[0].ReplaceText("address", Info.Classroom + Info.Time.Substring(Info.Time.IndexOf(" ") + 1));
+             table.Rows[3].Cells[1].Paragraphs[0].ReplaceText("class", Info.Class);
+             table.Rows[4].Cells[1].Paragraphs[0].ReplaceText("context", Info.Subject);
+             if (!System.IO.File.Exists(Common.Common.strAddfilesPath))
+             {
+                 Directory.CreateDirectory(Common.Common.strAddfilesPath);
+             }
+             doc.SaveAs(newfile);
+
+             doc.Dispose();
+             return newfile;
+        }
+        public string fullsupervisor(WordTableInfo Info)
+        {
+            Common.Common.load_supervisor();
+            string fileName1 = Environment.CurrentDirectory + "\\" + "supervisor.doc";
+            string newfile = Common.Common.strAddfilesPath + "\\" + Info.Teacher + Info.Time.Trim() + Info.Supervisor + ".doc";
+            DocX doc = DocX.Load(fileName1);
+            doc.ReplaceText("title","广东医学院教师课堂教学质量评价表" + "(" + Info.Teachingtype + ")") ;
+            Table table = doc.Tables[0];
+            table.Rows[0].Cells[1].Paragraphs[0].ReplaceText("Teacher", Info.Teacher);
+            table.Rows[0].Cells[3].Paragraphs[0].ReplaceText("Perfession", Info.Perfession);
+            table.Rows[0].Cells[5].Paragraphs[0].ReplaceText("Time", Info.Time.Substring(0, Info.Time.IndexOf(" ")));
+            table.Rows[1].Cells[1].Paragraphs[0].ReplaceText("Class", Info.Class);
+            table.Rows[1].Cells[3].Paragraphs[0].ReplaceText("address", Info.Classroom + Info.Time.Substring(Info.Time.IndexOf(" ") + 1));
+            table.Rows[2].Cells[1].Paragraphs[0].ReplaceText("Context", Info.Subject);
+            if (!System.IO.File.Exists(Common.Common.strAddfilesPath))
+            {
+                Directory.CreateDirectory(Common.Common.strAddfilesPath);
+            }
+            doc.SaveAs(newfile);
+            doc.Dispose();
+            return newfile;
+        }
         public string  Addsupervisordata(WordTableInfo Info)
         {
             Common.Common.load_supervisor();

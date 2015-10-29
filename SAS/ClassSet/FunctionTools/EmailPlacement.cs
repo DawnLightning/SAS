@@ -37,13 +37,14 @@ namespace SAS.ClassSet.FunctionTools
                 if (i == 0)
                 {
                     Info.Supervisor = ListSupervisor[0];
-                    ListFileName.Add(Tool.Addchiefsupervisordata(Info));
-
+                   // ListFileName.Add(Tool.Addchiefsupervisordata(Info));
+                    ListFileName.Add(Tool.fullcheifsupervisor(Info));
                 }
                 else
                 {
                     Info.Supervisor = ListSupervisor[i];
-                    ListFileName.Add(Tool.Addsupervisordata(Info));
+                   // ListFileName.Add(Tool.Addsupervisordata(Info));
+                    ListFileName.Add(Tool.fullsupervisor(Info));
                 }
             }
         }

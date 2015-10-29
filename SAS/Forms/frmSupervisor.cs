@@ -12,10 +12,11 @@ using System.Windows.Forms;
 using SAS.ClassSet.FunctionTools;
 namespace SAS.Forms
 {
-    public partial class frmSupervisor : Form
+    public partial class frmSupervisor : DevComponents.DotNetBar.Office2007Form
     {
         public frmSupervisor(string name, string id, string startweek)
-        {   
+        {
+            this.EnableGlass = false;
             this.DDName = name;
             this.DDID = id;
             this.startweek = startweek;
@@ -143,134 +144,7 @@ namespace SAS.Forms
         }
         private void btnsave_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(DateTime.Now);
-            if (chkBatchAdd.Checked)
-            {
-                if (tBStart.Text == "" || tBStart.Text == "00" || tBStart.Text == "0" || tBEnd.Text == "" || tBEnd.Text == "00" || tBEnd.Text == "0")
-                {
-                    MessageBox.Show("周次不能为空或0！！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-            }
-            else
-            {
-                if (tBWeek.Text == "" || tBWeek.Text == "00" || tBWeek.Text == "0")
-                {
-                    MessageBox.Show("周次不能为空或0！！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-            }
-            foreach (ListViewItem LVI in listView3.Items)
-            {
-                LVI.Checked = true;
-            }
-            string[] strWeek = new string[7];
-            foreach (object obj in A1)
-            {
-                string S1 = obj.ToString();
-                switch (S1[0])
-                {
-                    case '1':
-                        strWeek[0] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '2':
-                        strWeek[1] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '3':
-                        strWeek[2] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '4':
-                        strWeek[3] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '5':
-                        strWeek[4] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '6':
-                        strWeek[5] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                    case '7':
-                        strWeek[6] += S1.Substring(S1.IndexOf("第") + 1, 2);
-                        break;
-                }
-            }
-            ArrayList[] ALWeek = new ArrayList[7];
-            for (int i = 0; i < 7; i++)
-            {
-                ALWeek[i] = new ArrayList();
-                if (strWeek[i] != null)
-                {
-                    ALWeek[i] = ConvertToBClass(strWeek[i]);
-                }
-            }
-            help.Oledbcommand("delete from SpareTime_Data where Supervisor_ID='" + DDID + "' and Spare_Week=" + tBWeek.Text + ";");
-            System.Diagnostics.Debug.WriteLine(DateTime.Now);
-            if (chkBatchAdd.Checked == false)
-            {
-                System.Diagnostics.Debug.WriteLine(DateTime.Now);
-                for (int i = 0; i < 7; i++)
-                {
-                    if (ALWeek[i].Count > 0)
-                    {
-                        for (int j = 0; j < ALWeek[i].Count; j++)
-                        {
-                            if (tBWeek.Text.Count() == 1)
-                            { strID = DDID + "0" + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
-                            else
-                            { strID = DDID + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
-                            InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + tBWeek.Text + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
-                        }
-                    }
-                }
-                help.insertToStockDataByBatch(InsertArray, progressBar1);
-                InsertArray.Clear();
-               // Insert();
-                iyanzheng = 1;
-                MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                progressBar1.Value = 0;
-                //new frmSpareTime().Show();
-            }
-            else
-            {
-                if (int.Parse(tBEnd.Text) <= int.Parse(tBStart.Text))
-                {
-                    MessageBox.Show("终止周必须大于起始周!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    tBEnd.Select();
-                    return;
-                }
-                System.Diagnostics.Debug.WriteLine(DateTime.Now);
-                for (int i1 = int.Parse(tBStart.Text); i1 <= int.Parse(tBEnd.Text); i1++)
-                {
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (ALWeek[i].Count > 0)
-                        {
-                            for (int j = 0; j < ALWeek[i].Count; j++)
-                            {
-
-                                if (i1.ToString().Count() == 1)
-                                { strID = DDID + "0" + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
-                                else
-                                { strID = DDID + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
-
-                                InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + i1.ToString() + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
-
-                            }
-
-                        }
-                    }
-                }
-                help.insertToStockDataByBatch(InsertArray, progressBar1);
-                InsertArray.Clear();
-               // Insert();
-                iyanzheng = 1;
-                MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                frmSpareTime frs = new frmSpareTime();
-                frs.Show();
-                form.Close();
-                //progressBar1.Value = 0;
-                //new frmSpareTime().Show();
-            }
+            
         }
         private void frmSupervisor_Load(object sender, EventArgs e)
         {
@@ -483,8 +357,8 @@ namespace SAS.Forms
                 groupBox2.Enabled = true;
                 tBWeek.Enabled = false;
                 lblWeek.Enabled = false;
-                btnLastWeek.Enabled = false;
-                btnNextWeek.Enabled = false;
+                buttonX1.Enabled = false;
+                buttonX2.Enabled = false;
                 listView3.Items.Clear();
                 for (int i = 0; i < A1.Count; i++)
                 {
@@ -497,8 +371,8 @@ namespace SAS.Forms
                 groupBox2.Enabled = false;
                 tBWeek.Enabled = true;
                 lblWeek.Enabled = true;
-                btnLastWeek.Enabled = true;
-                btnNextWeek.Enabled = true;
+                buttonX1.Enabled = true;
+                buttonX2.Enabled = true;
                 listView3.Items.Clear();
                 for (int i = 0; i < A1.Count; i++)
                 {
@@ -509,34 +383,11 @@ namespace SAS.Forms
         }
         private void btnDeleteAll_Click(object sender, EventArgs e)
         {
-            listView3.Items.Clear();
-            A1.Clear();
-            foreach (Control Cl in panelFree.Controls)
-            {
-                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
-                {
-                    CheckBox CB = new CheckBox();
-                    CB = (CheckBox)Cl;
-                    CB.Checked = false;
-                }
-            }
+           
         }
         private void btnDeleteSelect_Click(object sender, EventArgs e)
         {
-            while (listView3.CheckedIndices.Count > 0)
-            {
-                int i = listView3.CheckedIndices[0];
-                string S11 = A1[i].ToString().Substring(0, A1[i].ToString().IndexOf(" "));
-                foreach (Control Cl in panelFree.Controls)
-                {
-                    if (Cl is CheckBox && Cl.Name == "checkBox" + S11)
-                    {
-                        CheckBox CB = new CheckBox();
-                        CB = (CheckBox)Cl;
-                        CB.Checked = false;
-                    }
-                }
-            }
+           
         }
         private void tBWeek_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -631,43 +482,13 @@ namespace SAS.Forms
         }
         private void btnLastWeek_Click(object sender, EventArgs e)
         {
-            if (iyanzheng == 0)
-            {
-                DialogResult DR = MessageBox.Show("本周空课表还未保存,是否保存?", "提醒", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (DR == DialogResult.Yes)
-                {
-                    btnsave_Click(sender, e);
-                }
-            }
-            if (tBWeek.Text == "0" || tBWeek.Text == "" || tBWeek.Text == "00" || tBWeek.Text == "1" || tBWeek.Text == "01")
-            {
-                tBWeek.Text = "1";
-                tBWeek.SelectAll();
-                return;
-            }
-            tBWeek.Text = (int.Parse(tBWeek.Text) - 1).ToString();
-            RefreshThisWeek(tBWeek.Text);
+          
 
         }
 
         private void btnNextWeek_Click(object sender, EventArgs e)
         {
-            if (iyanzheng == 0)
-            {
-                DialogResult DR = MessageBox.Show("本周空课表还未保存,是否保存?", "提醒", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (DR == DialogResult.Yes)
-                {
-                    btnsave_Click(sender, e);
-                }
-            }
-            if (tBWeek.Text == "0" || tBWeek.Text == "" || tBWeek.Text == "00")
-            {
-                tBWeek.Text = "1";
-                tBWeek.SelectAll();
-                return;
-            }
-            tBWeek.Text = (int.Parse(tBWeek.Text) + 1).ToString();
-            RefreshThisWeek(tBWeek.Text);
+           
 
         }
         private void checkBox0_Click(object sender, EventArgs e)
@@ -749,31 +570,7 @@ namespace SAS.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (tBWeek.Text == "1")
-            {
-                btnLastWeek.Enabled = false;
-                btnNextWeek.Enabled = true;
-            }
-            else if (tBWeek.Text == "20")
-            {
-                btnLastWeek.Enabled = false;
-                btnNextWeek.Enabled = true;
-            }
-            else
-            {
-                btnLastWeek.Enabled = true;
-                btnNextWeek.Enabled = true;
-            }
-            listView3.Items.Clear();
-
-
-            tBWeek.Text = (int.Parse(tBWeek.Text)).ToString();
-            RefreshThisWeek(tBWeek.Text);
-            for (int i = 0; i < A1.Count; i++)
-            {
-                ListViewItem LVI = listView3.Items.Add(DDName);
-                LVI.SubItems.Add("第" + tBWeek.Text + "周" + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(" ") + 1, A1[i].ToString().IndexOf((',')) - A1[i].ToString().IndexOf(" ") - 1) + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(',') + 1));
-            }
+           
 
         }
         private void RefreshThisWeek(string weekStr)
@@ -782,8 +579,8 @@ namespace SAS.Forms
             ClearaInts();
             for (int i = 0; i < 7; i++)
             {
-                DataTable nw = SqlHelper.ExecuteDataTable("Select * from SpareTime_Data where Spare_Week = @week and Supervisor = @name and Spare_Day= @day",
-                new OleDbParameter("@week", week), new OleDbParameter("@name", DDName), new OleDbParameter("@day", i + 1));
+                DataTable nw = SqlHelper.ExecuteDataTable("Select * from SpareTime_Data where Spare_Week = @week and Supervisor = @Name and Spare_Day= @Day",
+                new OleDbParameter("@week", week), new OleDbParameter("@Name", DDName), new OleDbParameter("@Day", i + 1));
                 foreach (DataRow value in nw.Rows)
                 {
                     int num = Convert.ToInt32(value["Spare_Number"]);
@@ -845,6 +642,240 @@ namespace SAS.Forms
                 //}
             }
             InsertArray.Clear();
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            if (iyanzheng == 0)
+            {
+                DialogResult DR = MessageBox.Show("本周空课表还未保存,是否保存?", "提醒", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (DR == DialogResult.Yes)
+                {
+                    btnsave_Click(sender, e);
+                }
+            }
+            if (tBWeek.Text == "0" || tBWeek.Text == "" || tBWeek.Text == "00" || tBWeek.Text == "1" || tBWeek.Text == "01")
+            {
+                tBWeek.Text = "1";
+                tBWeek.SelectAll();
+                return;
+            }
+            tBWeek.Text = (int.Parse(tBWeek.Text) - 1).ToString();
+            RefreshThisWeek(tBWeek.Text);
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            if (iyanzheng == 0)
+            {
+                DialogResult DR = MessageBox.Show("本周空课表还未保存,是否保存?", "提醒", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (DR == DialogResult.Yes)
+                {
+                    btnsave_Click(sender, e);
+                }
+            }
+            if (tBWeek.Text == "0" || tBWeek.Text == "" || tBWeek.Text == "00")
+            {
+                tBWeek.Text = "1";
+                tBWeek.SelectAll();
+                return;
+            }
+            tBWeek.Text = (int.Parse(tBWeek.Text) + 1).ToString();
+            RefreshThisWeek(tBWeek.Text);
+        }
+
+        private void buttonX3_Click(object sender, EventArgs e)
+        {
+            if (tBWeek.Text == "1")
+            {
+                buttonX1.Enabled = false;
+                buttonX2.Enabled = true;
+            }
+            else if (tBWeek.Text == "20")
+            {
+                buttonX1.Enabled = false;
+                buttonX2.Enabled = true;
+            }
+            else
+            {
+                buttonX1.Enabled = true;
+                buttonX2.Enabled = true;
+            }
+            listView3.Items.Clear();
+            A1.Clear();
+
+            tBWeek.Text = (int.Parse(tBWeek.Text)).ToString();
+            RefreshThisWeek(tBWeek.Text);
+            for (int i = 0; i < A1.Count; i++)
+            {
+                ListViewItem LVI = listView3.Items.Add(DDName);
+                LVI.SubItems.Add("第" + tBWeek.Text + "周" + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(" ") + 1, A1[i].ToString().IndexOf((',')) - A1[i].ToString().IndexOf(" ") - 1) + " " + A1[i].ToString().Substring(A1[i].ToString().IndexOf(',') + 1));
+            }
+        }
+
+        private void buttonX4_Click(object sender, EventArgs e)
+        {
+            listView3.Items.Clear();
+            A1.Clear();
+            foreach (Control Cl in panelFree.Controls)
+            {
+                if (Cl is CheckBox && Cl.Name != "chkBatchAdd")
+                {
+                    CheckBox CB = new CheckBox();
+                    CB = (CheckBox)Cl;
+                    CB.Checked = false;
+                }
+            }
+        }
+
+        private void buttonX5_Click(object sender, EventArgs e)
+        {
+            while (listView3.CheckedIndices.Count > 0)
+            {
+                int i = listView3.CheckedIndices[0];
+                string S11 = A1[i].ToString().Substring(0, A1[i].ToString().IndexOf(" "));
+                foreach (Control Cl in panelFree.Controls)
+                {
+                    if (Cl is CheckBox && Cl.Name == "checkBox" + S11)
+                    {
+                        CheckBox CB = new CheckBox();
+                        CB = (CheckBox)Cl;
+                        CB.Checked = false;
+                    }
+                }
+            }
+        }
+
+        private void buttonX6_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(DateTime.Now);
+            if (chkBatchAdd.Checked)
+            {
+                if (tBStart.Text == "" || tBStart.Text == "00" || tBStart.Text == "0" || tBEnd.Text == "" || tBEnd.Text == "00" || tBEnd.Text == "0")
+                {
+                    MessageBox.Show("周次不能为空或0！！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    return;
+                }
+            }
+            else
+            {
+                if (tBWeek.Text == "" || tBWeek.Text == "00" || tBWeek.Text == "0")
+                {
+                    MessageBox.Show("周次不能为空或0！！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    return;
+                }
+            }
+            foreach (ListViewItem LVI in listView3.Items)
+            {
+                LVI.Checked = true;
+            }
+            string[] strWeek = new string[7];
+            foreach (object obj in A1)
+            {
+                string S1 = obj.ToString();
+                switch (S1[0])
+                {
+                    case '1':
+                        strWeek[0] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '2':
+                        strWeek[1] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '3':
+                        strWeek[2] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '4':
+                        strWeek[3] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '5':
+                        strWeek[4] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '6':
+                        strWeek[5] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                    case '7':
+                        strWeek[6] += S1.Substring(S1.IndexOf("第") + 1, 2);
+                        break;
+                }
+            }
+            ArrayList[] ALWeek = new ArrayList[7];
+            for (int i = 0; i < 7; i++)
+            {
+                ALWeek[i] = new ArrayList();
+                if (strWeek[i] != null)
+                {
+                    ALWeek[i] = ConvertToBClass(strWeek[i]);
+                }
+            }
+            help.Oledbcommand("delete from SpareTime_Data where Supervisor_ID='" + DDID + "' and Spare_Week=" + tBWeek.Text + ";");
+            System.Diagnostics.Debug.WriteLine(DateTime.Now);
+            if (chkBatchAdd.Checked == false)
+            {
+                System.Diagnostics.Debug.WriteLine(DateTime.Now);
+                for (int i = 0; i < 7; i++)
+                {
+                    if (ALWeek[i].Count > 0)
+                    {
+                        for (int j = 0; j < ALWeek[i].Count; j++)
+                        {
+                            if (tBWeek.Text.Count() == 1)
+                            { strID = DDID + "0" + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
+                            else
+                            { strID = DDID + tBWeek.Text + (i + 1).ToString() + ALWeek[i][j]; }
+                            InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + tBWeek.Text + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
+                        }
+                    }
+                }
+                help.insertToStockDataByBatch(InsertArray, progressBar1);
+                InsertArray.Clear();
+                // Insert();
+                iyanzheng = 1;
+                MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                progressBar1.Value = 0;
+                //new frmSpareTime().Show();
+            }
+            else
+            {
+                if (int.Parse(tBEnd.Text) <= int.Parse(tBStart.Text))
+                {
+                    MessageBox.Show("终止周必须大于起始周!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    tBEnd.Select();
+                    return;
+                }
+                System.Diagnostics.Debug.WriteLine(DateTime.Now);
+                for (int i1 = int.Parse(tBStart.Text); i1 <= int.Parse(tBEnd.Text); i1++)
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        if (ALWeek[i].Count > 0)
+                        {
+                            for (int j = 0; j < ALWeek[i].Count; j++)
+                            {
+
+                                if (i1.ToString().Count() == 1)
+                                { strID = DDID + "0" + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
+                                else
+                                { strID = DDID + i1.ToString() + (i + 1).ToString() + ALWeek[i][j]; }
+
+                                InsertArray.Add("insert into SpareTime_Data(Spare_ID,Supervisor_ID,Supervisor,Spare_Week,Spare_Day,Spare_Number) values('" + strID + "','" + DDID + "','" + DDName + "','" + i1.ToString() + "','" + (i + 1).ToString() + "','" + ALWeek[i][j] + "')");
+
+                            }
+
+                        }
+                    }
+                }
+                help.insertToStockDataByBatch(InsertArray, progressBar1);
+                InsertArray.Clear();
+                // Insert();
+                iyanzheng = 1;
+                MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                frmSpareTime frs = new frmSpareTime();
+                frs.Show();
+                form.Close();
+                //progressBar1.Value = 0;
+                //new frmSpareTime().Show();
+            }
         }
     }
 }

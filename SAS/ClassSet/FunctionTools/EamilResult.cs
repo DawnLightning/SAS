@@ -25,7 +25,8 @@ namespace SAS.ClassSet.FunctionTools
             Info.PassWord = Common.Common.MailPassword;
             Info.Content = "";
             Info.Title = "听课反馈" + DateTime.Now.ToShortTimeString();
-            Info.Receiver = help.getDs("select * from Teachers_Data where Teacher='" + Listview.CheckedItems[0].SubItems[6].Text + "'","Teachers_Data").Tables[0].Rows[0][2].ToString();
+          
+            Info.Receiver = help.getDs("select * from Teachers_Data where Teacher like '%" + Listview.CheckedItems[0].SubItems[6].Text + "%'", "Teachers_Data").Tables[0].Rows[0][2].ToString();
             return Info;
         }
         public void SentResult(){

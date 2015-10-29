@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param Name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -235,7 +235,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
             this.Name = "frmPlanSearch";
+            this.ShowIcon = false;
             this.Text = "frmPlanSearch";
             this.Load += new System.EventHandler(this.frmPlanSearch_Load);
             this.ResumeLayout(false);

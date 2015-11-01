@@ -484,6 +484,13 @@ namespace SAS
             }
             else { }
         }
+
+        private void buttonItem10_Click(object sender, EventArgs e)
+        {
+            ExportClass ex = new ExportClass();
+            ex.MakeWordDoc();
+            MessageBox.Show("导出成功");
+        }
        
     }
 }

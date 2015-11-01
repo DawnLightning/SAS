@@ -92,6 +92,7 @@
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.labPage = new System.Windows.Forms.Label();
+            this.buttonItem10 = new DevComponents.DotNetBar.ButtonItem();
             this.ribbonControl1.SuspendLayout();
             this.ribbonPanel2.SuspendLayout();
             this.ribbonPanel1.SuspendLayout();
@@ -102,8 +103,8 @@
             // 
             this.ribbonControl1.AntiAlias = false;
             this.ribbonControl1.CaptionVisible = true;
-            this.ribbonControl1.Controls.Add(this.ribbonPanel2);
             this.ribbonControl1.Controls.Add(this.ribbonPanel1);
+            this.ribbonControl1.Controls.Add(this.ribbonPanel2);
             this.ribbonControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.ribbonControl1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ribbonControl1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -133,6 +134,7 @@
             this.ribbonPanel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.ribbonPanel2.Size = new System.Drawing.Size(894, 112);
             this.ribbonPanel2.TabIndex = 2;
+            this.ribbonPanel2.Visible = false;
             // 
             // ribbonBar8
             // 
@@ -374,7 +376,6 @@
             this.ribbonPanel1.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.ribbonPanel1.Size = new System.Drawing.Size(894, 112);
             this.ribbonPanel1.TabIndex = 1;
-            this.ribbonPanel1.Visible = false;
             // 
             // ribbonBar5
             // 
@@ -382,7 +383,7 @@
             this.ribbonBar5.Dock = System.Windows.Forms.DockStyle.Left;
             this.ribbonBar5.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem6});
-            this.ribbonBar5.Location = new System.Drawing.Point(352, 0);
+            this.ribbonBar5.Location = new System.Drawing.Point(428, 0);
             this.ribbonBar5.Name = "ribbonBar5";
             this.ribbonBar5.Size = new System.Drawing.Size(79, 109);
             this.ribbonBar5.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
@@ -403,7 +404,7 @@
             this.ribbonBar4.Dock = System.Windows.Forms.DockStyle.Left;
             this.ribbonBar4.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem5});
-            this.ribbonBar4.Location = new System.Drawing.Point(273, 0);
+            this.ribbonBar4.Location = new System.Drawing.Point(349, 0);
             this.ribbonBar4.Name = "ribbonBar4";
             this.ribbonBar4.Size = new System.Drawing.Size(79, 109);
             this.ribbonBar4.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
@@ -425,7 +426,7 @@
             this.ribbonBar3.Dock = System.Windows.Forms.DockStyle.Left;
             this.ribbonBar3.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem4});
-            this.ribbonBar3.Location = new System.Drawing.Point(194, 0);
+            this.ribbonBar3.Location = new System.Drawing.Point(270, 0);
             this.ribbonBar3.Name = "ribbonBar3";
             this.ribbonBar3.Size = new System.Drawing.Size(79, 109);
             this.ribbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
@@ -448,7 +449,7 @@
             this.ribbonBar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.itemContainer5,
             this.itemContainer1});
-            this.ribbonBar2.Location = new System.Drawing.Point(82, 0);
+            this.ribbonBar2.Location = new System.Drawing.Point(158, 0);
             this.ribbonBar2.Name = "ribbonBar2";
             this.ribbonBar2.Size = new System.Drawing.Size(112, 109);
             this.ribbonBar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
@@ -502,11 +503,12 @@
             this.ribbonBar1.AutoOverflowEnabled = true;
             this.ribbonBar1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ribbonBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.buttonItem1});
+            this.buttonItem1,
+            this.buttonItem10});
             this.ribbonBar1.Location = new System.Drawing.Point(3, 0);
             this.ribbonBar1.MaximumOverflowTextLength = 40;
             this.ribbonBar1.Name = "ribbonBar1";
-            this.ribbonBar1.Size = new System.Drawing.Size(79, 109);
+            this.ribbonBar1.Size = new System.Drawing.Size(155, 109);
             this.ribbonBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
             this.ribbonBar1.TabIndex = 0;
             this.ribbonBar1.Text = "教学进度表";
@@ -524,7 +526,6 @@
             // 
             // ribbonTabItem2
             // 
-            this.ribbonTabItem2.Checked = true;
             this.ribbonTabItem2.ImagePaddingHorizontal = 8;
             this.ribbonTabItem2.Name = "ribbonTabItem2";
             this.ribbonTabItem2.Panel = this.ribbonPanel2;
@@ -532,6 +533,7 @@
             // 
             // ribbonTabItem1
             // 
+            this.ribbonTabItem1.Checked = true;
             this.ribbonTabItem1.ImagePaddingHorizontal = 8;
             this.ribbonTabItem1.Name = "ribbonTabItem1";
             this.ribbonTabItem1.Panel = this.ribbonPanel1;
@@ -730,6 +732,14 @@
             this.labPage.Text = "当前是第        页   共        页";
             this.labPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // buttonItem10
+            // 
+            this.buttonItem10.ImagePaddingHorizontal = 8;
+            this.buttonItem10.Name = "buttonItem10";
+            this.buttonItem10.SubItemsExpandWidth = 14;
+            this.buttonItem10.Text = "导出";
+            this.buttonItem10.Click += new System.EventHandler(this.buttonItem10_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -818,5 +828,6 @@
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private System.Windows.Forms.Label labPage;
         private DevComponents.DotNetBar.LabelX labelX1;
+        private DevComponents.DotNetBar.ButtonItem buttonItem10;
     }
 }

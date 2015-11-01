@@ -211,6 +211,30 @@ namespace SAS.ClassSet.Common
                  }
              }
          }
+
+         public static void load_classes()
+         {
+             string Path = Environment.CurrentDirectory + "\\" + "classes.docx";
+             if (!(File.Exists(Path)))
+             {
+                 FileStream fs = new FileStream(Path, FileMode.OpenOrCreate, FileAccess.Write);
+
+                 try
+                 {
+                     Byte[] b = SAS.Properties.Resources.classes;
+
+                     fs.Write(b, 0, b.Length);
+                     if (fs != null)
+                         fs.Close();
+                 }
+                 catch
+                 {
+                     if (fs != null)
+                         fs.Close();
+
+                 }
+             }
+         }
         #endregion
     }
  }

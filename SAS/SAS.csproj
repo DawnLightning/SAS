@@ -119,6 +119,7 @@
     <Compile Include="ClassSet\FunctionTools\EmailPlacement.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelHelper.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelTools.cs" />
+    <Compile Include="ClassSet\FunctionTools\ExportClass.cs" />
     <Compile Include="ClassSet\FunctionTools\PhotoTools.cs" />
     <Compile Include="ClassSet\FunctionTools\Placement.cs" />
     <Compile Include="ClassSet\FunctionTools\PlacementConfig.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="ClassSet\MemberInfo\ClassInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\EmailInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\EmailRecordInfo.cs" />
+    <Compile Include="ClassSet\MemberInfo\ExportClassInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\PlacementInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\SupervisorInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\TeacherInfo.cs" />
@@ -307,6 +309,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\classes .docx" />
     <None Include="Resources\SAS_Help.zip" />
     <None Include="Resources\supervisor.doc" />
   </ItemGroup>

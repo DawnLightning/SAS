@@ -116,6 +116,48 @@ namespace SAS.ClassSet.FunctionTools
             doc.Dispose();
             return newfile;
         }
+        public void fullclasses(List<ExportClassInfo> info)
+        {
+            Common.Common.load_classes();
+            string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";
+            string newfile = Common.Common.strAddfilesPath + "\\" + "东莞校区信息工程学院信工教师课程安排表（1.0)" + ".docx";
+            DocX doc = DocX.Load(fileName1);
+            MessageBox.Show("表格数量：" + doc.Tables.Count.ToString());
+            for (int i = 0; i < info.Count; i++)
+            {
+                Table tb = doc.Tables[info[i].Week - 1];
+                if (info[i].Start < 10)//上下午
+                {
+                    tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].End.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    if (info[i].IsOverTop)
+                    {
+                        for (int k = info[i].Start + 1; k < info[i].End; k++)
+                        {
+                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                        }
+
+                    }
+                }
+                else
+                {
+                    tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    if (info[i].IsOverTop)
+                    {
+                        for (int k = info[i].Start + 1; k < info[i].End; k++)
+                        {
+                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                        }
+                    }
+                }
+            }
+            if (!System.IO.File.Exists(Common.Common.strAddfilesPath))
+            {
+                Directory.CreateDirectory(Common.Common.strAddfilesPath);
+            }
+            doc.SaveAs(newfile);
+            doc.Dispose();
+        }
         public string  Addsupervisordata(WordTableInfo Info)
         {
             Common.Common.load_supervisor();

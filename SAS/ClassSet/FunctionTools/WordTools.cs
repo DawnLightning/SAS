@@ -116,16 +116,20 @@ namespace SAS.ClassSet.FunctionTools
             doc.Dispose();
             return newfile;
         }
+        /// <summary>
+        /// 将对象数组写入word文档
+        /// </summary>
+        /// <param name="info">对象数组</param>
         public void fullclasses(List<ExportClassInfo> info)
         {
-            Common.Common.load_classes();
-            string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";
-            string newfile = Common.Common.strAddfilesPath + "\\" + "东莞校区信息工程学院信工教师课程安排表（1.0)" + ".docx";
-            DocX doc = DocX.Load(fileName1);
-            MessageBox.Show("表格数量：" + doc.Tables.Count.ToString());
+            Common.Common.load_classes();//加载输出word文档，可以在resource文件中查看
+            string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";//输出目录
+            string newfile = Common.Common.strAddfilesPath + "\\" + "东莞校区信息工程学院信工教师课程安排表（1.0)" + ".docx";//保存目录
+            DocX doc = DocX.Load(fileName1);//用第三方类库加载word文档
             for (int i = 0; i < info.Count; i++)
             {
-                Table tb = doc.Tables[info[i].Week - 1];
+                Table tb = doc.Tables[info[i].Week - 1];//word文档总共有表格20张，例如：现在是第一周，那么就是第一张表，索引从0开始
+                //通过表格原有的数字，确定替换位置，例如：现在是第1周，星期1，第1-2节，那么对应的表格位置就是第2行，第2列，仔细看resource中的表格
                 if (info[i].Start < 10)//上下午
                 {
                     tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
@@ -139,7 +143,7 @@ namespace SAS.ClassSet.FunctionTools
 
                     }
                 }
-                else
+                else//晚上
                 {
                     tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                     if (info[i].IsOverTop)
@@ -151,12 +155,39 @@ namespace SAS.ClassSet.FunctionTools
                     }
                 }
             }
+            //去除表格中的数字
+            for (int i = 0; i < doc.Tables.Count;i++ )
+            {
+                Table tb = doc.Tables[i];
+                for (int column= 2;column< 7;column++ )
+                {
+                    for (int row = 1; row < 12;row++ )
+                    {
+                       string text=tb.Rows[row].Cells[column].Paragraphs[0].Text;
+                       if (IsNumber(text))
+                        {
+                            tb.Rows[row].Cells[column].Paragraphs[0].ReplaceText(text, "");
+                        }
+
+                    }
+                }
+            }
             if (!System.IO.File.Exists(Common.Common.strAddfilesPath))
             {
                 Directory.CreateDirectory(Common.Common.strAddfilesPath);
             }
-            doc.SaveAs(newfile);
-            doc.Dispose();
+            doc.SaveAs(newfile);//保存
+            doc.Dispose();//释放对象
+        }
+        private bool IsNumber(string text)
+        {
+            try
+            {
+                Convert.ToInt32(text);
+                return true;
+            }catch(Exception){
+                return false;
+            }
         }
         public string  Addsupervisordata(WordTableInfo Info)
         {

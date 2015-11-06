@@ -120,11 +120,11 @@ namespace SAS.ClassSet.FunctionTools
         /// 将对象数组写入word文档
         /// </summary>
         /// <param name="info">对象数组</param>
-        public void fullclasses(List<ExportClassInfo> info)
+        public void fullclasses(List<ExportClassInfo> info,string filename)
         {
             Common.Common.load_classes();//加载输出word文档，可以在resource文件中查看
             string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";//输出目录
-            string newfile = Common.Common.strAddfilesPath + "\\" + "东莞校区信息工程学院信工教师课程安排表（1.0)" + ".docx";//保存目录
+            string newfile = Common.Common.strAddfilesPath + "\\" + filename + ".docx";//保存目录
             DocX doc = DocX.Load(fileName1);//用第三方类库加载word文档
             for (int i = 0; i < info.Count; i++)
             {

@@ -487,9 +487,11 @@ namespace SAS
 
         private void buttonItem10_Click(object sender, EventArgs e)
         {
-            ExportClass ex = new ExportClass();
-            ex.MakeWordDoc();
-            MessageBox.Show("导出成功");
+            //ExportClass ex = new ExportClass();
+            //ex.MakeWordDoc();
+            //MessageBox.Show("导出成功");
+            frmPlanSearch fm = new frmPlanSearch();
+            fm.Show();
         }
        
     }

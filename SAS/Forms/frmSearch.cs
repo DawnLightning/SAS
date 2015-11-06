@@ -48,9 +48,9 @@ namespace SAS.Forms
                 }
                 else
                 {
-                    frmPlanSearch frm = new frmPlanSearch(date);
-                    frm.Show();
-                    this.Close();
+                   // frmPlanSearch frm = new frmPlanSearch(date);
+                   // frm.Show();
+                   // this.Close();
                 }
             }
             else

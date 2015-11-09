@@ -120,7 +120,7 @@ namespace SAS.Forms
         private void buttonX1_Click(object sender, EventArgs e)
         {
             ExportClass ex = new ExportClass();
-            string filename = cbname.Text + "老师的"+cbname.Text+"课程表";
+            string filename = cbclass+"专业"+cbname.Text + "老师的"+cbname.Text+"课程表";
             ex.MakeWordDoc(selectcommand,filename);
             MessageBox.Show("导出成功");
         }

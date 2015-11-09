@@ -54,7 +54,7 @@ namespace SAS.ClassSet.FunctionTools
             for (int i = 0; i < dtclass.Rows.Count;i++ )
             {
                 ExportClassInfo info = new ExportClassInfo();
-                info.Teachername = dtclass.Rows[i][0].ToString();
+                info.Teachername = ClearTechnicalTitle(dtclass.Rows[i][0].ToString());
                 info.Classtype = dtclass.Rows[i][1].ToString();
                 info.Week = Convert.ToInt32(dtclass.Rows[i][2]);
                 info.Day = Convert.ToInt32(dtclass.Rows[i][3]);
@@ -103,6 +103,22 @@ namespace SAS.ClassSet.FunctionTools
            }
          
            
+        }
+        /// <summary>
+        /// 去掉职称
+        /// </summary>
+        /// <param name="s">教师姓名</param>
+        /// <returns></returns>
+        private string ClearTechnicalTitle(string s)
+        {
+            if (s.IndexOf("(") != -1)
+            {
+                 return s.Substring(0, s.IndexOf("("));
+            }
+            else
+            {
+                return s;
+            }
         }
     }
 }

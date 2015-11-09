@@ -126,52 +126,59 @@ namespace SAS.ClassSet.FunctionTools
             string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";//输出目录
             string newfile = Common.Common.strAddfilesPath + "\\" + filename + ".docx";//保存目录
             DocX doc = DocX.Load(fileName1);//用第三方类库加载word文档
+            //去除表格中的数字
+            for (int i = 0; i < doc.Tables.Count; i++)
+            {
+                Table tb = doc.Tables[i];
+                for (int column = 2; column < 7; column++)
+                {
+                    for (int row = 1; row < 12; row++)
+                    {
+                        string text = tb.Rows[row].Cells[column].Paragraphs[0].Text;
+                        if (IsNumber(text))
+                        {
+                            tb.Rows[row].Cells[column].Paragraphs[0].ReplaceText(text, "");
+                        }
+
+
+                    }
+                }
+            }
             for (int i = 0; i < info.Count; i++)
             {
                 Table tb = doc.Tables[info[i].Week - 1];//word文档总共有表格20张，例如：现在是第一周，那么就是第一张表，索引从0开始
                 //通过表格原有的数字，确定替换位置，例如：现在是第1周，星期1，第1-2节，那么对应的表格位置就是第2行，第2列，仔细看resource中的表格
                 if (info[i].Start < 10)//上下午
                 {
-                    tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
-                    tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].End.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    //tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                     tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    //tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].End.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                     tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                     if (info[i].IsOverTop)
                     {
                         for (int k = info[i].Start + 1; k < info[i].End; k++)
                         {
-                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                           // tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                         }
 
                     }
                 }
                 else//晚上
                 {
-                    tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                   // tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                    tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                     if (info[i].IsOverTop)
                     {
                         for (int k = info[i].Start + 1; k < info[i].End; k++)
                         {
-                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                           // tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                           tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                         }
                     }
                 }
             }
-            //去除表格中的数字
-            for (int i = 0; i < doc.Tables.Count;i++ )
-            {
-                Table tb = doc.Tables[i];
-                for (int column= 2;column< 7;column++ )
-                {
-                    for (int row = 1; row < 12;row++ )
-                    {
-                       string text=tb.Rows[row].Cells[column].Paragraphs[0].Text;
-                       if (IsNumber(text))
-                        {
-                            tb.Rows[row].Cells[column].Paragraphs[0].ReplaceText(text, "");
-                        }
-
-                    }
-                }
-            }
+        
             if (!System.IO.File.Exists(Common.Common.strAddfilesPath))
             {
                 Directory.CreateDirectory(Common.Common.strAddfilesPath);

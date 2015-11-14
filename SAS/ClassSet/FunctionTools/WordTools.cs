@@ -124,7 +124,7 @@ namespace SAS.ClassSet.FunctionTools
         {
             Common.Common.load_classes();//加载输出word文档，可以在resource文件中查看
             string fileName1 = Environment.CurrentDirectory + "\\" + "classes.docx";//输出目录
-            string newfile = Common.Common.strAddfilesPath + "\\" + filename + ".docx";//保存目录
+            string newfile = Common.Common.strAddfilesPath+ filename + ".docx";//保存目录
             DocX doc = DocX.Load(fileName1);//用第三方类库加载word文档
             //去除表格中的数字
             for (int i = 0; i < doc.Tables.Count; i++)

@@ -41,6 +41,8 @@
             this.cbspcial = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -175,20 +177,43 @@
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(75, 23);
             this.buttonX2.TabIndex = 101;
-            this.buttonX2.Text = "数据预览";
+            this.buttonX2.Text = "查找";
             this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
+            // 
+            // buttonX3
+            // 
+            this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX3.Location = new System.Drawing.Point(213, 334);
+            this.buttonX3.Name = "buttonX3";
+            this.buttonX3.Size = new System.Drawing.Size(75, 23);
+            this.buttonX3.TabIndex = 102;
+            this.buttonX3.Text = "查看文件";
+            // 
+            // buttonX4
+            // 
+            this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Location = new System.Drawing.Point(384, 334);
+            this.buttonX4.Name = "buttonX4";
+            this.buttonX4.Size = new System.Drawing.Size(75, 23);
+            this.buttonX4.TabIndex = 103;
+            this.buttonX4.Text = "打开文件夹";
+            this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
             // 
             // frmPlanSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(718, 340);
+            this.ClientSize = new System.Drawing.Size(701, 367);
+            this.Controls.Add(this.buttonX4);
+            this.Controls.Add(this.buttonX3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listView1);
             this.DoubleBuffered = true;
             this.Name = "frmPlanSearch";
             this.ShowIcon = false;
-            this.Text = "frmPlanSearch";
+            this.Text = "课程表导出";
             this.Load += new System.EventHandler(this.frmPlanSearch_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -210,5 +235,7 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx cbspcial;
         private System.Windows.Forms.GroupBox groupBox1;
         private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX3;
+        private DevComponents.DotNetBar.ButtonX buttonX4;
     }
 }

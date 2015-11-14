@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SAS.ClassSet.FunctionTools;
+using SAS.ClassSet.Common;
+using System.Diagnostics;
 namespace SAS.Forms
 {
     public partial class frmPlanSearch : DevComponents.DotNetBar.Office2007Form
@@ -120,9 +122,18 @@ namespace SAS.Forms
         private void buttonX1_Click(object sender, EventArgs e)
         {
             ExportClass ex = new ExportClass();
-            string filename = cbname.Text + "老师的+"+cbname+"课程表";
+            if (!System.IO.File.Exists(Common.strAddfilesPath + "课程表"))
+            {
+                System.IO.Directory.CreateDirectory(Common.strAddfilesPath + "课程表");
+            }
+            string filename = "课程表\\"+cbname.Text + "老师的+"+cbname+"课程表";
             ex.MakeWordDoc(selectcommand,filename);
             MessageBox.Show("导出成功");
+        }
+
+        private void buttonX4_Click(object sender, EventArgs e)
+        {
+            Process.Start(Common.strAddfilesPath);
         }
     }
 }

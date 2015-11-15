@@ -150,15 +150,15 @@ namespace SAS.ClassSet.FunctionTools
                 //通过表格原有的数字，确定替换位置，例如：现在是第1周，星期1，第1-2节，那么对应的表格位置就是第2行，第2列，仔细看resource中的表格
                 if (info[i].Start < 10)//上下午
                 {
-                    //tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                  
                      tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
-                    //tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].End.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                
                      tb.Rows[info[i].End].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                     if (info[i].IsOverTop)
                     {
                         for (int k = info[i].Start + 1; k < info[i].End; k++)
                         {
-                           // tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                          
                             tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                         }
 
@@ -166,13 +166,13 @@ namespace SAS.ClassSet.FunctionTools
                 }
                 else//晚上
                 {
-                   // tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText(info[i].Start.ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                  
                     tb.Rows[info[i].Start].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                     if (info[i].IsOverTop)
                     {
                         for (int k = info[i].Start + 1; k < info[i].End; k++)
                         {
-                           // tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].ReplaceText((k).ToString(), info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
+                         
                            tb.Rows[k].Cells[1 + info[i].Day].Paragraphs[0].AppendLine(info[i].Teachername + ":" + info[i].Classname + "(" + info[i].Classtype + ")");
                         }
                     }
@@ -183,8 +183,17 @@ namespace SAS.ClassSet.FunctionTools
             {
                 Directory.CreateDirectory(Common.Common.strAddfilesPath);
             }
-            doc.SaveAs(newfile);//保存
-            doc.Dispose();//释放对象
+            try
+            {
+                doc.SaveAs(newfile);//保存
+                doc.Dispose();//释放对象
+                MessageBox.Show("导出成功");
+            }catch(IOException e){
+                MessageBox.Show("当前文件正在打开，请关闭后重试");
+            }catch(Exception e){
+                MessageBox.Show(e.ToString());
+            }
+          
         }
         private bool IsNumber(string text)
         {
@@ -236,9 +245,7 @@ namespace SAS.ClassSet.FunctionTools
 
             File.Delete(fileName1.ToString());
             return newfile;
-           // sent_email(Supervisor, Time, Subject, newfile);
-            // movetofile(newfile);
-            //File.Move(newfile, cCommon.strAddfilesPath);
+          
         }
     }
 }

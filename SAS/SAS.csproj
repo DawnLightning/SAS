@@ -111,7 +111,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassSet\FunctionTools\Common.cs" />
+    <Compile Include="ClassSet\Common\Common.cs" />
     <Compile Include="ClassSet\FunctionTools\CalendarTools.cs" />
     <Compile Include="ClassSet\FunctionTools\CameraTools.cs" />
     <Compile Include="ClassSet\FunctionTools\EamilResult.cs" />
@@ -125,7 +125,7 @@
     <Compile Include="ClassSet\FunctionTools\PlacementConfig.cs" />
     <Compile Include="ClassSet\FunctionTools\SqlHelper.cs" />
     <Compile Include="ClassSet\FunctionTools\WordTools.cs" />
-    <Compile Include="ClassSet\FunctionTools\ListViewShow\UIShow.cs" />
+    <Compile Include="ClassSet\ListViewShow\UIShow.cs" />
     <Compile Include="ClassSet\MemberInfo\ClassInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\EmailInfo.cs" />
     <Compile Include="ClassSet\MemberInfo\EmailRecordInfo.cs" />
@@ -350,9 +350,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClassSet\Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

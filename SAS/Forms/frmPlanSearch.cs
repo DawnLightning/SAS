@@ -17,6 +17,7 @@ namespace SAS.Forms
         private DataTable dt = null;
         private SqlHelper helper = new SqlHelper();
         private string selectcommand = "";
+        private string filepath;
         public frmPlanSearch()
         {
             InitializeComponent();
@@ -126,14 +127,23 @@ namespace SAS.Forms
             {
                 System.IO.Directory.CreateDirectory(Common.strAddfilesPath + "课程表");
             }
-            string filename = "课程表\\"+cbname.Text + "老师的+"+cbname+"课程表";
+            string filename = "课程表\\"+ cbspcial.Text + "专业" + cbname.Text + "老师的" + cbclass.Text + "课程表";
+            filepath = Common.strAddfilesPath + filename+".docx";
             ex.MakeWordDoc(selectcommand,filename);
             MessageBox.Show("导出成功");
         }
 
         private void buttonX4_Click(object sender, EventArgs e)
         {
-            Process.Start(Common.strAddfilesPath);
+            if (!System.IO.File.Exists(Common.strAddfilesPath + "课程表"))
+            {
+                Process.Start(Common.strAddfilesPath + "课程表");
+            }  
+        }
+
+        private void buttonX3_Click(object sender, EventArgs e)
+        {
+            Process.Start(filepath);
         }
     }
 }

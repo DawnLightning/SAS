@@ -189,6 +189,7 @@
             this.buttonX3.Size = new System.Drawing.Size(75, 23);
             this.buttonX3.TabIndex = 102;
             this.buttonX3.Text = "查看文件";
+            this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
             // 
             // buttonX4
             // 

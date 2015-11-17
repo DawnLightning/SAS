@@ -85,16 +85,6 @@ namespace SAS.Forms
                 return false;
             }
         }
-
-        private void btnPageUp_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void btnPageDown_Click(object sender, EventArgs e)
-        {
-           
-        }
         private void clear_listview()
         {
             int count = this.listView1.Items.Count;

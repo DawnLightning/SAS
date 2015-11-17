@@ -238,8 +238,8 @@ namespace SAS.ClassSet.FunctionTools
             daTeacher.Update(dtSupervisor);
             daSpareTime = helper.adapter(strSelect_SpareTime_Data);
             daSpareTime.Update(dtSpareTime);
-            frmMain.fm.SetStatusText("自动生成听课安排成功！", 0);
-            frmMain.fm.flashListview();
+            Main.fm.SetStatusText("自动生成听课安排成功！", 0);
+            Main.fm.flashListview();
 
         }
         private string DistinctSupervisor(string supervisor, List<string> ListSupervisor)

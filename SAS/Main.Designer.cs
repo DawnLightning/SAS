@@ -703,7 +703,7 @@
             // 
             this.labelX1.Location = new System.Drawing.Point(3, 4);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(75, 23);
+            this.labelX1.Size = new System.Drawing.Size(167, 23);
             this.labelX1.TabIndex = 82;
             this.labelX1.Text = "labelX1";
             // 

@@ -228,7 +228,7 @@ namespace SAS
 
                 EmailPlacement sent = new EmailPlacement(listView1);
                 sent.SentPlacement();
-
+                //MessageBox.Show("听课安排发送成功！");
             }
         }
 

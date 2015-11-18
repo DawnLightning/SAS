@@ -39,20 +39,6 @@ namespace SAS.Forms
             show.logs_listview_write(dt, listView1, currentpage, pagesize);
             
         }
-        private void btnPageDown_Click(object sender, EventArgs e)
-        {
-          
-        }
-        private void btnPageUp_Click(object sender, EventArgs e)
-        {
-
-           
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-           
-          
-        }
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             foreach (ListViewItem s in listView1.Items)
@@ -83,10 +69,6 @@ namespace SAS.Forms
 
             }
         }
-        private void btnAll_Click(object sender, EventArgs e)
-        {
-           
-        }
         private EmailInfo InitializeEmailInfo()
         {
             EmailInfo EInfo = new EmailInfo();
@@ -98,11 +80,6 @@ namespace SAS.Forms
             EInfo.Receiver = help.getDs("select * from Teachers_Data where Teacher like '%" + listView1.CheckedItems[0].SubItems[1].Text + "%'", "Teachers_Data").Tables[0].Rows[0][2].ToString();
             return EInfo;
         }
-        private void button3_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void textBoxNow_TextChanged(object sender, EventArgs e)
         {
             if(int.Parse(textBoxNow.Text)>int.Parse(labPageAll.Text))

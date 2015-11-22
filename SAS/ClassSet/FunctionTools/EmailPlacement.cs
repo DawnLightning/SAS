@@ -12,6 +12,9 @@ namespace SAS.ClassSet.FunctionTools
     class EmailPlacement
     {
         ListView listView1;
+        private int recnuum=0;
+        private int sentnum=0;
+        private int successnum=0;
         public EmailPlacement(ListView listView1)
         {
             this.listView1 = listView1;
@@ -56,10 +59,11 @@ namespace SAS.ClassSet.FunctionTools
                 ListAddress.Add(dr[0][2].ToString());
             }
         }
-        private void MakeEmail(EmailInfo EInfo,List<string> ListFileName,List<string> ListAddress,Email senter,SqlHelper help,List<string> ListSupervisor){
+        private void MakeEmail(EmailInfo EInfo,List<string> ListFileName,List<string> ListAddress,SqlHelper help,List<string> ListSupervisor){
             EInfo.User = Common.Common.MailAddress;
             EInfo.PassWord = Common.Common.MailPassword;
             EmailRecordInfo ERecord;
+            sentnum = ListFileName.Count;
             for (int i = 0; i < ListFileName.Count; i++)
             {
                 EInfo.AddFiles = ListFileName[i];
@@ -68,11 +72,32 @@ namespace SAS.ClassSet.FunctionTools
                 EInfo.Title = DateTime.Now + "听课安排";
                 string successflag="";
                 ERecord = new EmailRecordInfo(ListSupervisor[i], "督导", EInfo.Title, ListSupervisor[i] + DateTime.Now.ToLongTimeString()+i, "听课安排", successflag, ListFileName[i]);
-                senter.Send(new Email {Type=0,EI= EInfo,ERI=ERecord,list=listView1,id=i,count=ListFileName.Count-1});
+
+                AsynEmail EmailSendPoccess = new AsynEmail(EInfo, ERecord, this.EmailResultCallBack);
+                EmailSendPoccess.ThreadSend();
                 //MessageBox.Show(successflag);
                 //help.Insert(ERecord,"Logs_Data");
+                Main.fm.SetStatusText("正在发送邮件", 0);
             }
 
+        }
+        private void EmailResultCallBack(EmailRecordInfo info, string message)
+        {
+            recnuum++;
+            Main.fm.SetStatusText(string.Format("已发送{0}封",recnuum), 0);
+            SqlHelper help = new SqlHelper();
+            help.Insert(info, "Logs_Data");
+            if (message=="发送成功")
+            {   
+                successnum++;
+            }
+            if(recnuum==sentnum){
+                
+                MessageBox.Show(string.Format("共发送{0}邮件,成功{1}封，失败{2}封，请查看记录",sentnum,successnum,sentnum-successnum));
+                Main.fm.SetStatusText("发送完成", 0);
+            }
+           
+            
         }
         public void SentPlacement()
         {
@@ -80,14 +105,14 @@ namespace SAS.ClassSet.FunctionTools
             WordTools Tool = new WordTools();
             List<string> ListSupervisor = new List<string>();//存放督导成员
             List<string> ListFileName = new List<string>();
-            Email senter = new Email();
+          
             EmailInfo EInfo = new EmailInfo();
             SqlHelper help = new SqlHelper();
             List<string> ListAddress = new List<string>();
             DistinctSupervisor(Info.Supervisor, ListSupervisor);//分解出每个督导员
             FillWordTable(ListSupervisor,Info,Tool,ListFileName);//填写相应的word表格
             FindEmailAddress(ListSupervisor,help,ListAddress);//找到每个人的邮箱地址
-            MakeEmail(EInfo,ListFileName,ListAddress,senter,help,ListSupervisor);//发邮件
+            MakeEmail(EInfo,ListFileName,ListAddress,help,ListSupervisor);//发邮件
           
           
         }
@@ -106,5 +131,6 @@ namespace SAS.ClassSet.FunctionTools
             }
 
         }
+      
     }
 }

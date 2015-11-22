@@ -13,6 +13,9 @@ namespace SAS.ClassSet.FunctionTools
         private ListView Listview;
         private string FilePath;
         SqlHelper help = new SqlHelper();
+        private int recnuum =0;
+        private int sentnum = 1;
+        private int successnum = 0;
         public EamilResult(ListView listview,string file)
         {
             this.Listview = listview;
@@ -24,20 +27,41 @@ namespace SAS.ClassSet.FunctionTools
             Info.User = Common.Common.MailAddress;
             Info.PassWord = Common.Common.MailPassword;
             Info.Content = "";
-            Info.Title = "听课反馈" + DateTime.Now.ToShortTimeString();
+            Info.Title = DateTime.Now.ToLongTimeString() + "听课反馈";
           
             Info.Receiver = help.getDs("select * from Teachers_Data where Teacher like '%" + Listview.CheckedItems[0].SubItems[6].Text + "%'", "Teachers_Data").Tables[0].Rows[0][2].ToString();
             return Info;
         }
         public void SentResult(){
             EmailInfo EInfo = InitializeEmailInfo();
-            Email senter = new Email();
+           
             string flag="";
             EmailRecordInfo record = new EmailRecordInfo(Listview.CheckedItems[0].SubItems[6].Text, "受听课教师", EInfo.Title, Listview.CheckedItems[0].SubItems[6].Text + DateTime.Now.ToShortTimeString(), "听课反馈结果", flag, FilePath);
-            senter.Send(new Email { Type=2,EI=EInfo,ERI=record,id=0,count=0});
-            
+
+            AsynEmail EmailSendPoccess = new AsynEmail(EInfo, record, this.EmailResultCallBack);
+            EmailSendPoccess.ThreadSend();
+            Main.fm.SetStatusText("正在发送邮件", 0);
             //help.Insert(record,"Logs_Data");
             //MessageBox.Show(flag);
+        }
+        private void EmailResultCallBack(EmailRecordInfo info, string message)
+        {
+            recnuum++;
+            Main.fm.SetStatusText(string.Format("已发送{0}封", recnuum), 0);
+            SqlHelper help = new SqlHelper();
+            help.Insert(info, "Logs_Data");
+            if (message == "发送成功")
+            {
+                successnum++;
+            }
+            if (recnuum == sentnum)
+            {
+
+                MessageBox.Show(string.Format("共发送{0}邮件,成功{1}封，失败{2}封，请查看记录", sentnum, successnum, sentnum - successnum));
+                Main.fm.SetStatusText("发送完成", 0);
+            }
+
+
         }
     }
 }

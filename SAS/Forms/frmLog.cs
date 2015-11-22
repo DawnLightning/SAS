@@ -24,6 +24,9 @@ namespace SAS.Forms
         int currentpage = 1;
         int totalpage;
         SqlHelper help = new SqlHelper();
+        private int recnuum = 0;
+        private int sentnum = 1;
+        private int successnum = 0;
         DataTable dt = new DataTable(),dt1 = new DataTable(),dt2 = new DataTable();
       
         
@@ -105,19 +108,43 @@ namespace SAS.Forms
             if (listView1.CheckedItems.Count == 1)
             {
                 EmailInfo EInfo = InitializeEmailInfo();
-                Email senter = new Email();
-                string updatecommand = "update Logs_Data set File_State='{flag}'" + "where Time_Now='" + listView1.CheckedItems[0].SubItems[4].Text + "'";
-                frmLog log1 = this;
-                senter.Send(new Email { Type = 1, EI = EInfo, FL = log1, str = updatecommand });
+                EmailRecordInfo RInfo = new EmailRecordInfo();
+                RInfo.Email_Receiver = listView1.CheckedItems[0].SubItems[1].Text;
+                RInfo.Email_Theme = listView1.CheckedItems[0].SubItems[3].Text;
+                RInfo.Enclosure_Path = "";
+                RInfo.Email_Type = listView1.CheckedItems[0].SubItems[5].Text;
+                RInfo.File_State = "";
+                RInfo.Time_Now = "";
+                RInfo.Teacher_Identity = listView1.CheckedItems[0].SubItems[2].Text;
+                AsynEmail EmailSendPoccess = new AsynEmail(EInfo, RInfo, this.EmailResultCallBack);
+                EmailSendPoccess.ThreadSend();
+                Main.fm.SetStatusText("正在发送邮件", 0);
+          
 
-                if (help.Oledbcommand(updatecommand) > 0)
-                {
-                    frmLog_Load_1(sender, e);
-                }
+                
 
             }
         }
+        private void EmailResultCallBack(EmailRecordInfo info, string message)
+        {
+            recnuum++;
 
+            Main.fm.SetStatusText(string.Format("已发送{0}封", recnuum), 0);
+            SqlHelper help = new SqlHelper();
+            help.Insert(info, "Logs_Data");
+            if (message == "发送成功")
+            {
+                successnum++;
+            }
+            if (recnuum == sentnum)
+            {
+
+                MessageBox.Show(string.Format("共发送{0}邮件,成功{1}封，失败{2}封，请查看记录", sentnum, successnum, sentnum - successnum));
+                Main.fm.SetStatusText("发送完成", 0);
+            }
+
+
+        }
         private void buttonX3_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("是否确认删除?注意!删除后将无法恢复!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)

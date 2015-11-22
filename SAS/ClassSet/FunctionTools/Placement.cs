@@ -324,7 +324,6 @@ namespace SAS.ClassSet.FunctionTools
             }
             daSpareTime = helper.adapter(strSelect_SpareTime_Data);
             daSpareTime.Update(dtSpareTime);
-            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString());
             daTeacher = helper.adapter(strSelect_Teachers_Data);
             daTeacher.Update(dtTeachers);
             MakePlacement(config);

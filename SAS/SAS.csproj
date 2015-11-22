@@ -112,10 +112,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassSet\Common\Common.cs" />
+    <Compile Include="ClassSet\FunctionTools\AsynEmail.cs" />
     <Compile Include="ClassSet\FunctionTools\CalendarTools.cs" />
     <Compile Include="ClassSet\FunctionTools\CameraTools.cs" />
     <Compile Include="ClassSet\FunctionTools\EamilResult.cs" />
-    <Compile Include="ClassSet\FunctionTools\Email.cs" />
     <Compile Include="ClassSet\FunctionTools\EmailPlacement.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelHelper.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelTools.cs" />

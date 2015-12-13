@@ -76,7 +76,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 3;
-            this.label3.Text = "每周听课次数";
+            this.label3.Text = "每周听课天数";
             // 
             // textBox1
             // 

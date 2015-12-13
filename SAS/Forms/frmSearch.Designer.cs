@@ -45,8 +45,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "教学进度表",
-            "听课安排表"});
+            "教学进度表"});
             this.comboBox1.Location = new System.Drawing.Point(126, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
@@ -84,6 +83,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmSearch";
+            this.ShowIcon = false;
             this.Text = "人员查询";
             this.Load += new System.EventHandler(this.frmSearch_Load);
             this.ResumeLayout(false);

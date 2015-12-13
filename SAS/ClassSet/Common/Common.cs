@@ -106,11 +106,11 @@ namespace SAS.ClassSet.Common
 
                     xe.RemoveAll();
 
-                    if (string.IsNullOrWhiteSpace(Common.MailAddress) || string.IsNullOrWhiteSpace(Common.MailPassword))
-                    {
-                        SAS.Forms.frmSetting fs = new Forms.frmSetting();
-                        fs.ShowDialog();
-                    }
+                    //if (string.IsNullOrWhiteSpace(Common.MailAddress) || string.IsNullOrWhiteSpace(Common.MailPassword))
+                    //{
+                    //    SAS.Forms.frmSetting fs = new Forms.frmSetting();
+                    //    fs.ShowDialog();
+                    //}
                 }
                 else
                 {

@@ -176,7 +176,7 @@
             this.groupBox1.Size = new System.Drawing.Size(352, 100);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "设置开学日期";
+            this.groupBox1.Text = "设置开学日期（必填项）";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // groupBox2
@@ -193,7 +193,7 @@
             this.groupBox2.Size = new System.Drawing.Size(352, 100);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "填写邮箱信息";
+            this.groupBox2.Text = "填写邮箱信息（非必填项用于发送听课安排或者结果）";
             // 
             // label5
             // 
@@ -257,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 310);
+            this.ClientSize = new System.Drawing.Size(388, 298);
             this.Controls.Add(this.buttonX3);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonX1);

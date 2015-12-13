@@ -116,6 +116,7 @@
     <Compile Include="ClassSet\FunctionTools\CalendarTools.cs" />
     <Compile Include="ClassSet\FunctionTools\CameraTools.cs" />
     <Compile Include="ClassSet\FunctionTools\EamilResult.cs" />
+    <Compile Include="ClassSet\FunctionTools\Email.cs" />
     <Compile Include="ClassSet\FunctionTools\EmailPlacement.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelHelper.cs" />
     <Compile Include="ClassSet\FunctionTools\ExcelTools.cs" />
@@ -318,6 +319,9 @@
     <Content Include="DLL\DevComponents.DotNetBar2.dll" />
     <Content Include="DLL\DocX.dll" />
     <Content Include="DLL\NPOI.dll" />
+    <Content Include="DLL\NPOI.OOXML.dll" />
+    <Content Include="DLL\NPOI.OpenXml4Net.dll" />
+    <Content Include="DLL\NPOI.OpenXmlFormats.dll" />
     <None Include="Resources\chief_supervisor.doc" />
     <None Include="Resources\DataBase.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -350,7 +354,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -84,12 +84,14 @@ namespace SAS.ClassSet.FunctionTools
         //算日期
         public static DateTime getdata(int n, int weeks, int weekday, int y, int r)//年，周次，星期，月，日
         {
-            Calendar calendar = CultureInfo.InvariantCulture.Calendar;
-            DateTime starttime = new DateTime(n, y, r);//开学日期
-            int days;//根据周次，星期算出天数差
-            days = (weeks - 1) * 7 + weekday;//天数差
-            DateTime thisdate = calendar.AddDays(starttime, days);//所求日期
-            return thisdate;
+
+                Calendar calendar = CultureInfo.InvariantCulture.Calendar;
+                DateTime starttime = new DateTime(n, y, r);//开学日期
+                int days;//根据周次，星期算出天数差
+                days = (weeks - 1) * 7 + weekday;//天数差
+                DateTime thisdate = calendar.AddDays(starttime, days);//所求日期
+                return thisdate;
+        
         }
 
         //将大写的星期转化成数字

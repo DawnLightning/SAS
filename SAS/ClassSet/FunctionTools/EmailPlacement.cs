@@ -60,25 +60,29 @@ namespace SAS.ClassSet.FunctionTools
             }
         }
         private void MakeEmail(EmailInfo EInfo,List<string> ListFileName,List<string> ListAddress,SqlHelper help,List<string> ListSupervisor){
-            EInfo.User = Common.Common.MailAddress;
-            EInfo.PassWord = Common.Common.MailPassword;
-            EmailRecordInfo ERecord;
-            sentnum = ListFileName.Count;
-            for (int i = 0; i < ListFileName.Count; i++)
+            if (Common.Common.MailPassword !="")
             {
-                EInfo.AddFiles = ListFileName[i];
-                EInfo.Content = "";
-                EInfo.Receiver = ListAddress[i];
-                EInfo.Title = DateTime.Now + "听课安排";
-                string successflag="";
-                ERecord = new EmailRecordInfo(ListSupervisor[i], "督导", EInfo.Title, ListSupervisor[i] + DateTime.Now.ToLongTimeString()+i, "听课安排", successflag, ListFileName[i]);
+                EInfo.User = Common.Common.MailAddress;
+                EInfo.PassWord = Common.Common.MailPassword;
+                EmailRecordInfo ERecord;
+                sentnum = ListFileName.Count;
+                for (int i = 0; i < ListFileName.Count; i++)
+                {
+                    EInfo.AddFiles = ListFileName[i];
+                    EInfo.Content = "";
+                    EInfo.Receiver = ListAddress[i];
+                    EInfo.Title = DateTime.Now + "听课安排";
+                    string successflag = "";
+                    ERecord = new EmailRecordInfo(ListSupervisor[i], "督导", EInfo.Title, ListSupervisor[i] + DateTime.Now.ToLongTimeString() + i, "听课安排", successflag, ListFileName[i]);
 
-                AsynEmail EmailSendPoccess = new AsynEmail(EInfo, ERecord, this.EmailResultCallBack);
-                EmailSendPoccess.ThreadSend();
-                //MessageBox.Show(successflag);
-                //help.Insert(ERecord,"Logs_Data");
-                Main.fm.SetStatusText("正在发送邮件", 0);
+                    AsynEmail EmailSendPoccess = new AsynEmail(EInfo, ERecord, this.EmailResultCallBack);
+                    EmailSendPoccess.ThreadSend();
+                    //MessageBox.Show(successflag);
+                    //help.Insert(ERecord,"Logs_Data");
+                    Main.fm.SetStatusText("正在发送邮件", 0);
+                }
             }
+            else MessageBox.Show("发件人邮箱不能为空，请设置发件人邮箱！");
 
         }
         private void EmailResultCallBack(EmailRecordInfo info, string message)

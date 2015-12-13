@@ -305,12 +305,12 @@ namespace SAS.Forms
 
         private void buttonX4_Click(object sender, EventArgs e)
         {
-            if (tBID.Text != "" && tBName.Text != "" && tBMail.Text != "" && tBTel.Text != "" && tbTitle.Text != "" && tbBelongs.Text != "")
-            {
+            //if ( tBName.Text != "" && tBMail.Text != "" && tBTel.Text != "" && tbTitle.Text != "" && tbBelongs.Text != "")
+            //{
 
 
                 string EmailPattern = @"^([A-Za-z0-9]{1}[A-Za-z0-9_]*)@([A-Za-z0-9_]+)[.]([A-Za-z0-9_]*)$";//E-Mail地址格式的正则表达式
-                if (Regex.IsMatch(tBMail.Text.Trim(), EmailPattern))
+                if (tBMail.Text == "" || Regex.IsMatch(tBMail.Text.Trim(), EmailPattern))
                 {
                     if (status == 1)
                     {
@@ -373,12 +373,12 @@ namespace SAS.Forms
                 }
 
 
-            }
+           // }
 
-            else
-            {
-                MessageBox.Show("请确保数据完整");
-            }
+            //else
+            //{
+            //    MessageBox.Show("请确保数据完整");
+            //}
         }
 
         private void buttonX5_Click(object sender, EventArgs e)

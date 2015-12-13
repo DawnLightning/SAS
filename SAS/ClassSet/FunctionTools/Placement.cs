@@ -149,7 +149,7 @@ namespace SAS.ClassSet.FunctionTools
               
                  drClasses = ContorlProportion(config.Proportion);
                  drSupervisor = dtSupervisor.Select("Class_WeekNumber<2 and Class_DayNumber = 0", "Class_Totality asc");
-                 drTeacher = dtTeachers.Select("Accept_ClassNumber=0");
+                 drTeacher = dtTeachers.Select("Accept_ClassNumber>=0");
                 int count = Supervisor(drSpareTimeClass,drSupervisor).Count;
                 if(count<config.Cnumpeo_min){
                     break;

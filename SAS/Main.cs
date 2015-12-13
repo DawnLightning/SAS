@@ -439,12 +439,14 @@ namespace SAS
                
                 buttonItem15.Enabled = true;
                 buttonItem16.Enabled = true;
+                //buttonItem9.Enabled = true;
             }
             else
             {
                 
                 buttonItem16.Enabled = false;
                 buttonItem15.Enabled = false;
+                //buttonItem9.Enabled = false;
             }
         }
         #region 委托
